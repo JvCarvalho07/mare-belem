@@ -54,7 +54,7 @@ section{padding-block:clamp(56px,7vw,96px)}
 @keyframes fog{to{transform:translateX(6%)}}
 .hero .in{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;justify-content:center;padding-top:60px}
 .kicker{font:400 clamp(15px,1.4vw,18px) Jost,sans-serif;letter-spacing:.04em;color:var(--mut);margin-bottom:6px}
-.mare{white-space:nowrap;font:800 clamp(76px,22vw,330px)/1 Jost,sans-serif;letter-spacing:-.04em;margin:-.14em 0 -.1em -.05em;padding-top:.06em;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 20px 40px #0008)}
+.mare{white-space:nowrap;font:800 clamp(76px,22vw,330px)/1 Jost,sans-serif;letter-spacing:-.04em;margin:-.14em 0 -.1em -.05em;padding-top:.06em;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 20px 40px #0008)}
 .hero .lead{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,4vw,60px);align-items:end;margin-top:clamp(14px,3vh,34px)}
 .hero .lead>*{min-width:0}
 .hero h1{font-size:clamp(24px,2.6vw,38px);font-weight:300;line-height:1.2;max-width:24ch}
@@ -166,20 +166,92 @@ html.parado{scroll-behavior:auto}
 @media(max-width:980px){.proj2{grid-template-columns:1fr}.pj.big{grid-row:auto;min-height:420px}}
 .mare{background:none!important;filter:none!important}
 .mare{letter-spacing:0!important}
-.mare .lt{display:inline-block;padding-top:.2em;margin-top:-.2em;margin-right:.035em;letter-spacing:0;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 20px 40px #0008)}
+.mare .lt{display:inline-block;padding-top:.2em;margin-top:-.2em;margin-right:.035em;letter-spacing:0;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 20px 40px #0008)}
 @media(min-width:2000px){.hero .bg{background-image:url(img/u-floresta-nevoa.webp)}}
 @media(max-width:800px){.hero .bg{background-image:url(img/u-floresta-nevoa-m.webp)}}
 .hero .bg{will-change:transform}
 .lf{will-change:transform}
 .menuBtn{display:none;margin-left:auto;font:600 15px Jost,sans-serif;color:inherit;background:#ffffff1f;border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
 @media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
+/* ---- seções sem cartões (referências: faixas de foto, fotos redondas, faixa de palavras, linha do tempo) ---- */
+.destaque{position:relative;display:grid;grid-template-columns:1.15fr 1fr;min-height:88vh;padding:0;overflow:hidden}
+.dfoto{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,#000 70%,transparent);mask-image:linear-gradient(90deg,#000 70%,transparent)}
+.dfoto img{position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;will-change:transform}
+.dtexto{display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,6vw,90px) max(22px,calc((100vw - 1220px)/2 + 22px)) clamp(40px,6vw,90px) clamp(10px,3vw,40px)}
+.etq{font:600 15px Jost,sans-serif;color:var(--broto);margin-bottom:10px}
+.destaque h2{font-size:clamp(56px,8vw,120px);font-weight:800;letter-spacing:-.03em;line-height:.9;margin-bottom:22px}
+.dnum{list-style:none;margin:10px 0 30px;padding:0;display:flex;flex-wrap:wrap;gap:12px 34px}
+.dnum b{display:block;font:300 clamp(40px,4vw,58px)/1 Jost,sans-serif;color:var(--broto);font-variant-numeric:tabular-nums}
+.dnum span{font-size:15px;color:var(--mut)}
+.destaque .btn{align-self:flex-start}
+
+.faixa{overflow:hidden;border-block:1px solid var(--line);padding-block:18px;white-space:nowrap}
+.trilha{display:inline-flex;align-items:center;gap:34px;animation:corre 40s linear infinite;will-change:transform}
+.trilha span{font:300 clamp(30px,4vw,56px)/1 Jost,sans-serif;color:var(--nevoa)}
+.trilha span:nth-child(4n+3){color:transparent;-webkit-text-stroke:1px #e7eee688}
+.trilha i{width:12px;height:12px;border-radius:50% 0;background:var(--broto);transform:rotate(45deg);flex:none}
+@keyframes corre{to{transform:translate3d(-50%,0,0)}}
+
+.frentes-s{padding-bottom:0}
+.tiras{display:flex;height:min(82vh,760px);margin-top:34px}
+.tira{position:relative;flex:1;overflow:hidden;isolation:isolate;transition:flex 1s cubic-bezier(.2,.7,.1,1);cursor:default;outline:none}
+.tira+.tira{border-left:1px solid #0f1a14}
+.tira:hover,.tira:focus-visible{flex:1.8}
+.tira img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform 1.4s cubic-bezier(.2,.7,.1,1)}
+.tira:hover img{transform:scale(1.05)}
+.tira::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#0f1a1433 0%,#0f1a1400 35%,#0f1a14e8 100%)}
+.tira .tx{position:absolute;left:0;right:0;bottom:0;padding:clamp(20px,3vw,40px)}
+.tira .lt{display:block;font:800 clamp(70px,8vw,120px)/1 Jost,sans-serif;padding-top:.1em;background:linear-gradient(180deg,#d6ec9e,#8fbf6a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tira p{font-size:16.5px;color:#d3ddd5;margin:0;max-width:34ch}
+
+.zig{display:grid;gap:clamp(30px,5vw,60px);margin-top:44px}
+.zz{display:grid;grid-template-columns:clamp(150px,22vw,280px) 1fr;gap:clamp(24px,4vw,60px);align-items:center;max-width:900px}
+.zz:nth-child(even){grid-template-columns:1fr clamp(150px,22vw,280px);margin-left:auto;text-align:right}
+.zz:nth-child(even) .circ{order:2}
+.zz:nth-child(even) p{margin-left:auto}
+.circ{position:relative;aspect-ratio:1;border-radius:50%;overflow:hidden;box-shadow:0 0 0 6px #ffffff10,0 0 0 14px #b5d96a14}
+.circ img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.7,.1,1)}
+.zz:hover .circ img{transform:scale(1.07)}
+.zz small{display:block;font:600 15px Jost,sans-serif;color:var(--broto);margin-bottom:6px}
+.zz h3{font-size:clamp(26px,2.6vw,36px);font-weight:400}
+.zz p{color:var(--mut);margin-top:8px}
+
+.prox{list-style:none;margin:30px 0 0;padding:0;border-top:1px solid var(--line)}
+.prox li{display:grid;grid-template-columns:84px 1fr;gap:22px;align-items:center;padding:20px 0;border-bottom:1px solid var(--line)}
+.prox img{width:84px;height:84px;border-radius:50%;object-fit:cover}
+.prox h3{font-size:clamp(26px,3vw,40px);font-weight:300;margin:0}
+.prox p{margin:4px 0 0;color:var(--mut)}
+
+.linha{list-style:none;margin:44px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative;counter-reset:s}
+.linha::before{content:"";position:absolute;left:0;right:0;top:21px;height:2px;background:linear-gradient(90deg,var(--broto),#6fd3c2);transform-origin:left;transform:scaleX(var(--k,1))}
+.linha li{position:relative;padding-top:64px;counter-increment:s;min-width:0}
+.linha li::before{content:counter(s);position:absolute;top:0;left:0;width:44px;height:44px;border-radius:50%;background:var(--mata);box-shadow:inset 0 0 0 2px var(--broto);display:grid;place-items:center;font:600 18px Jost,sans-serif;color:var(--broto)}
+.linha p{font-size:16px;color:var(--mut);margin:0}
+
+@media(max-width:980px){
+ .destaque{grid-template-columns:1fr;min-height:0}
+ .dfoto{height:46vh;-webkit-mask-image:linear-gradient(180deg,#000 70%,transparent);mask-image:linear-gradient(180deg,#000 70%,transparent)}
+ .dtexto{padding:10px 22px 60px}
+ .tiras{flex-direction:column;height:auto}
+ .tira{min-height:62vh;flex:none}
+ .tira+.tira{border-left:0;border-top:1px solid #0f1a14}
+ .zz,.zz:nth-child(even){grid-template-columns:110px 1fr;text-align:left;margin-left:0}
+ .zz:nth-child(even) .circ{order:0}
+ .linha{grid-template-columns:1fr;gap:28px;padding-left:64px}
+ .linha::before{left:21px;right:auto;top:0;bottom:0;width:2px;height:auto;background:linear-gradient(180deg,var(--broto),#6fd3c2)}
+ .linha li{padding-top:0}
+ .linha li::before{left:-64px}
+ .mini{display:grid!important;grid-template-columns:72px 1fr;max-width:none;justify-self:stretch;padding:10px}
+ .mini .th{height:56px}
+}
+
 </style></head><body>
 
 <nav class="nav" id="nav" aria-label="Principal"><div class="in">
  <a class="logo" href="#" aria-label="MARÉ, início"><img src="img/logo-onda.webp" alt=""><span>MARÉ</span></a>
  <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista">Menu</button>
- <ul id="menuLista"><li><a href="#frentes">Frentes</a></li><li><a href="#servicos">Serviços</a></li><li><a href="#projetos">Projetos</a></li><li><a href="#contato">Contato</a></li></ul>
- <a class="btn broto" href="#contato">Fale com a gente</a>
+ <ul id="menuLista"><li><a href="#projeto">Maré Cheia</a></li><li><a href="#frentes">Frentes</a></li><li><a href="#servicos">Serviços</a></li><li><a href="#contato">Contato</a></li></ul>
+ <a class="btn broto contato" href="#contato">Fale com a gente</a>
 </div></nav>
 
 <svg class="rio" id="rio" viewBox="0 0 40 1000" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="gRio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b5d96a"/><stop offset="1" stop-color="#6fd3c2"/></linearGradient></defs>
@@ -208,7 +280,7 @@ html.parado{scroll-behavior:auto}
   <div class="lead">
    <div class="ld d3">
     <h1>Mobilização, acessibilidade e renovação estrutural para a cidade-floresta.</h1>
-    <div class="acts"><a class="btn broto" href="#contato">Quero uma proposta</a><a class="btn vidro" href="#manifesto">Conheça nosso trabalho</a></div>
+    <div class="acts"><a class="btn broto contato" href="#contato">Quero uma proposta</a><a class="btn vidro" href="#manifesto">Conheça nosso trabalho</a></div>
    </div>
    <a class="mini ld d4" href="mare-cheia.html"><span class="th"><i></i></span><span><b>Projeto Maré Cheia</b><span>Alagamentos, calçadas e acessibilidade em 3D</span></span></a>
   </div>
@@ -220,49 +292,55 @@ html.parado{scroll-behavior:auto}
  <p id="mf">Belém é uma <em>cidade-floresta</em>. Vive entre a chuva, a maré e as árvores. Quando a natureza e a cidade brigam, a água invade as ruas e quem mais sofre é quem tem menos. A MARÉ existe para fazer as duas andarem juntas.</p>
 </div></section>
 
-<section id="frentes" style="padding-top:0"><div class="in">
- <h2 class="rv">Três frentes, um só propósito</h2>
- <div class="frentes">
-  <article class="fr rv"><img src="img/u-borboleta-mao.webp" alt="Borboleta pousada na mão de uma pessoa" loading="lazy"><div class="tx"><span class="lt">M</span><h3>Mobilização</h3><p>Moradores, escolas e famílias que vivem à beira dos rios no centro de cada projeto.</p></div></article>
-  <article class="fr rv"><img src="img/u-cirio.webp" alt="Fitas coloridas do Círio de Nazaré amarradas" loading="lazy"><div class="tx"><span class="lt">A</span><h3>Acessibilidade</h3><p>Uma cidade que acolhe todo mundo, como o Círio acolhe a cidade inteira.</p></div></article>
-  <article class="fr rv"><img src="img/u-garca.webp" alt="Garça branca pousada sobre um tronco no rio" loading="lazy"><div class="tx"><span class="lt">RÉ</span><h3>Renovação estrutural</h3><p>Soluções de baixo custo que trabalham com a água e o verde, e não contra eles.</p></div></article>
+<section class="destaque" id="projeto" aria-label="Projeto atual: Maré Cheia">
+ <div class="dfoto"><img src="img/u-rio-aereo.webp" alt="Rio sinuoso cortando a floresta, visto de cima" loading="lazy"></div>
+ <div class="dtexto">
+  <span class="etq">Projeto atual</span>
+  <h2>Maré Cheia</h2>
+  <p>Alagamentos, calçadas e acessibilidade em Belém. Um mapa 3D com 22 pontos já registrados, para levar cada problema a quem pode resolver.</p>
+  <ul class="dnum"><li><b data-n="22">22</b><span>pontos no mapa</span></li><li><b data-n="145">145</b><span>pontos críticos na cidade</span></li><li><b data-n="150" data-s=" mm">150 mm</b><span>de chuva num só dia</span></li></ul>
+  <a class="btn broto" href="mare-cheia.html">Conhecer o Maré Cheia</a>
  </div>
-</div></section>
+</section>
 
-<section class="claro" id="servicos"><div class="in">
+<div class="faixa" aria-hidden="true"><div class="trilha"><span>Mobilização</span><i></i><span>Acessibilidade</span><i></i><span>Renovação estrutural</span><i></i><span>Belém</span><i></i><span>Mobilização</span><i></i><span>Acessibilidade</span><i></i><span>Renovação estrutural</span><i></i><span>Belém</span><i></i></div></div>
+
+<section id="frentes" class="frentes-s">
+ <div class="in"><h2 class="rv">Três frentes, um só propósito</h2></div>
+ <div class="tiras">
+  <article class="tira" tabindex="0"><img src="img/u-borboleta-mao.webp" alt="Borboleta pousada na mão de uma pessoa" loading="lazy" style="object-position:50% 40%"><div class="tx"><span class="lt">M</span><h3>Mobilização</h3><p>Moradores, escolas e famílias que vivem à beira dos rios no centro de cada projeto.</p></div></article>
+  <article class="tira" tabindex="0"><img src="img/u-cirio.webp" alt="Fitas coloridas do Círio de Nazaré amarradas" loading="lazy" style="object-position:50% 30%"><div class="tx"><span class="lt">A</span><h3>Acessibilidade</h3><p>Uma cidade que acolhe todo mundo, como o Círio acolhe a cidade inteira.</p></div></article>
+  <article class="tira" tabindex="0"><img src="img/u-garca.webp" alt="Garça branca pousada sobre um tronco no rio" loading="lazy" style="object-position:40% 18%"><div class="tx"><span class="lt">RÉ</span><h3>Renovação estrutural</h3><p>Soluções de baixo custo que trabalham com a água e o verde, e não contra eles.</p></div></article>
+ </div>
+</section>
+
+<section id="servicos"><div class="in">
  <h2 class="rv">O que fazemos</h2>
  <p class="rv">Para escolas, comunidades, empresas e poder público que querem cuidar de Belém de forma sustentável.</p>
- <div class="svc">
-  <article class="sv rv"><img src="img/u-rio-aereo.webp" alt="Rio sinuoso no meio da floresta, visto do alto" loading="lazy"><div><small>Água</small><h3>Drenagem e alagamentos</h3><p>Mapeamos pontos críticos e propomos jardins de chuva, limpeza de canais e campanhas.</p></div></article>
-  <article class="sv rv"><img src="img/u-sumauma.webp" alt="Raízes enormes de uma sumaúma" loading="lazy"><div><small>Verde</small><h3>Arborização e áreas verdes</h3><p>Projetos de praças, sombra e plantio em escolas e bairros.</p></div></article>
-  <article class="sv rv"><img src="img/u-borboleta-mao.webp" alt="Borboleta pousada na mão de uma pessoa" loading="lazy"><div><small>Comunidade</small><h3>Educação ambiental</h3><p>Oficinas, rodas de conversa e pesquisas com quem vive no lugar.</p></div></article>
-  <article class="sv rv"><img src="img/u-barco-rio.webp" alt="Pequeno barco navegando no rio perto de um trapiche" loading="lazy"><div><small>Acesso</small><h3>Acessibilidade urbana</h3><p>Diagnóstico de calçadas, rampas e trapiches, com a lista do que corrigir primeiro.</p></div></article>
+ <div class="zig">
+  <article class="zz"><div class="circ"><img src="img/u-rio-aereo.webp" alt="Rio sinuoso no meio da floresta, visto do alto" loading="lazy"></div><div><small>Água</small><h3>Drenagem e alagamentos</h3><p>Mapeamos pontos críticos e propomos jardins de chuva, limpeza de canais e campanhas.</p></div></article>
+  <article class="zz"><div class="circ"><img src="img/u-sumauma.webp" alt="Raízes enormes de uma sumaúma" loading="lazy"></div><div><small>Verde</small><h3>Arborização e áreas verdes</h3><p>Projetos de praças, sombra e plantio em escolas e bairros.</p></div></article>
+  <article class="zz"><div class="circ"><img src="img/u-meninos-barco.webp" alt="Jovens sentados num barco de madeira na beira do rio" loading="lazy"></div><div><small>Comunidade</small><h3>Educação ambiental</h3><p>Oficinas, rodas de conversa e pesquisas com quem vive no lugar.</p></div></article>
+  <article class="zz"><div class="circ"><img src="img/u-barco-rio.webp" alt="Pequeno barco navegando no rio perto de um trapiche" loading="lazy"></div><div><small>Acesso</small><h3>Acessibilidade urbana</h3><p>Diagnóstico de calçadas, rampas e trapiches, com a lista do que corrigir primeiro.</p></div></article>
  </div>
 </div></section>
 
-<section id="projetos"><div class="in">
- <h2 class="rv">Nossos projetos</h2>
- <p class="rv">Cada projeto da MARÉ cuida de uma parte da cidade-floresta. O primeiro começou pela água.</p>
- <div class="proj2">
-  <a class="pj big rv" href="mare-cheia.html"><img src="img/u-rio-aereo.webp" alt="Rio sinuoso no meio da floresta, visto de cima" loading="lazy"><div class="gl"><span class="st">Em andamento</span><h3>Maré Cheia</h3><p>Alagamentos, calçadas e acessibilidade em Belém. Um mapa 3D com 22 pontos já registrados e ações para a água voltar a correr. Entre e mergulhe.</p></div></a>
-  <div class="pj rv"><img src="img/u-sumauma.webp" alt="Raízes de uma sumaúma" loading="lazy"><div class="gl"><span class="st em">Próximo</span><h3>Sumaúma</h3><p>Arborização, sombra e áreas verdes em escolas e praças.</p></div></div>
-  <div class="pj rv"><img src="img/foto-garca.webp" alt="Garça na água com lixo boiando no porto" loading="lazy"><div class="gl"><span class="st em">Próximo</span><h3>Ciclo</h3><p>Lixo e reciclagem, do bueiro entupido à coleta seletiva.</p></div></div>
-  <div class="pj rv"><img src="img/u-barco-rio.webp" alt="Barco pequeno navegando no rio" loading="lazy"><div class="gl"><span class="st em">Próximo</span><h3>Rota</h3><p>Transporte e mobilidade, nas ruas e nos rios da cidade.</p></div></div>
- </div>
- <div class="nums">
-  <div class="rv"><b data-n="145">145</b><span>pontos críticos de alagamento contados pela prefeitura</span></div>
-  <div class="rv"><b data-n="150" data-s=" mm">150 mm</b><span>de chuva em menos de 24 horas em abril de 2026</span></div>
-  <div class="rv"><b data-n="22">22</b><span>pontos já no nosso mapa, do Tapanã ao Jurunas</span></div>
- </div>
+<section id="projetos" class="proximos"><div class="in">
+ <h2 class="rv">Próximos projetos</h2>
+ <ul class="prox">
+  <li><img src="img/u-sumauma.webp" alt="" loading="lazy"><div><h3>Sumaúma</h3><p>Arborização, sombra e áreas verdes em escolas e praças.</p></div></li>
+  <li><img src="img/foto-garca.webp" alt="" loading="lazy"><div><h3>Ciclo</h3><p>Lixo e reciclagem, do bueiro entupido à coleta seletiva.</p></div></li>
+  <li><img src="img/u-barco-rio.webp" alt="" loading="lazy"><div><h3>Rota</h3><p>Transporte e mobilidade, nas ruas e nos rios da cidade.</p></div></li>
+ </ul>
 </div></section>
 
-<section id="como" style="padding-top:0"><div class="in">
+<section id="como"><div class="in">
  <h2 class="rv">Como trabalhamos</h2>
- <ol class="steps">
-  <li class="rv"><h3>Escuta</h3><p>Conversamos com quem pede e com quem vive no lugar.</p></li>
-  <li class="rv"><h3>Campo</h3><p>Visitamos, fotografamos e medimos o problema.</p></li>
-  <li class="rv"><h3>Proposta</h3><p>Diagnóstico, prioridades e soluções de baixo custo.</p></li>
-  <li class="rv"><h3>Ação</h3><p>Ajudamos a executar e medimos o resultado.</p></li>
+ <ol class="linha">
+  <li><h3>Escuta</h3><p>Conversamos com quem pede e com quem vive no lugar.</p></li>
+  <li><h3>Campo</h3><p>Visitamos, fotografamos e medimos o problema.</p></li>
+  <li><h3>Proposta</h3><p>Diagnóstico, prioridades e soluções de baixo custo.</p></li>
+  <li><h3>Ação</h3><p>Ajudamos a executar e medimos o resultado.</p></li>
  </ol>
 </div></section>
 
@@ -270,8 +348,9 @@ html.parado{scroll-behavior:auto}
  <h2 class="rv">Belém se cuida junto.</h2>
  <p class="rv">Tem um problema na sua rua, escola ou comunidade? Conte para a gente. Respondemos com uma proposta de diagnóstico, ou colocamos o ponto no Mapa MARÉ.</p>
  <ul class="vals rv"><li>Escuta ativa</li><li>Natureza a favor</li><li>Transparência</li><li>Cidade para todos</li></ul>
- <span class="btn broto rv" style="cursor:default">Contato em breve</span>
+ <a class="btn broto rv contato" href="#contato">Contato em breve</a>
 </div></section>
+
 </main>
 
 <footer><div class="in">
@@ -314,13 +393,15 @@ if(window.gsap&&window.ScrollTrigger&&!still){
  gsap.set(words,{opacity:.16});
  gsap.to(words,{opacity:1,stagger:.05,ease:"none",scrollTrigger:{trigger:mf,start:"top 80%",end:"bottom 45%",scrub:true}});
  gsap.utils.toArray("h2.rv,p.rv,.cta .rv").forEach(el=>{el.classList.remove("rv");gsap.from(el,{y:50,opacity:0,duration:1.1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 98%"}})});
- gsap.utils.toArray(".fr").forEach((el,i)=>{el.classList.remove("rv");
-  gsap.from(el,{clipPath:"inset(100% 0% 0% 0% round 22px)",duration:1.4,delay:i*.12,ease:"power4.inOut",scrollTrigger:{trigger:".frentes",start:"top 95%"}});
-  gsap.fromTo(el.querySelector("img"),{yPercent:-8,scale:1.15},{yPercent:8,ease:"none",scrollTrigger:{trigger:el,start:"top bottom",end:"bottom top",scrub:true}})});
- gsap.utils.toArray(".sv").forEach((el,i)=>{el.classList.remove("rv");gsap.from(el,{y:60,opacity:0,duration:1,delay:(i%2)*.12,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 98%"}})});
- gsap.utils.toArray(".pj").forEach((el,i)=>{el.classList.remove("rv");
-  gsap.from(el,{clipPath:"inset(0% 0% 100% 0% round 26px)",duration:1.3,delay:i*.1,ease:"power4.inOut",scrollTrigger:{trigger:".proj2",start:"top 95%"}});});
- gsap.utils.toArray(".nums .rv,.steps .rv,.vals.rv").forEach(el=>{el.classList.remove("rv");gsap.from(el,{y:40,opacity:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 98%",onEnter:()=>el.querySelectorAll("[data-n]").forEach(contar)}})});
+ gsap.fromTo(".dfoto img",{yPercent:-6},{yPercent:6,ease:"none",scrollTrigger:{trigger:".destaque",start:"top bottom",end:"bottom top",scrub:true}});
+ gsap.from(".destaque .etq,.destaque h2,.destaque p,.dnum li,.destaque .btn",{y:40,opacity:0,stagger:.08,duration:1,ease:"power3.out",scrollTrigger:{trigger:".destaque",start:"top 75%",onEnter:()=>document.querySelectorAll(".dnum [data-n]").forEach(contar)}});
+ gsap.from(".tira",{clipPath:"inset(100% 0% 0% 0%)",stagger:.14,duration:1.3,ease:"power4.inOut",scrollTrigger:{trigger:".tiras",start:"top 92%"}});
+ gsap.from(".tira .tx",{y:40,opacity:0,stagger:.14,duration:1,delay:.5,ease:"power3.out",scrollTrigger:{trigger:".tiras",start:"top 92%"}});
+ gsap.utils.toArray(".zz").forEach((el,i)=>{gsap.from(el.querySelector(".circ"),{scale:.6,opacity:0,duration:1.1,ease:"back.out(1.4)",scrollTrigger:{trigger:el,start:"top 92%"}});gsap.from(el.querySelector("div:not(.circ)"),{x:i%2?-40:40,opacity:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 92%"}})});
+ gsap.from(".prox li",{y:30,opacity:0,stagger:.1,duration:.9,ease:"power3.out",scrollTrigger:{trigger:".prox",start:"top 92%"}});
+ gsap.fromTo(".linha",{"--k":0},{"--k":1,duration:1.6,ease:"power2.inOut",scrollTrigger:{trigger:".linha",start:"top 85%"}});
+ gsap.from(".linha li",{y:30,opacity:0,stagger:.18,duration:.9,ease:"power3.out",scrollTrigger:{trigger:".linha",start:"top 85%"}});
+ gsap.from(".vals.rv",{y:30,opacity:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:".vals",start:"top 98%"}});
  gsap.fromTo("#cbg",{yPercent:-10},{yPercent:10,ease:"none",scrollTrigger:{trigger:".cta",start:"top bottom",end:"bottom top",scrub:true}});
  gsap.from("footer .big",{yPercent:60,opacity:0,duration:1.2,ease:"power3.out",scrollTrigger:{trigger:"footer",start:"top 95%"}});
  document.querySelectorAll(".rv").forEach(e=>e.classList.add("on"));
@@ -332,4 +413,9 @@ if(window.gsap&&window.ScrollTrigger&&!still){
 </script>
 
 <script>(()=>{const b=document.getElementById("menuBtn"),l=document.getElementById("menuLista");if(!b)return;b.onclick=()=>{const a=l.classList.toggle("aberto");b.setAttribute("aria-expanded",a);b.textContent=a?"Fechar":"Menu"};l.querySelectorAll("a").forEach(x=>x.addEventListener("click",()=>{l.classList.remove("aberto");b.setAttribute("aria-expanded","false");b.textContent="Menu"}))})()</script>
+<script>
+/* CONTATO: cole aqui o link do Google Forms da MARÉ e todos os botões de contato passam a abrir o formulário. */
+const FORMS_URL="";
+document.querySelectorAll("a.contato").forEach(a=>{if(FORMS_URL){a.href=FORMS_URL;a.target="_blank";a.rel="noopener";if(/em breve/i.test(a.textContent))a.textContent="Fale com a gente"}});
+</script>
 </body></html>

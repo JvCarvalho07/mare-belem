@@ -84,10 +84,13 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .mapa{position:relative;margin-top:clamp(28px,4vw,44px);height:min(82vh,760px);min-height:460px}
 .mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
 .mapa::before{content:"";position:absolute;left:0;right:0;top:0;height:60px;z-index:2;pointer-events:none;background:linear-gradient(var(--papel),#f3f5f200)}
-.trilho{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:20px}
+.trilho{display:grid;grid-template-columns:1fr 1fr;column-gap:48px;margin-top:26px;border-top:1px solid #0f7f8633}
 .trilho::-webkit-scrollbar{display:none}
-.pc{text-align:left;padding:14px 16px;border-radius:16px;background:#ffffffee;box-shadow:0 10px 26px #0f3a3f26;border:0;font:inherit;color:var(--tinta);cursor:pointer;transition:transform .2s}
-.pc:hover{transform:translateY(-3px)}
+.pc{display:grid;grid-template-columns:22px 1fr auto;gap:4px 14px;align-items:start;text-align:left;padding:16px 0;background:none;border:0;border-bottom:1px solid #0f7f8633;font:inherit;color:var(--tinta);cursor:pointer;width:100%}
+.pc::before{content:"";grid-row:span 3;width:14px;height:14px;margin-top:5px;border-radius:50%;box-shadow:0 0 0 3px var(--teal);background:var(--papel)}
+.pc::after{content:"Ver no mapa";grid-column:3;grid-row:1;font:600 13px Jost,sans-serif;color:var(--teal);white-space:nowrap}
+.pc>*{grid-column:2}
+.pc:hover b{color:var(--teal)}
 .pc small{display:block;font:600 13px Jost,sans-serif;color:var(--barro)}
 .pc b{display:block;font:600 17px Jost,sans-serif;line-height:1.2;margin:2px 0 4px}
 .pc span{font-size:14px;color:var(--mut);line-height:1.35;display:block}
@@ -103,28 +106,33 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .mergulho .in{position:relative}
 .mergulho h2{color:#fff}
 .mergulho p{color:#cde9e6}
-.cartao{background:#ffffff14;box-shadow:inset 0 0 0 1px #ffffff26;border-radius:22px}
+.cartao{background:none}
 .dados{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:34px 0 clamp(70px,9vw,110px)}
-.dados .cartao{padding:22px}
+.dados .cartao{padding:6px 24px 6px 0;border-right:1px solid #ffffff2e}.dados .cartao:last-child{border-right:0}
 .dados b{display:block;white-space:nowrap;font:300 clamp(40px,4.4vw,60px)/.95 Jost,sans-serif;color:#9fe8e0;font-variant-numeric:tabular-nums}
 .dados span{font-size:15px;color:#bcdcd9}
 .frentes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 clamp(70px,9vw,110px)}
-.fr{padding:24px;min-width:0}
+.fr{padding:4px 24px 4px 0;min-width:0;border-right:1px solid #ffffff2e}.fr:last-child{border-right:0}
 .fr .ic{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:#9fe8e022;color:#9fe8e0;margin-bottom:14px}
 .fr .ic svg{width:25px;height:25px}
 .fr p{font-size:16px;color:#bcdcd9;margin:0}
-.acoes{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px;counter-reset:a}
-.ac{padding:22px;min-width:0;counter-increment:a}
-.ac::before{content:"Passo " counter(a);display:block;font:600 14px Jost,sans-serif;color:var(--barro);margin-bottom:8px}
+.acoes{display:grid;grid-template-columns:1fr;gap:0;margin-top:34px;counter-reset:a;position:relative;padding-left:120px;max-width:760px}
+.acoes::before{content:"";position:absolute;left:84px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,#9fe8e0,#9fe8e000)}
+.ac{position:relative;padding:0 0 38px;min-width:0;counter-increment:a}
+.ac::before{content:counter(a) " m";position:absolute;left:-124px;top:2px;width:56px;text-align:right;font:300 30px/1 Jost,sans-serif;color:#9fe8e0}
+.ac::after{content:"";position:absolute;left:-42px;top:8px;width:14px;height:14px;border-radius:50%;background:#0d5f66;box-shadow:0 0 0 3px #9fe8e0}
 .ac p{font-size:15.5px;color:#bcdcd9;margin:0}
 .leito{position:relative;padding-block:clamp(90px,11vw,140px) clamp(70px,9vw,110px)}
-.leito .cta{padding:clamp(26px,4vw,44px);display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:end;background:#ffffff12}
+.leito .cta{padding:0;display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:end;background:none;border-top:1px solid #ffffff2e;padding-top:40px}
 .leito .cta>*{min-width:0}
 .plantas{display:block;width:100%;height:clamp(110px,13vw,180px);margin-top:70px}
 footer{background:var(--fundo);color:#8fb3b0;padding-block:26px;font-size:14px}
 footer .in{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-between}
 footer a{color:#cde9e6}
 @media(max-width:980px){.nav ul{display:none}.sup .base .in{grid-template-columns:1fr}.sup .acts{justify-content:flex-start}.abre{grid-template-columns:1fr}.dados,.frentes{grid-template-columns:1fr}.acoes{grid-template-columns:1fr 1fr}.leito .cta{grid-template-columns:1fr}.prof{display:none}.vfundo{display:none}}
+@media(max-width:980px){.trilho{grid-template-columns:1fr}.dados .cartao,.fr{border-right:0;border-bottom:1px solid #ffffff2e;padding:0 0 18px}.acoes{padding-left:96px}.acoes::before{left:62px}.ac::before{left:-100px;width:40px;font-size:22px}.ac::after{left:-41px}}
+.tocar{position:absolute;inset:0;z-index:4;display:none;align-items:center;justify-content:center;border:0;background:#0f3a3f33;color:#fff;font:600 16px Jost,sans-serif;cursor:pointer}
+.tocar::before{content:"";position:absolute;left:50%;top:50%;width:250px;height:52px;margin:-26px 0 0 -125px;border-radius:999px;background:var(--teal);z-index:-1}
 @media(max-width:600px){.acoes{grid-template-columns:1fr}.nav .btn{display:none}.mapa{height:70vh}}
 .menuBtn{display:none;margin-left:auto;font:600 15px Jost,sans-serif;color:inherit;background:#ffffff1f;border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
 @media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
@@ -135,7 +143,7 @@ footer a{color:#cde9e6}
  <a class="back" href="index.html"><img src="img/logo-onda.webp" alt="">MARÉ</a>
  <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista">Menu</button>
  <ul id="menuLista"><li><a href="#pontos">Pontos</a></li><li><a href="#mergulho">O problema</a></li><li><a href="#acoes">Ações</a></li></ul>
- <a class="btn teal" href="#enviar">Enviar um ponto</a>
+ <a class="btn teal contato" href="#enviar">Enviar um ponto</a>
 </nav>
 
 <div class="prof" aria-hidden="true"><div class="esc"><span>0 m</span><span>1 m</span><span>2 m</span><span>3 m</span><span>4 m</span></div><div class="reg"><i id="profPt"></i></div></div>
@@ -169,6 +177,7 @@ footer a{color:#cde9e6}
   </div>
  </div>
  <div class="mapa">
+  <button class="tocar" id="tocar" type="button">Toque para explorar o mapa</button>
   <iframe id="mapaF" src="mapa.html?embed=1&amp;tema=estudio&amp;v=6" title="Mapa 3D dos alagamentos de Belém" loading="lazy" allow="fullscreen"></iframe>
 
  </div>
@@ -212,7 +221,7 @@ footer a{color:#cde9e6}
  <div class="leito" id="enviar"><div class="in">
   <div class="cartao cta">
    <div><h2 style="margin-bottom:10px">Viu a água parada ou a calçada quebrada?</h2><p>Mande foto e endereço para a MARÉ. A equipe confere e coloca o ponto no mapa.</p></div>
-   <div style="display:flex;gap:12px;flex-wrap:wrap"><span class="btn claro" style="cursor:default">Contato em breve</span><a class="btn linha" href="index.html">Voltar para a MARÉ</a></div>
+   <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn claro contato" href="#enviar">Contato em breve</a><a class="btn linha" href="index.html">Voltar para a MARÉ</a></div>
   </div>
  </div>
  </div>
@@ -230,13 +239,13 @@ const forte=matchMedia("(min-width: 900px) and (pointer: fine)").matches; // com
 
 // 1) nome do projeto "dentro" da foto (imagem pronta, sem custo depois)
 function assar(){return new Promise(res=>{const img=new Image();img.onload=()=>{
- const W=Math.min(1600,innerWidth),H=Math.round(W*innerHeight/innerWidth);
+ const W=Math.round(Math.min(2560,innerWidth*Math.min(devicePixelRatio||1,2.5))),H=Math.round(W*innerHeight/innerWidth);
  const c=document.createElement("canvas");c.width=W;c.height=H;const g=c.getContext("2d");
  const k=Math.max(W/img.width,H/img.height),w=img.width*k,h=img.height*k;g.drawImage(img,(W-w)/2,(H-h)/2,w,h);
  g.fillStyle="rgba(4,40,44,.16)";g.fillRect(0,0,W,H);
  let fs=Math.min(W*.17,H*.3);g.font=`800 ${fs}px Jost, sans-serif`;const mw=g.measureText("MARÉ CHEIA").width;if(mw>W*.86){fs*=W*.86/mw;g.font=`800 ${fs}px Jost, sans-serif`}
  g.textAlign="center";g.textBaseline="middle";g.shadowColor="rgba(0,30,35,.4)";g.shadowBlur=fs*.15;g.fillStyle="rgba(236,250,247,.84)";g.fillText("MARÉ CHEIA",W/2,H*.42);
- res(c.toDataURL("image/jpeg",.86))};img.src="img/u-rio-aereo-hd.webp"})}
+ res(c.toDataURL("image/jpeg",.92))};img.src="img/u-rio-aereo-hd.webp"})}
 async function iniciarAgua(){try{await document.fonts.load("800 100px Jost")}catch(e){}agua.style.backgroundImage=`url(${await assar()})`}
 iniciarAgua();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(iniciarAgua,500)});
 
@@ -249,6 +258,8 @@ if(forte){new IntersectionObserver(es=>{if(es[0].isIntersecting){if(!vluz.src)vl
 new IntersectionObserver(es=>{try{mapaF.contentWindow.postMessage({mareAtivo:es[0].isIntersecting},"*")}catch(e){}},{threshold:0}).observe(mapaF);
 document.querySelectorAll(".pc").forEach(b=>b.addEventListener("click",()=>{const ll=b.dataset.ll.split(",").map(Number);try{mapaF.contentWindow.postMessage({mareVoar:ll},"*")}catch(e){}}));
 
+const tocar=document.getElementById("tocar");
+if(!forte){mapaF.style.pointerEvents="none";tocar.style.display="flex";tocar.onclick=()=>{mapaF.style.pointerEvents="auto";tocar.remove()}}else tocar.remove();
 // 5) navegação, medidor e animações de entrada
 let last=0;
 const upd=y=>{const h=innerHeight,k=y/Math.max(1,document.documentElement.scrollHeight-h);pt.style.top=`calc(${(k*100).toFixed(2)}% - 6px)`;
@@ -271,4 +282,9 @@ if(window.gsap&&window.ScrollTrigger){
 }else{document.querySelectorAll("[data-n]").forEach(contar);addEventListener("scroll",()=>upd(scrollY),{passive:true});upd(scrollY)}
 </script>
 <script>(()=>{const b=document.getElementById("menuBtn"),l=document.getElementById("menuLista");if(!b)return;b.onclick=()=>{const a=l.classList.toggle("aberto");b.setAttribute("aria-expanded",a);b.textContent=a?"Fechar":"Menu"};l.querySelectorAll("a").forEach(x=>x.addEventListener("click",()=>{l.classList.remove("aberto");b.setAttribute("aria-expanded","false");b.textContent="Menu"}))})()</script>
+<script>
+/* CONTATO: cole aqui o link do Google Forms da MARÉ (o mesmo do site principal). */
+const FORMS_URL="";
+document.querySelectorAll("a.contato").forEach(a=>{if(FORMS_URL){a.href=FORMS_URL;a.target="_blank";a.rel="noopener";if(/em breve/i.test(a.textContent))a.textContent="Enviar pelo formulário"}});
+</script>
 </body></html>
