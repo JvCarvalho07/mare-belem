@@ -28,7 +28,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .pb{overflow:auto;padding:4px 16px 16px;display:flex;flex-direction:column;gap:18px}
 h2{font:700 15px "Bricolage Grotesque",sans-serif;margin:0 0 8px;color:var(--acai)}
 .mut{color:var(--mut);font-size:13.5px}
-.count{display:flex;gap:18px}.count b{font:800 30px/1 "Bricolage Grotesque",sans-serif;color:var(--azulejo);display:block;font-variant-numeric:tabular-nums}.count span{font-size:13px;color:var(--mut)}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:2px;max-height:240px;overflow:auto}.list button{all:unset;cursor:pointer;display:grid;grid-template-columns:12px 1fr;gap:10px;align-items:start;padding:8px 6px;border-radius:10px;width:100%;box-sizing:border-box}.list button:hover,.list button:focus-visible{background:#fff}.list i{width:12px;height:12px;border-radius:50%;margin-top:5px}.list b{display:block;font-size:15px}.list span{font-size:13px;color:var(--mut)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:99px;background:#fff;border:1.5px solid var(--line);cursor:pointer;font-size:14px;user-select:none}
 .chip input{position:absolute;opacity:0;pointer-events:none}.chip i{width:11px;height:11px;border-radius:50%}
@@ -67,7 +67,7 @@ label.ck{display:flex;gap:8px;align-items:flex-start;font-size:14.5px}label.ck i
 <aside class="panel" id="panel">
  <div class="ph"><h1>Belém, hoje</h1><button class="x" id="bclose" aria-label="Recolher painel">×</button></div>
  <div class="pb">
-  <div class="count"><div><b id="sTot">0</b><span>pontos visíveis</span></div><div><b id="sAla">0</b><span>alagamentos</span></div></div>
+  <div><h2>Pontos registrados</h2><ul class="list" id="list"></ul><div class="mut" style="margin-top:6px">Pontos da imprensa têm local aproximado e link para a notícia.</div></div>
   <div><h2>O que mostrar</h2><div class="chips" id="chips"></div></div>
   <div><h2>Chuva e maré agora</h2>
    <div class="row"><input id="rain" type="number" min="0" placeholder="Chuva em mm/h" aria-label="Chuva em milímetros por hora"><select id="tide" aria-label="Maré"><option value="">Maré</option><option value="baixa">Baixa</option><option value="alta">Alta</option></select></div>
@@ -76,8 +76,8 @@ label.ck{display:flex;gap:8px;align-items:flex-start;font-size:14.5px}label.ck i
    <div class="mut">Belém é quase plana. Exagerar o relevo mostra onde a água se acumula.</div></div>
   <div><h2>Dados</h2><div class="row"><button class="sbtn" id="bexp">Baixar planilha</button><button class="sbtn" id="bjson">Salvar arquivo</button></div>
    <label class="mut" style="display:block;margin-top:8px">Juntar pontos de outra pessoa<input id="imp" type="file" accept=".json"></label>
-   <button class="sbtn" id="bclr" style="margin-top:8px">Apagar pontos de exemplo</button>
-   <div class="mut" style="margin-top:6px">Os pontos ficam salvos neste navegador. Os 6 iniciais são exemplos fictícios.</div></div>
+
+   <div class="mut" style="margin-top:6px">Os pontos ficam salvos neste navegador. Os pontos da imprensa vêm de notícias, com local aproximado.</div></div>
   <div class="mut">Mapa © OpenStreetMap, OpenFreeMap · Satélite © Esri · Relevo: AWS Terrain Tiles</div>
  </div>
 </aside>
@@ -96,9 +96,9 @@ const Q=new URLSearchParams(location.search),HERO=Q.has("hero");
 if(HERO)document.body.classList.add("hero");if(Q.has("embed"))document.body.classList.add("embed");
 const T={alagamento:["Alagamento","#1d4f91"],calcada:["Calçada quebrada","#c98410"],acessibilidade:["Sem acessibilidade","#7a3b8f"],bueiro:["Bueiro entupido","#b8402f"]};
 const $=id=>document.getElementById(id);
-const EX=[["alagamento","Jurunas",-1.4690,-48.4930],["alagamento","Terra Firme",-1.4720,-48.4560],["alagamento","Condor",-1.4640,-48.4850],["calcada","Cidade Velha",-1.4540,-48.5040],["acessibilidade","Umarizal",-1.4500,-48.4850],["bueiro","Batista Campos",-1.4490,-48.4890]];
+const NEWS=[["alagamento","Av. Visconde de Souza Franco (Doca) com R. Senador Manoel Barata","Reduto",-1.4462,-48.4936,"Alaga na maré alta.","https://dol.com.br/noticias/para/854962/video-mare-alta-deixa-ruas-de-belem-debaixo-dagua"],["alagamento","R. Municipalidade","Reduto",-1.4449,-48.4952,"Água na altura da carenagem das motos na maré alta.","https://dol.com.br/noticias/para/935942/video-rua-no-reduto-e-alagada-apos-chuvas-durante-mare-alta-em-belem"],["alagamento","Av. Pedro Miranda, canal da Visconde de Inhaúma","Pedreira",-1.4330,-48.4718,"O canal transborda e os carros param.","https://diariodopara.com.br/para/chuva-forte-alaga-ruas-e-para-belem-veja-fotos/"],["alagamento","R. Augusto Corrêa, em frente à UFPA","Guamá",-1.4746,-48.4570,"Alaga e atrapalha carros e pedestres.","https://dol.com.br/noticias/para/889706/chuva-deixa-ruas-alagadas-e-derruba-arvore-em-belem"],["alagamento","Av. Bernardo Sayão e Av. Perimetral","Guamá",-1.4718,-48.4630,"Trechos tomados pela água.","https://dol.com.br/noticias/para/889706/chuva-deixa-ruas-alagadas-e-derruba-arvore-em-belem"],["alagamento","Av. Duque de Caxias","Marco",-1.4436,-48.4705,"Ponto citado em dias de chuva forte.","https://www.oliberal.com/belem/tempo-fechado-com-chuva-faz-terca-feira-escurecer-mais-cedo-e-provoca-varios-alagamentos-em-belem-1.1076837"],["alagamento","Tv. Alcindo Cacela com R. dos Mundurucus","Cremação",-1.4618,-48.4848,"Ponto citado em dias de chuva forte.","https://www.oliberal.com/belem/tempo-fechado-com-chuva-faz-terca-feira-escurecer-mais-cedo-e-provoca-varios-alagamentos-em-belem-1.1076837"],["alagamento","R. dos Pariquis","Cremação",-1.4655,-48.4880,"Ponto citado em dias de chuva forte.","https://www.oliberal.com/belem/tempo-fechado-com-chuva-faz-terca-feira-escurecer-mais-cedo-e-provoca-varios-alagamentos-em-belem-1.1076837"],["alagamento","Av. João Paulo II","Marco",-1.4400,-48.4590,"Ponto citado em dias de chuva forte.","https://www.oliberal.com/para/chuva-forte-provoca-alagamentos-na-grande-belem-1.1118866"],["alagamento","Tv. Campos Sales","Campina",-1.4527,-48.4962,"Ponto citado em dias de chuva forte.","https://www.oliberal.com/para/chuva-forte-provoca-alagamentos-na-grande-belem-1.1118866"]];
 let R=null;try{R=JSON.parse(localStorage.getItem("mare_relatos")||"null")}catch(e){}
-if(!Array.isArray(R))R=EX.map((e,i)=>({id:"ex"+i,tipo:e[0],bairro:e[1],lat:e[2],lng:e[3],desc:"Ponto de exemplo (fictício).",foto:"",ex:true,data:"exemplo"}));
+if(!Array.isArray(R))R=[];R=R.filter(r=>!r.ex&&!r.imp);const IMP=NEWS.map((e,i)=>({id:"imp"+i,tipo:e[0],local:e[1],bairro:e[2],lat:e[3],lng:e[4],desc:e[5],url:e[6],imp:true,data:"Imprensa"}));
 const save=()=>{try{localStorage.setItem("mare_relatos",JSON.stringify(R))}catch(e){alert("O navegador ficou sem espaço. Salve o arquivo e apague pontos antigos.")}};
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 for(const k in T){$("chips").insertAdjacentHTML("beforeend",`<label class="chip"><input type="checkbox" class="f" value="${k}" checked><i style="background:${T[k][1]}"></i>${T[k][0]}</label>`);$("t").insertAdjacentHTML("beforeend",`<option value="${k}">${T[k][0]}</option>`)}
@@ -116,11 +116,11 @@ map.on("style.load",()=>{if(map.getSource("dem"))return;
  if(HERO){map.setTerrain({source:"dem",exaggeration:3})}});
 let mk=[],adding=false,pos=null,is3d=HERO;
 const pin=c=>`<svg class="pin" viewBox="0 0 30 38" aria-hidden="true"><path d="M15 37s13-13.2 13-22A13 13 0 0 0 2 15c0 8.8 13 22 13 22z" fill="${c}" stroke="#fff" stroke-width="2.5"/><circle cx="15" cy="15" r="5" fill="#fff"/></svg>`;
-function draw(){mk.forEach(m=>m.remove());mk=[];const on=[...document.querySelectorAll(".f:checked")].map(x=>x.value);const V=R.filter(r=>on.includes(r.tipo));
- V.forEach(r=>{const el=document.createElement("div");el.innerHTML=pin(T[r.tipo][1]);el.title=T[r.tipo][0]+" em "+(r.bairro||"local sem bairro");if(r.ex)el.style.opacity=.7;
-  const h=`<div class="pop"><span class="tag" style="background:${T[r.tipo][1]}">${T[r.tipo][0]}</span><br><b>${esc(r.bairro)}</b><br>${esc(r.desc)}<br><small style="color:#5d5662">${esc(r.data)}</small>${r.foto?`<img src="${r.foto}" alt="Foto enviada pelo morador">`:""}</div>`;
+function draw(){mk.forEach(m=>m.remove());mk=[];const on=[...document.querySelectorAll(".f:checked")].map(x=>x.value);const V=R.concat(IMP).filter(r=>on.includes(r.tipo));
+ V.forEach(r=>{const el=document.createElement("div");el.innerHTML=pin(T[r.tipo][1]);el.title=T[r.tipo][0]+" em "+(r.bairro||"local sem bairro");
+  const h=`<div class="pop"><span class="tag" style="background:${T[r.tipo][1]}">${T[r.tipo][0]}</span><br><b>${esc(r.local||r.bairro)}</b><br>${r.local?esc(r.bairro)+"<br>":""}${esc(r.desc)}<br><small style="color:#5d5662">${r.url?`Fonte: <a href="${r.url}" target="_blank" rel="noopener">notícia</a>, local aproximado`:esc(r.data)}</small>${r.foto?`<img src="${r.foto}" alt="Foto enviada pelo morador">`:""}</div>`;
   mk.push(new maplibregl.Marker({element:el,anchor:"bottom"}).setLngLat([r.lng,r.lat]).setPopup(new maplibregl.Popup({offset:30,maxWidth:"260px"}).setHTML(h)).addTo(map))});
- $("sTot").textContent=V.length;$("sAla").textContent=R.filter(r=>r.tipo==="alagamento").length}
+ $("list").innerHTML=V.map((r,i)=>`<li><button data-i="${i}"><i style="background:${T[r.tipo][1]}"></i><span><b>${esc(r.local||r.bairro||T[r.tipo][0])}</b>${esc(r.bairro)} · ${r.imp?"imprensa":"morador"}</span></button></li>`).join("");$("list").querySelectorAll("button").forEach(b=>b.onclick=()=>{const r=V[+b.dataset.i];map.flyTo({center:[r.lng,r.lat],zoom:16});mk[+b.dataset.i].togglePopup()})}
 document.addEventListener("change",e=>{if(e.target.classList.contains("f"))draw()});
 map.on("load",()=>{draw();if(HERO&&!matchMedia("(prefers-reduced-motion: reduce)").matches){const spin=()=>{map.easeTo({bearing:map.getBearing()+30,duration:24000,easing:t=>t});};spin();map.on("moveend",spin)}});
 $("b3d").onclick=function(){is3d=!is3d;this.setAttribute("aria-pressed",is3d);
@@ -136,7 +136,7 @@ function reduz(file){return new Promise(res=>{if(!file)return res("");const fr=n
 $("ms").onclick=async()=>{if(!$("ok").checked){alert("Marque a autorização para publicar a foto e o local.");return}
  R.push({id:"r"+Date.now(),tipo:$("t").value,bairro:$("bairro").value.trim(),desc:$("desc").value.trim(),lat:pos.lat,lng:pos.lng,foto:await reduz($("foto").files[0]),data:new Date().toLocaleString("pt-BR")});
  save();$("modal").style.display="none";$("desc").value="";$("foto").value="";$("ok").checked=false;draw()};
-$("bclr").onclick=()=>{R=R.filter(r=>!r.ex);save();draw()};
+
 const dl=(n,txt,m)=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type:m}));a.download=n;a.click()};
 $("bjson").onclick=()=>dl("pontos-mare.json",JSON.stringify(R),"application/json");
 $("bexp").onclick=()=>dl("pontos-mare.csv","﻿tipo;bairro;descricao;lat;lng;data\n"+R.map(r=>[T[r.tipo][0],r.bairro,(r.desc||"").replace(/[;\n]/g," "),r.lat,r.lng,r.data].join(";")).join("\n"),"text/csv");
