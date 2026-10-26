@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <style>
 /* Mapa em tela cheia; barra de ferramentas à direita; painel recolhível à esquerda (folha inferior no celular) */
-:root{--acai:#2b1430;--azulejo:#1d4f91;--rio:#8a6a3d;--chuva:#f2f4f3;--manga:#e8a33d;--folha:#2f6b4f;--ink:#1e1a22;--mut:#5d5662;--glass:#ffffffeb;--line:#ddd7d0;
+:root{--acai:#4b2f4d;--azulejo:#1d4f91;--rio:#8a6a3d;--chuva:#f2f4f3;--manga:#cfa545;--folha:#2f6b4f;--ink:#1e1a22;--mut:#5d5662;--glass:#ffffffeb;--line:#ddd7d0;
  --t-ala:#1d4f91;--t-cal:#c98410;--t-ace:#7a3b8f;--t-bue:#b8402f}
 *{box-sizing:border-box}html,body{height:100%;margin:0}
 body{font:16px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif;color:var(--ink);background:var(--chuva);overflow:hidden}
@@ -53,7 +53,8 @@ label.ck{display:flex;gap:8px;align-items:flex-start;font-size:14.5px}label.ck i
 .pop .tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;color:#fff;margin-bottom:4px}
 .maplibregl-popup-content{border-radius:14px;padding:12px 14px}
 .hero .brand,.hero .tools,.hero .panel,.hero .open,.hero .maplibregl-ctrl-top-right{display:none!important}
-.embed .brand{display:none}.embed .panel{top:12px}
+.embed .brand{display:none}
+body:not(.adm) .admin{display:none!important}.adm .pub{display:none}.embed .panel{top:12px}
 @media(max-width:720px){.panel{top:auto;left:8px;right:8px;width:auto;height:52vh;bottom:8px}.panel.closed{transform:translateY(calc(100% + 20px))}.brand b{display:none}.tools{right:52px}.embed .panel{top:auto}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head><body>
@@ -62,7 +63,7 @@ label.ck{display:flex;gap:8px;align-items:flex-start;font-size:14.5px}label.ck i
 <div class="tools">
  <button class="tb" id="b3d" aria-pressed="false">3D</button>
  <button class="tb" id="bsat" aria-pressed="false">Satélite</button>
- <button class="tb add" id="bnew">Marcar um ponto</button>
+ <button class="tb add admin" id="bnew">Marcar um ponto</button><a class="tb add pub" href="index.html#contato" target="_top" style="text-decoration:none">Enviar um ponto</a>
 </div>
 <aside class="panel" id="panel">
  <div class="ph"><h1>Belém, hoje</h1><button class="x" id="bclose" aria-label="Recolher painel">×</button></div>
@@ -74,7 +75,7 @@ label.ck{display:flex;gap:8px;align-items:flex-start;font-size:14.5px}label.ck i
    <div class="gauge"><div class="tube"><div class="lvl" id="lvl"></div></div><div><b id="risk">Informe chuva e maré</b><span class="mut">Chuva de 30 mm/h ou mais com maré alta indica risco alto. É uma estimativa; a leitura automática de chuva e maré vem na próxima fase.</span></div></div></div>
   <div><h2>Relevo</h2><label class="mut">Exagero do relevo em 3D: <b id="exv">4×</b><input id="ex" type="range" min="1" max="10" step=".5" value="4" style="padding:0;border:0;accent-color:var(--azulejo)"></label>
    <div class="mut">Belém é quase plana. Exagerar o relevo mostra onde a água se acumula.</div></div>
-  <div><h2>Dados</h2><div class="row"><button class="sbtn" id="bexp">Baixar planilha</button><button class="sbtn" id="bjson">Salvar arquivo</button></div>
+  <div class="admin"><h2>Dados (equipe)</h2><div class="row"><button class="sbtn" id="bexp">Baixar planilha</button><button class="sbtn" id="bjson">Salvar arquivo</button></div>
    <label class="mut" style="display:block;margin-top:8px">Juntar pontos de outra pessoa<input id="imp" type="file" accept=".json"></label>
 
    <div class="mut" style="margin-top:6px">Os pontos ficam salvos neste navegador. Os pontos da imprensa vêm de notícias, com local aproximado.</div></div>
@@ -93,7 +94,7 @@ label.ck{display:flex;gap:8px;align-items:flex-start;font-size:14.5px}label.ck i
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
 const Q=new URLSearchParams(location.search),HERO=Q.has("hero");
-if(HERO)document.body.classList.add("hero");if(Q.has("embed"))document.body.classList.add("embed");
+if(HERO)document.body.classList.add("hero");if(Q.has("admin"))document.body.classList.add("adm");if(Q.has("embed"))document.body.classList.add("embed");
 const T={alagamento:["Alagamento","#1d4f91"],calcada:["Calçada quebrada","#c98410"],acessibilidade:["Sem acessibilidade","#7a3b8f"],bueiro:["Bueiro entupido","#b8402f"]};
 const $=id=>document.getElementById(id);
 const NEWS=[["alagamento","Av. Visconde de Souza Franco (Doca) com R. Senador Manoel Barata","Reduto",-1.4462,-48.4936,"Alaga na maré alta.","https://dol.com.br/noticias/para/854962/video-mare-alta-deixa-ruas-de-belem-debaixo-dagua"],["alagamento","R. Municipalidade","Reduto",-1.4449,-48.4952,"Água na altura da carenagem das motos na maré alta.","https://dol.com.br/noticias/para/935942/video-rua-no-reduto-e-alagada-apos-chuvas-durante-mare-alta-em-belem"],["alagamento","Av. Pedro Miranda, canal da Visconde de Inhaúma","Pedreira",-1.4330,-48.4718,"O canal transborda e os carros param.","https://diariodopara.com.br/para/chuva-forte-alaga-ruas-e-para-belem-veja-fotos/"],["alagamento","R. Augusto Corrêa, em frente à UFPA","Guamá",-1.4746,-48.4570,"Alaga e atrapalha carros e pedestres.","https://dol.com.br/noticias/para/889706/chuva-deixa-ruas-alagadas-e-derruba-arvore-em-belem"],["alagamento","Av. Bernardo Sayão e Av. Perimetral","Guamá",-1.4718,-48.4630,"Trechos tomados pela água.","https://dol.com.br/noticias/para/889706/chuva-deixa-ruas-alagadas-e-derruba-arvore-em-belem"],["alagamento","Av. Duque de Caxias","Marco",-1.4436,-48.4705,"Ponto citado em dias de chuva forte.","https://www.oliberal.com/belem/tempo-fechado-com-chuva-faz-terca-feira-escurecer-mais-cedo-e-provoca-varios-alagamentos-em-belem-1.1076837"],["alagamento","Tv. Alcindo Cacela com R. dos Mundurucus","Cremação",-1.4618,-48.4848,"Ponto citado em dias de chuva forte.","https://www.oliberal.com/belem/tempo-fechado-com-chuva-faz-terca-feira-escurecer-mais-cedo-e-provoca-varios-alagamentos-em-belem-1.1076837"],["alagamento","R. dos Pariquis","Cremação",-1.4655,-48.4880,"Ponto citado em dias de chuva forte.","https://www.oliberal.com/belem/tempo-fechado-com-chuva-faz-terca-feira-escurecer-mais-cedo-e-provoca-varios-alagamentos-em-belem-1.1076837"],["alagamento","Av. João Paulo II","Marco",-1.4400,-48.4590,"Ponto citado em dias de chuva forte.","https://www.oliberal.com/para/chuva-forte-provoca-alagamentos-na-grande-belem-1.1118866"],["alagamento","Tv. Campos Sales","Campina",-1.4527,-48.4962,"Ponto citado em dias de chuva forte.","https://www.oliberal.com/para/chuva-forte-provoca-alagamentos-na-grande-belem-1.1118866"]];
