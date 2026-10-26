@@ -7,140 +7,130 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* Três atos contínuos, como nas referências do cliente:
-   1. superfície: foto aérea do rio com água simulada (WebGL) e o nome do projeto submerso;
-   2. papel em aquarela: o mapa claro entre manchas de água;
-   3. mergulho: degradê até o leito, com raios de luz e bolhas. O medidor de profundidade acompanha tudo. */
-:root{--papel:#f3f5f2;--tinta:#123236;--mut:#557173;--teal:#0f7f86;--teal2:#2bb3b1;--fundo:#03161b;--espuma:#e6f6f3;--barro:#b88a52;--line:#ffffff22;color-scheme:light}
+/* Versão leve: sem desfoque em cartões, sem filtros SVG animados, um vídeo só (desktop), água WebGL só no computador e pausada fora da tela.
+   Atos: superfície (rio + água) → papel (22 pontos + mapa de ponta a ponta) → mergulho (dados e ações) → leito (contato). */
+:root{--papel:#f3f5f2;--tinta:#123236;--mut:#557173;--teal:#0f7f86;--teal2:#2bb3b1;--fundo:#03161b;--espuma:#e6f6f3;--barro:#b88a52;color-scheme:light}
 *{box-sizing:border-box}
 html{scrollbar-width:thin;scrollbar-color:var(--teal) var(--papel)}
 ::-webkit-scrollbar{width:9px}::-webkit-scrollbar-track{background:var(--papel)}::-webkit-scrollbar-thumb{background:var(--teal);border-radius:9px}
 body{margin:0;color:var(--tinta);background:var(--papel);font:18px/1.65 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:hidden}
 .in{max-width:1180px;margin:0 auto;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:Jost,sans-serif;margin:0;text-wrap:balance}
-h2{font-size:clamp(38px,5.2vw,70px);font-weight:300;line-height:1;letter-spacing:-.02em;margin-bottom:22px}
-h3{font-size:22px;font-weight:600;line-height:1.2;margin-bottom:6px}
+h2{font-size:clamp(36px,4.8vw,64px);font-weight:300;line-height:1.02;letter-spacing:-.02em;margin-bottom:18px}
+h3{font-size:21px;font-weight:600;line-height:1.2;margin-bottom:6px}
 p{margin:0 0 14px;max-width:56ch}
 a{color:var(--teal)}
 a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offset:3px;border-radius:8px}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;font:600 15px Jost,sans-serif;letter-spacing:.04em;text-decoration:none;transition:transform .25s,background .25s}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border-radius:999px;font:600 15px Jost,sans-serif;letter-spacing:.03em;text-decoration:none;border:0;cursor:pointer;transition:transform .25s}
 .btn:hover{transform:translateY(-2px)}
 .btn.teal{background:var(--teal);color:#fff}
-.btn.claro{background:#ffffffe6;color:var(--tinta)}
-.btn.vidro{color:#fff;background:#ffffff1f;backdrop-filter:blur(10px);box-shadow:inset 0 0 0 1px #ffffff66}
+.btn.claro{background:#fff;color:var(--tinta)}
+.btn.linha{color:#fff;box-shadow:inset 0 0 0 1.5px #ffffffb0}
 
-/* navegação */
-.nav{position:fixed;top:0;left:0;right:0;z-index:40;--p:0;background:rgba(243,245,242,calc(var(--p)*.85));backdrop-filter:blur(calc(var(--p)*14px));-webkit-backdrop-filter:blur(calc(var(--p)*14px));transition:transform .5s cubic-bezier(.2,.7,.1,1)}
-.nav.esconde{transform:translateY(-100%)}
-.nav .in{display:flex;align-items:center;gap:22px;height:72px}
-.nav a.back{display:flex;align-items:center;gap:10px;text-decoration:none;font:600 16px Jost,sans-serif;color:#fff;transition:color .3s}
-.nav a.back img{width:34px;height:34px;border-radius:50%;background:#fff;object-fit:contain}
-.nav ul{display:flex;gap:24px;list-style:none;margin:0 0 0 auto;padding:0}
-.nav ul a{color:#fff;text-decoration:none;font:400 15.5px Jost,sans-serif;transition:color .3s}
-.nav.claro a.back,.nav.claro ul a{color:var(--tinta)}
-.nav .btn{padding:10px 18px}
+/* navegação em pílula */
+.nav{position:fixed;z-index:40;top:max(14px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(1100px,calc(100% - 28px));display:flex;align-items:center;gap:16px;padding:7px 7px 7px 16px;border-radius:999px;background:#0a2a2e59;box-shadow:inset 0 0 0 1px #ffffff33;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background .4s,box-shadow .4s,transform .5s cubic-bezier(.2,.7,.1,1)}
+.nav.claro{background:#ffffffeb;box-shadow:0 8px 28px #0f7f861f}
+.nav.esconde{transform:translate(-50%,-140%)}
+.nav a.back{display:flex;align-items:center;gap:9px;text-decoration:none;font:600 16px Jost,sans-serif;color:#fff;transition:color .3s}
+.nav a.back img{width:30px;height:30px;border-radius:50%;background:#fff;object-fit:contain}
+.nav ul{display:flex;gap:4px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{display:block;padding:7px 13px;border-radius:999px;color:#fff;text-decoration:none;font:400 15px Jost,sans-serif;transition:background .2s,color .3s}
+.nav ul a:hover{background:#ffffff26}
+.nav.claro a.back,.nav.claro ul a{color:var(--tinta)}.nav.claro ul a:hover{background:#0f7f8614}
+.nav .btn{padding:9px 16px;font-size:14px}
 
 /* medidor de profundidade */
-.prof{position:fixed;right:max(18px,env(safe-area-inset-right));top:50%;transform:translateY(-50%);z-index:30;display:flex;gap:10px;height:46vh;font:500 13px Jost,sans-serif;color:#fff;mix-blend-mode:difference}
+.prof{position:fixed;right:max(18px,env(safe-area-inset-right));top:50%;transform:translateY(-50%);z-index:30;display:flex;gap:10px;height:46vh;font:500 13px Jost,sans-serif;color:#fff;mix-blend-mode:difference;pointer-events:none}
 .prof .reg{position:relative;width:2px;background:#ffffff55;border-radius:2px}
 .prof .reg i{position:absolute;left:-5px;width:12px;height:12px;border-radius:50%;background:#fff;top:0}
 .prof .esc{display:flex;flex-direction:column;justify-content:space-between;text-align:right}
 
 /* ato 1: superfície */
-.sup{position:relative;height:100svh;min-height:640px;overflow:hidden;background:#0d3d3f}
+.sup{position:relative;height:100svh;min-height:620px;overflow:hidden;background:#0d3d3f}
 .agua{position:absolute;inset:0;background-size:cover;background-position:center}
-.sup::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#00000059,#0000 28%,#0000 70%,#0000004d)}
-.sup .top{position:absolute;z-index:3;left:0;right:0;top:110px;color:#fff;pointer-events:none}
-.sup .top small{font:400 17px Jost,sans-serif;letter-spacing:.06em;opacity:.9}
-.sup .base{position:absolute;z-index:6;left:0;right:0;bottom:clamp(110px,15vh,180px);color:#fff}
+.sup::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#00000052,#0000 30%,#0000 62%,#0000003d)}
+.sup .top{position:absolute;z-index:3;left:0;right:0;top:96px;color:#fff;pointer-events:none}
+.sup .top small{font:400 16px Jost,sans-serif;letter-spacing:.04em;opacity:.92}
+.sup .base{position:absolute;z-index:6;left:0;right:0;bottom:clamp(96px,14vh,150px);color:#fff}
 .sup .base .in{display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:end}
-.sup h1{font-size:clamp(22px,2.4vw,34px);font-weight:300;line-height:1.25;max-width:28ch;text-shadow:0 2px 20px #0008}
+.sup h1{font-size:clamp(21px,2.3vw,32px);font-weight:300;line-height:1.25;max-width:28ch;text-shadow:0 2px 18px #0009}
 .sup .acts{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
-.dica{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,120px);color:#fff;font:400 14px Jost,sans-serif;opacity:.8;pointer-events:none;display:flex;gap:8px;align-items:center}
-.dica i{width:8px;height:8px;border-radius:50%;background:#fff;animation:pisca 1.6s infinite}
-@keyframes pisca{50%{opacity:.2}}
 .aves{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
-.ave{position:absolute;color:#fff;filter:drop-shadow(0 8px 6px #0004);animation:voa linear infinite}
+.ave{position:absolute;color:#fff;animation:voa linear infinite}
 .ave svg{width:100%;height:auto;display:block}
 .ave .asa{transform-origin:50% 60%;animation:bate .8s ease-in-out infinite alternate}
-@keyframes voa{from{transform:translate(-15vw,0)}to{transform:translate(115vw,-8vh)}}
+@keyframes voa{from{transform:translate3d(-15vw,0,0)}to{transform:translate3d(115vw,-8vh,0)}}
 @keyframes bate{to{transform:scaleY(-.6)}}
-/* borda de aquarela entre a superfície e o papel */
-.borda{position:absolute;z-index:5;left:-2%;right:-2%;bottom:-2px;height:clamp(90px,14vw,190px);pointer-events:none}
+/* ondas de ponta a ponta */
+.ondas{position:absolute;z-index:5;left:0;right:0;bottom:-1px;height:clamp(70px,9vw,130px);overflow:hidden;pointer-events:none}
+.ondas svg{position:absolute;bottom:0;left:0;width:200%;height:100%;will-change:transform}
+.ondas .o1{animation:corre 18s linear infinite;opacity:.45}
+.ondas .o2{animation:corre 26s linear infinite reverse;opacity:.7}
+.ondas .o3{animation:corre 34s linear infinite}
+@keyframes corre{to{transform:translate3d(-50%,0,0)}}
 
-/* ato 2: papel em aquarela */
-.papel{position:relative;padding-block:clamp(70px,9vw,120px) clamp(90px,10vw,140px);overflow:hidden}
-.mancha{position:absolute;border-radius:50%;pointer-events:none;filter:url(#aquarela) blur(2px);opacity:.55}
-.m1{width:520px;height:420px;left:-180px;top:120px;background:radial-gradient(circle at 40% 40%,#7cc9c6,#2bb3b100 70%)}
-.m2{width:460px;height:520px;right:-200px;top:520px;background:radial-gradient(circle at 60% 50%,#9fd8d2,#2bb3b100 70%)}
-.m3{width:380px;height:300px;left:30%;bottom:-120px;background:radial-gradient(circle,#c9a77455,#c9a77400 70%)}
-.papel .grid{position:relative;display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,70px);align-items:start}
-.papel .grid>*{min-width:0}
-.traco{width:44px;height:3px;background:var(--teal);border-radius:3px;margin-bottom:18px}
-.papel h2{color:var(--teal)}
-.papel p{color:var(--mut)}
-.mapa{position:relative;height:min(76vh,680px);border-radius:28px;overflow:hidden;box-shadow:0 30px 60px #0f7f8626}
-.mapa iframe{width:100%;height:100%;border:0;display:block}
-.legenda{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
-.legenda span{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:#fff;box-shadow:0 2px 10px #0f7f8614;font-size:15px}
-.legenda i{width:10px;height:10px;border-radius:50%}
-.lista{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:2px}
-.lista li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:12px 0;border-bottom:1px dashed #0f7f8640}
-.lista li::before{content:"";width:14px;height:14px;margin-top:6px;border-radius:50%;background:var(--papel);box-shadow:0 0 0 3px var(--teal)}
-.lista b{font-family:Jost,sans-serif;font-weight:600;display:block}
-.lista span{font-size:15px;color:var(--mut)}
+/* ato 2: 22 pontos + mapa */
+.papel{position:relative;padding-block:clamp(48px,6vw,80px) 0;background:radial-gradient(40% 30% at 0% 20%,#9fd8d24d,transparent 70%),radial-gradient(35% 30% at 100% 10%,#c9a7742e,transparent 70%),var(--papel)}
+.abre{display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,56px);align-items:end}
+.abre>*{min-width:0}
+.vinte{font:300 clamp(120px,17vw,230px)/.78 Jost,sans-serif;color:var(--teal);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.abre h2{margin-bottom:10px}
+.abre p{color:var(--mut)}
+.fatos{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.fatos span{padding:8px 14px;border-radius:999px;background:#fff;box-shadow:0 2px 10px #0f7f8612;font-size:15px}
+.fatos b{color:var(--teal);font-family:Jost,sans-serif}
+.mapa{position:relative;margin-top:clamp(28px,4vw,44px);height:min(82vh,760px);min-height:460px}
+.mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.mapa::before{content:"";position:absolute;left:0;right:0;top:0;height:60px;z-index:2;pointer-events:none;background:linear-gradient(var(--papel),#f3f5f200)}
+.trilho{position:absolute;z-index:3;left:0;right:0;bottom:22px;display:flex;gap:12px;overflow-x:auto;padding:4px max(22px,calc(50% - 568px)) 10px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.trilho::-webkit-scrollbar{display:none}
+.pc{flex:none;width:260px;scroll-snap-align:start;text-align:left;padding:14px 16px;border-radius:16px;background:#ffffffee;box-shadow:0 10px 26px #0f3a3f26;border:0;font:inherit;color:var(--tinta);cursor:pointer;transition:transform .2s}
+.pc:hover{transform:translateY(-3px)}
+.pc small{display:block;font:600 13px Jost,sans-serif;color:var(--barro)}
+.pc b{display:block;font:600 17px Jost,sans-serif;line-height:1.2;margin:2px 0 4px}
+.pc span{font-size:14px;color:var(--mut);line-height:1.35;display:block}
+.nota{font-size:14px;color:var(--mut);margin:14px auto 0;text-align:center}
 
 /* ato 3: mergulho */
-.mergulho{position:relative;color:var(--espuma);background:linear-gradient(180deg,var(--papel) 0,#bfe3df 4%,#2a9a9a 14%,#0d5f66 32%,#073c44 60%,var(--fundo) 100%);padding-top:clamp(160px,18vw,240px);overflow:hidden}
-.raios{position:absolute;inset:0;pointer-events:none;opacity:.35;background:repeating-linear-gradient(100deg,#ffffff00 0 60px,#ffffff22 80px,#ffffff00 120px);-webkit-mask-image:linear-gradient(180deg,#0000 6%,#000 16%,#0000 55%);mask-image:linear-gradient(180deg,#0000 6%,#000 16%,#0000 55%);animation:raio 14s ease-in-out infinite alternate}
-@keyframes raio{to{background-position:240px 0;opacity:.2}}
+.mergulho{position:relative;color:var(--espuma);background:linear-gradient(180deg,var(--papel) 0,#bfe3df 3%,#2a9a9a 12%,#0d5f66 30%,#073c44 60%,var(--fundo) 100%);padding-top:clamp(120px,14vw,190px);overflow:hidden}
+.vfundo{position:absolute;left:0;top:clamp(110px,12vw,170px);width:100%;height:110vh;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,#0000,#000 18%,#000 55%,#0000);mask-image:linear-gradient(180deg,#0000,#000 18%,#000 55%,#0000)}
+.raios{position:absolute;left:0;right:0;top:0;height:120vh;pointer-events:none;opacity:.28;background:repeating-linear-gradient(100deg,#ffffff00 0 70px,#ffffff26 90px,#ffffff00 130px);-webkit-mask-image:linear-gradient(180deg,#0000 6%,#000 20%,#0000 70%);mask-image:linear-gradient(180deg,#0000 6%,#000 20%,#0000 70%)}
 .bolhas{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.bolhas i{position:absolute;bottom:-20px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ffffffcc,#9fe8e033 60%,transparent 72%);box-shadow:inset 0 0 0 1px #ffffff55;animation:sobe linear infinite}
-@keyframes sobe{to{transform:translate(var(--dx),-140vh)}}
+.bolhas i{position:absolute;bottom:-20px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ffffffbb,#9fe8e022 60%,transparent 72%);animation:sobe linear infinite;will-change:transform}
+@keyframes sobe{to{transform:translate3d(var(--dx),-140vh,0)}}
 .mergulho .in{position:relative}
 .mergulho h2{color:#fff}
 .mergulho p{color:#cde9e6}
-.vidro{background:#ffffff12;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 0 0 1px var(--line),0 30px 60px #00000033;border-radius:24px}
-.dados{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:40px 0 clamp(90px,12vw,150px)}
-.dados .vidro{padding:22px}
-.dados b{display:block;white-space:nowrap;font:300 clamp(38px,4vw,58px)/.95 Jost,sans-serif;color:#9fe8e0;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.cartao{background:#ffffff14;box-shadow:inset 0 0 0 1px #ffffff26;border-radius:22px}
+.dados{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:34px 0 clamp(70px,9vw,110px)}
+.dados .cartao{padding:22px}
+.dados b{display:block;white-space:nowrap;font:300 clamp(40px,4.4vw,60px)/.95 Jost,sans-serif;color:#9fe8e0;font-variant-numeric:tabular-nums}
 .dados span{font-size:15px;color:#bcdcd9}
-.frentes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:34px 0 clamp(90px,12vw,150px)}
-.fr{padding:26px;min-width:0}
-.fr .ic{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:#9fe8e022;color:#9fe8e0;margin-bottom:16px}
-.fr .ic svg{width:26px;height:26px}
+.frentes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 clamp(70px,9vw,110px)}
+.fr{padding:24px;min-width:0}
+.fr .ic{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:#9fe8e022;color:#9fe8e0;margin-bottom:14px}
+.fr .ic svg{width:25px;height:25px}
 .fr p{font-size:16px;color:#bcdcd9;margin:0}
-.acoes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px;counter-reset:a}
-.ac{padding:24px;min-width:0;counter-increment:a}
-.ac::before{content:"Passo " counter(a);display:block;font:600 14px Jost,sans-serif;color:var(--barro);margin-bottom:10px}
+.acoes{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px;counter-reset:a}
+.ac{padding:22px;min-width:0;counter-increment:a}
+.ac::before{content:"Passo " counter(a);display:block;font:600 14px Jost,sans-serif;color:var(--barro);margin-bottom:8px}
 .ac p{font-size:15.5px;color:#bcdcd9;margin:0}
-.leito{padding-block:clamp(110px,14vw,170px) 0}
-.leito .cta{padding:clamp(28px,4vw,48px);display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:end}
+.leito{position:relative;padding-top:clamp(90px,11vw,140px)}
+.leito .cta{padding:clamp(26px,4vw,44px);display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:end;background:#ffffff12}
 .leito .cta>*{min-width:0}
-.plantas{display:block;width:100%;height:clamp(120px,14vw,200px);margin-top:80px}
-.plantas path{transform-origin:bottom;animation:balanca 6s ease-in-out infinite alternate}
-.plantas path:nth-child(2){animation-duration:8s}.plantas path:nth-child(3){animation-duration:7s}
-@keyframes balanca{to{transform:skewX(3deg)}}
-footer{background:var(--fundo);color:#8fb3b0;padding-block:28px;font-size:14px}
+.plantas{display:block;width:100%;height:clamp(110px,13vw,180px);margin-top:70px}
+footer{background:var(--fundo);color:#8fb3b0;padding-block:26px;font-size:14px}
 footer .in{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-between}
 footer a{color:#cde9e6}
-@media(max-width:980px){.nav ul{display:none}.papel .grid,.leito .cta,.sup .base .in{grid-template-columns:1fr}.sup .acts{justify-content:flex-start}.dados{grid-template-columns:1fr 1fr}.frentes{grid-template-columns:1fr}.acoes{grid-template-columns:1fr 1fr}.prof{display:none}}
-@media(max-width:600px){.dados,.acoes{grid-template-columns:1fr}.nav .btn{display:none}.dica{display:none}}
-.parado *,.parado *::before,.parado *::after{animation:none!important;transition:none!important}
-.vfundo{position:absolute;left:0;width:100%;object-fit:cover;pointer-events:none}
-.vfundo.luz{top:clamp(120px,14vw,200px);height:130vh;opacity:.55;mix-blend-mode:screen;-webkit-mask-image:linear-gradient(180deg,#0000,#000 18%,#000 55%,#0000);mask-image:linear-gradient(180deg,#0000,#000 18%,#000 55%,#0000)}
-.leito{position:relative}
-.vfundo.chuva{top:0;height:100%;opacity:.4;-webkit-mask-image:linear-gradient(180deg,#0000,#000 30%,#000 70%,#0000);mask-image:linear-gradient(180deg,#0000,#000 30%,#000 70%,#0000)}
-.leito .in{position:relative}
+@media(max-width:980px){.nav ul{display:none}.sup .base .in{grid-template-columns:1fr}.sup .acts{justify-content:flex-start}.abre{grid-template-columns:1fr}.dados,.frentes{grid-template-columns:1fr}.acoes{grid-template-columns:1fr 1fr}.leito .cta{grid-template-columns:1fr}.prof{display:none}.vfundo{display:none}}
+@media(max-width:600px){.acoes{grid-template-columns:1fr}.nav .btn{display:none}.mapa{height:70vh}.pc{width:220px}}
 </style></head><body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="aquarela"><feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="60"/></filter>
- <filter id="borda-f"><feTurbulence type="fractalNoise" baseFrequency=".02 .06" numOctaves="4" seed="3"/><feDisplacementMap in="SourceGraphic" scale="34"/></filter></svg>
 
-<nav class="nav" id="nav" aria-label="Principal"><div class="in">
+<nav class="nav" id="nav" aria-label="Principal">
  <a class="back" href="index.html"><img src="img/logo-onda.webp" alt="">MARÉ</a>
- <ul><li><a href="#mapa">Mapa</a></li><li><a href="#mergulho">O problema</a></li><li><a href="#acoes">Ações</a></li></ul>
+ <ul><li><a href="#pontos">Pontos</a></li><li><a href="#mergulho">O problema</a></li><li><a href="#acoes">Ações</a></li></ul>
  <a class="btn teal" href="#enviar">Enviar um ponto</a>
-</div></nav>
+</nav>
 
 <div class="prof" aria-hidden="true"><div class="esc"><span>0 m</span><span>1 m</span><span>2 m</span><span>3 m</span><span>4 m</span></div><div class="reg"><i id="profPt"></i></div></div>
 
@@ -148,137 +138,143 @@ footer a{color:#cde9e6}
 <section class="sup" aria-label="Maré Cheia">
  <div class="agua" id="agua" role="img" aria-label="Rio sinuoso na floresta visto de cima, com o nome Maré Cheia sob a água"></div>
  <div class="top"><div class="in"><small>Projeto da MARÉ · em andamento</small></div></div>
- <div class="dica" aria-hidden="true"><i></i>Passe o mouse sobre a água</div>
  <div class="aves" aria-hidden="true">
-  <div class="ave" style="top:22%;width:70px;animation-duration:24s"><svg viewBox="0 0 80 40"><g class="asa"><path fill="currentColor" d="M40 22C30 8 16 4 2 10c14 0 24 6 34 16zM40 22C50 8 64 4 78 10c-14 0-24 6-34 16z"/></g><ellipse cx="40" cy="24" rx="7" ry="3" fill="currentColor"/><path d="M46 23l10-3" stroke="#f2c14e" stroke-width="2"/></svg></div>
-  <div class="ave" style="top:34%;width:48px;animation-duration:31s;animation-delay:-11s"><svg viewBox="0 0 80 40"><g class="asa" style="animation-duration:.7s"><path fill="currentColor" d="M40 22C30 8 16 4 2 10c14 0 24 6 34 16zM40 22C50 8 64 4 78 10c-14 0-24 6-34 16z"/></g><ellipse cx="40" cy="24" rx="7" ry="3" fill="currentColor"/></svg></div>
-  <div class="ave" style="top:14%;width:56px;animation-duration:37s;animation-delay:-21s"><svg viewBox="0 0 80 40"><g class="asa" style="animation-duration:.95s"><path fill="currentColor" d="M40 22C30 8 16 4 2 10c14 0 24 6 34 16zM40 22C50 8 64 4 78 10c-14 0-24 6-34 16z"/></g><ellipse cx="40" cy="24" rx="7" ry="3" fill="currentColor"/></svg></div>
+  <div class="ave" style="top:22%;width:66px;animation-duration:26s"><svg viewBox="0 0 80 40"><g class="asa"><path fill="currentColor" d="M40 22C30 8 16 4 2 10c14 0 24 6 34 16zM40 22C50 8 64 4 78 10c-14 0-24 6-34 16z"/></g><ellipse cx="40" cy="24" rx="7" ry="3" fill="currentColor"/></svg></div>
+  <div class="ave" style="top:34%;width:46px;animation-duration:33s;animation-delay:-13s"><svg viewBox="0 0 80 40"><g class="asa" style="animation-duration:.7s"><path fill="currentColor" d="M40 22C30 8 16 4 2 10c14 0 24 6 34 16zM40 22C50 8 64 4 78 10c-14 0-24 6-34 16z"/></g><ellipse cx="40" cy="24" rx="7" ry="3" fill="currentColor"/></svg></div>
  </div>
  <div class="base"><div class="in">
   <h1>Alagamentos, calçadas e acessibilidade. Mapeamos onde a água para e onde a rua barra o caminho, para Belém voltar a fluir.</h1>
-  <div class="acts"><a class="btn claro" href="#mapa">Ver o mapa</a><a class="btn vidro" href="#mergulho">Mergulhar no problema</a></div>
+  <div class="acts"><a class="btn claro" href="#pontos">Ver os pontos</a><a class="btn linha" href="#mergulho">Entender o problema</a></div>
  </div></div>
- <svg class="borda" viewBox="0 0 1440 190" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#borda-f)" fill="#f3f5f2" d="M-40 120C120 90 220 150 380 118S640 70 820 112 1100 160 1260 108 1440 96 1500 110V230H-40z"/><path filter="url(#borda-f)" fill="#f3f5f2" opacity=".5" d="M-40 96C160 70 260 120 420 96S700 50 860 88 1140 130 1300 86 1440 80 1500 90V230H-40z"/></svg>
+ <div class="ondas" aria-hidden="true">
+  <svg class="o1" viewBox="0 0 2880 130" preserveAspectRatio="none"><path fill="#f3f5f2" d="M0 60C240 20 480 20 720 60s480 40 720 0 480-40 720 0 480 40 720 0V130H0z"/></svg>
+  <svg class="o2" viewBox="0 0 2880 130" preserveAspectRatio="none"><path fill="#f3f5f2" d="M0 80C240 44 480 44 720 80s480 36 720 0 480-36 720 0 480 36 720 0V130H0z"/></svg>
+  <svg class="o3" viewBox="0 0 2880 130" preserveAspectRatio="none"><path fill="#f3f5f2" d="M0 98C240 74 480 74 720 98s480 24 720 0 480-24 720 0 480 24 720 0V130H0z"/></svg>
+ </div>
 </section>
 
-<section class="papel" id="mapa">
- <div class="mancha m1"></div><div class="mancha m2"></div><div class="mancha m3"></div>
- <div class="in grid">
+<section class="papel" id="pontos">
+ <div class="in abre">
+  <div class="vinte" data-n="22" aria-hidden="true">22</div>
   <div>
-   <div class="traco"></div>
-   <h2>Onde a água para</h2>
-   <p>Belém fica entre 0 e 4 metros acima do rio. Quando a maré sobe com chuva forte, a água não escoa, e a calçada quebrada vira obstáculo para quem anda a pé.</p>
-   <div class="legenda"><span><i style="background:#1d4f91"></i>Alagamento</span><span><i style="background:#c98410"></i>Calçada quebrada</span><span><i style="background:#7a3b8f"></i>Sem acessibilidade</span><span><i style="background:#b8402f"></i>Bueiro entupido</span></div>
-   <ul class="lista">
-    <li><div><b>Rua dos Mundurucus</b><span>Pedreira e Cremação. Alaga sempre que chove forte.</span></div></li>
-    <li><div><b>Doca com Manoel Barata</b><span>Reduto. Alaga na maré alta.</span></div></li>
-    <li><div><b>Canal da Tamandaré</b><span>Batista Campos. Transborda e toma a avenida.</span></div></li>
-    <li><div><b>Av. Pedro Miranda</b><span>Pedreira. O canal transborda e os carros param.</span></div></li>
-    <li><div><b>Túnel do Entroncamento</b><span>Souza. Alaga na entrada da cidade.</span></div></li>
-   </ul>
-   <p style="margin-top:18px;font-size:15px">20 pontos de notícias e estudos, com link para cada fonte. <a href="mapa.html?tema=estudio">Abrir o mapa em tela cheia</a></p>
+   <h2>lugares onde Belém alaga, quebra ou barra o caminho</h2>
+   <p>Juntamos notícias, estudos e relatos num mapa 3D. Cada ponto tem a fonte. Escolha um card para ver o lugar.</p>
+   <div class="fatos"><span><b>0 a 4 m</b> de altura acima do rio</span><span><b>14</b> bacias hidrográficas</span><span><b>145</b> pontos críticos, segundo a prefeitura</span></div>
   </div>
-  <div class="mapa"><iframe src="mapa.html?embed=1&amp;tema=estudio&amp;v=3" title="Mapa Maré Cheia de Belém" loading="lazy" allow="fullscreen"></iframe></div>
  </div>
+ <div class="mapa">
+  <iframe id="mapaF" src="mapa.html?embed=1&amp;tema=estudio&amp;v=5" title="Mapa 3D dos alagamentos de Belém" loading="lazy" allow="fullscreen"></iframe>
+  <div class="trilho" id="trilho">
+   <button class="pc" data-ll="-48.4800,-1.4640"><small>Pedreira e Cremação</small><b>Rua dos Mundurucus</b><span>A mais citada. Parte do canal foi entregue nas obras recentes.</span></button>
+   <button class="pc" data-ll="-48.4936,-1.4462"><small>Reduto</small><b>Doca com Manoel Barata</b><span>Alaga na maré alta. Canal reformado para a COP30.</span></button>
+   <button class="pc" data-ll="-48.4985,-1.4590"><small>Batista Campos</small><b>Canal da Tamandaré</b><span>Transbordava e tomava a avenida. Conferir após a obra.</span></button>
+   <button class="pc" data-ll="-48.4718,-1.4330"><small>Pedreira</small><b>Av. Pedro Miranda</b><span>O canal transborda e os carros param.</span></button>
+   <button class="pc" data-ll="-48.4700,-1.4295"><small>Pedreira</small><b>Chuva de 5 de maio de 2026</b><span>Alagamento prendeu uma ambulância.</span></button>
+   <button class="pc" data-ll="-48.4468,-1.4172"><small>Souza</small><b>Túnel do Entroncamento</b><span>O túnel do BRT alagou em 8 de maio de 2026.</span></button>
+   <button class="pc" data-ll="-48.4570,-1.4746"><small>Guamá</small><b>Augusto Corrêa, UFPA</b><span>Alaga em frente à universidade.</span></button>
+  </div>
+ </div>
+ <p class="nota"><a href="mapa.html?tema=estudio">Abrir o mapa em tela cheia</a>. As faixas verde-água nas ruas são uma simulação a partir das notícias.</p>
 </section>
 
 <section class="mergulho" id="mergulho">
- <video class="vfundo luz" muted loop playsinline preload="none" poster="img/poster-luz.jpg" aria-hidden="true"><source src="video/luz-agua.mp4" type="video/mp4"></video>
+ <video class="vfundo" id="vluz" muted loop playsinline preload="none" poster="img/poster-luz.jpg" aria-hidden="true"></video>
  <div class="raios"></div><div class="bolhas" id="bolhas"></div>
  <div class="in">
   <h2>Uma cidade ao nível do rio</h2>
-  <p>Belém tem 14 bacias hidrográficas e muitas áreas de baixada. O lixo entope bueiros e canais, e quem mais sofre são os idosos, as crianças e as pessoas com deficiência.</p>
+  <p>Quando a maré sobe e a chuva forte cai ao mesmo tempo, a água não tem para onde ir. O lixo entope bueiros e canais, e quem mais sofre são os idosos, as crianças e as pessoas com deficiência.</p>
   <div class="dados">
-   <div class="vidro"><b data-n="145">145</b><span>pontos críticos de alagamento contados pela prefeitura</span></div>
-   <div class="vidro"><b data-n="150" data-s=" mm">150 mm</b><span>de chuva em menos de 24 horas em abril de 2026</span></div>
-   <div class="vidro"><b data-n="14">14</b><span>bacias hidrográficas na cidade</span></div>
-   <div class="vidro"><b data-n="20">20</b><span>pontos já no nosso mapa</span></div>
+   <div class="cartao"><b data-n="150" data-s=" mm">150 mm</b><span>de chuva em menos de 24 horas em abril de 2026</span></div>
+   <div class="cartao"><b data-n="36" data-s=" mm">36 mm</b><span>em uma tarde de maio de 2026 bastaram para alagar Cremação, Marco e Pedreira</span></div>
+   <div class="cartao"><b data-n="145">145</b><span>pontos críticos de alagamento contados pela prefeitura</span></div>
   </div>
-  <h2>Três frentes do Maré Cheia</h2>
+  <h2>Três frentes</h2>
   <div class="frentes">
-   <article class="vidro fr"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></div><h3>Alagamentos</h3><p>O foco principal: onde a água para, por quê, e o que fazer para escoar.</p></article>
-   <article class="vidro fr"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 18h18M5 18l2-6h10l2 6M9 12V8h6v4"/></svg></div><h3>Calçadas</h3><p>Buracos, desníveis e trechos que somem quando chove.</p></article>
-   <article class="vidro fr"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="4.5" r="2"/><path d="M12 7v6m0 0-3 7m3-7 3 7M7 10h10"/></svg></div><h3>Acessibilidade</h3><p>Rampas, pisos e passagens para quem usa cadeira, bengala ou carrinho.</p></article>
+   <article class="cartao fr"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></div><h3>Alagamentos</h3><p>O foco principal: onde a água para, por quê, e o que fazer para escoar.</p></article>
+   <article class="cartao fr"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 18h18M5 18l2-6h10l2 6M9 12V8h6v4"/></svg></div><h3>Calçadas</h3><p>Buracos, desníveis e trechos que somem quando chove.</p></article>
+   <article class="cartao fr"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="4.5" r="2"/><path d="M12 7v6m0 0-3 7m3-7 3 7M7 10h10"/></svg></div><h3>Acessibilidade</h3><p>Rampas, pisos e passagens para quem usa cadeira, bengala ou carrinho.</p></article>
   </div>
   <h2 id="acoes">Como agimos</h2>
   <div class="acoes">
-   <article class="vidro ac"><h3>Mapear</h3><p>Notícias, estudos e relatos dos moradores num mapa só.</p></article>
-   <article class="vidro ac"><h3>Relatar</h3><p>Os pontos mais graves vão para a prefeitura, com foto e endereço.</p></article>
-   <article class="vidro ac"><h3>Mobilizar</h3><p>Campanha Bueiro Livre em escolas e bairros.</p></article>
-   <article class="vidro ac"><h3>Renovar</h3><p>Jardins de chuva, rampas e calçadas de baixo custo.</p></article>
+   <article class="cartao ac"><h3>Mapear</h3><p>Notícias, estudos e relatos dos moradores num mapa só.</p></article>
+   <article class="cartao ac"><h3>Relatar</h3><p>Os pontos mais graves vão para a prefeitura, com foto e endereço.</p></article>
+   <article class="cartao ac"><h3>Mobilizar</h3><p>Campanha Bueiro Livre em escolas e bairros.</p></article>
+   <article class="cartao ac"><h3>Renovar</h3><p>Jardins de chuva, rampas e calçadas de baixo custo.</p></article>
   </div>
  </div>
- <div class="leito" id="enviar"><video class="vfundo chuva" muted loop playsinline preload="none" poster="img/poster-chuva.jpg" aria-hidden="true"><source src="video/chuva-poca.mp4" type="video/mp4"></video><div class="in">
-  <div class="vidro cta">
+ <div class="leito" id="enviar"><div class="in">
+  <div class="cartao cta">
    <div><h2 style="margin-bottom:10px">Viu a água parada ou a calçada quebrada?</h2><p>Mande foto e endereço para a MARÉ. A equipe confere e coloca o ponto no mapa.</p></div>
-   <div style="display:flex;gap:12px;flex-wrap:wrap"><span class="btn claro" style="cursor:default">Contato em breve</span><a class="btn vidro" href="index.html">Voltar para a MARÉ</a></div>
+   <div style="display:flex;gap:12px;flex-wrap:wrap"><span class="btn claro" style="cursor:default">Contato em breve</span><a class="btn linha" href="index.html">Voltar para a MARÉ</a></div>
   </div>
  </div>
  <svg class="plantas" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true"><path fill="#062a2f" d="M0 200V150c30-20 50-80 60-140 10 70 24 110 50 140 20-50 36-90 40-150 10 60 26 110 56 150 30-40 44-90 50-130 12 50 28 100 56 130h1128v50z"/><path fill="#04222a" d="M520 200V140c24-30 40-80 46-120 10 50 22 90 46 120 24-40 34-80 40-130 14 60 30 100 60 130 20-30 34-70 40-110 12 50 26 90 52 110 26-40 40-90 44-130 10 60 28 100 58 130V200z"/><path fill="#031b20" d="M1000 200V150c26-30 40-70 48-120 8 50 22 90 48 120 30-40 40-80 46-120 12 50 26 90 54 120 26-30 40-80 46-130 10 60 26 100 56 130 30-40 44-80 50-120 10 50 24 90 52 120V200z"/></svg>
+ </div>
 </section>
 </main>
 
-<footer><div class="in"><span>MARÉ · Projeto Maré Cheia · Belém do Pará</span><span>Fotos: Unsplash. Vídeos: Pexels. Mapa: OpenStreetMap, OpenFreeMap, Esri. Água: <a href="https://github.com/sirxemic/jquery.ripples" target="_blank" rel="noopener">jQuery Ripples</a>.</span><button id="mov" type="button" style="font:inherit;color:inherit;background:none;border:1px solid currentColor;border-radius:999px;padding:6px 14px;cursor:pointer;opacity:.8"></button></div></footer>
+<footer><div class="in"><span>MARÉ · Projeto Maré Cheia · Belém do Pará</span><span>Fotos: Unsplash. Vídeo: Pexels. Mapa: OpenStreetMap, OpenFreeMap. Água: <a href="https://github.com/sirxemic/jquery.ripples" target="_blank" rel="noopener">jQuery Ripples</a>.</span></div></footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
-const still=(()=>{try{return localStorage.getItem("mare_movimento")==="off"}catch(e){return false}})();if(still)document.documentElement.classList.add("parado");
-const agua=document.getElementById("agua"),nav=document.getElementById("nav"),pt=document.getElementById("profPt");
+const agua=document.getElementById("agua"),nav=document.getElementById("nav"),pt=document.getElementById("profPt"),mapaF=document.getElementById("mapaF");
+const forte=matchMedia("(min-width: 900px) and (pointer: fine)").matches; // computador: água WebGL e vídeo
 
-// 1) nome do projeto "dentro" da foto, para a água distorcer as letras
+// 1) nome do projeto "dentro" da foto (imagem pronta, sem custo depois)
 function assar(){return new Promise(res=>{const img=new Image();img.onload=()=>{
- const W=Math.min(2400,Math.round(innerWidth*Math.min(devicePixelRatio||1,1.5))),H=Math.round(W*innerHeight/innerWidth);
+ const W=Math.min(1600,innerWidth),H=Math.round(W*innerHeight/innerWidth);
  const c=document.createElement("canvas");c.width=W;c.height=H;const g=c.getContext("2d");
  const k=Math.max(W/img.width,H/img.height),w=img.width*k,h=img.height*k;g.drawImage(img,(W-w)/2,(H-h)/2,w,h);
- g.fillStyle="rgba(4,40,44,.18)";g.fillRect(0,0,W,H);
- let fs=Math.min(W*.17,H*.3);g.font=`800 ${fs}px Jost, sans-serif`;const mw=g.measureText("MARÉ CHEIA").width;if(mw>W*.86){fs*=W*.86/mw;g.font=`800 ${fs}px Jost, sans-serif`}g.textAlign="center";g.textBaseline="middle";
- g.shadowColor="rgba(0,30,35,.45)";g.shadowBlur=fs*.18;g.fillStyle="rgba(236,250,247,.82)";
- g.fillText("MARÉ CHEIA",W/2,H*.44);
- res(c.toDataURL("image/jpeg",.9))};img.src="img/u-rio-aereo-hd.webp"})}
-let ondas=false;
+ g.fillStyle="rgba(4,40,44,.16)";g.fillRect(0,0,W,H);
+ let fs=Math.min(W*.17,H*.3);g.font=`800 ${fs}px Jost, sans-serif`;const mw=g.measureText("MARÉ CHEIA").width;if(mw>W*.86){fs*=W*.86/mw;g.font=`800 ${fs}px Jost, sans-serif`}
+ g.textAlign="center";g.textBaseline="middle";g.shadowColor="rgba(0,30,35,.4)";g.shadowBlur=fs*.15;g.fillStyle="rgba(236,250,247,.84)";g.fillText("MARÉ CHEIA",W/2,H*.42);
+ res(c.toDataURL("image/jpeg",.86))};img.src="img/u-rio-aereo-hd.webp"})}
+let ondas=false,gotas=null,visivel=true;
+function carregarScript(src){return new Promise((ok,err)=>{const s=document.createElement("script");s.src=src;s.onload=ok;s.onerror=err;document.head.appendChild(s)})}
 async function iniciarAgua(){
- if(document.fonts&&document.fonts.load)try{await document.fonts.load("800 100px Jost")}catch(e){}
- const url=await assar();agua.style.backgroundImage=`url(${url})`;
- if(still||!window.jQuery||!jQuery.fn.ripples)return;
- try{if(ondas)jQuery(agua).ripples("destroy");jQuery(agua).ripples({resolution:384,dropRadius:22,perturbance:.035,interactive:true});ondas=true;
-  clearInterval(window._gotas);window._gotas=setInterval(()=>{const r=agua.getBoundingClientRect();if(r.bottom<0)return;jQuery(agua).ripples("drop",Math.random()*r.width,Math.random()*r.height,18+Math.random()*16,.05+Math.random()*.05)},1400);
- }catch(e){/* sem WebGL: fica a foto parada com o nome */}
+ try{await document.fonts.load("800 100px Jost")}catch(e){}
+ agua.style.backgroundImage=`url(${await assar()})`;
+ if(!forte)return;
+ try{
+  if(!window.jQuery||!jQuery.fn.ripples){await carregarScript("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js");await carregarScript("https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js")}
+  if(ondas)jQuery(agua).ripples("destroy");
+  jQuery(agua).ripples({resolution:192,dropRadius:14,perturbance:.014,interactive:true});ondas=true;
+  clearInterval(gotas);gotas=setInterval(()=>{if(!visivel)return;const r=agua.getBoundingClientRect();jQuery(agua).ripples("drop",Math.random()*r.width,Math.random()*r.height,12,.018)},2600);
+ }catch(e){}
 }
-iniciarAgua();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(iniciarAgua,400)});
+new IntersectionObserver(es=>{visivel=es[0].isIntersecting;if(ondas)try{jQuery(agua).ripples(visivel?"play":"pause")}catch(e){}},{threshold:0}).observe(agua);
+iniciarAgua();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(iniciarAgua,500)});
 
-// vídeos só tocam quando aparecem na tela
-const vio=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting&&!still){if(v.preload==="none"){v.preload="auto";v.load()}v.play().catch(()=>{})}else v.pause()}),{threshold:.05});
-document.querySelectorAll(".vfundo").forEach(v=>vio.observe(v));
-// 2) bolhas
-if(!still){const b=document.getElementById("bolhas");for(let i=0;i<26;i++){const e=document.createElement("i"),s=4+Math.random()*16;e.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s}px;--dx:${Math.random()*90-45}px;animation-duration:${14+Math.random()*20}s;animation-delay:${-Math.random()*30}s;opacity:${.3+Math.random()*.5}`;b.appendChild(e)}}
+// 2) vídeo só no computador e só quando aparece
+const vluz=document.getElementById("vluz");
+if(forte){new IntersectionObserver(es=>{if(es[0].isIntersecting){if(!vluz.src)vluz.src="video/luz-agua.mp4";vluz.play().catch(()=>{})}else vluz.pause()},{threshold:.05}).observe(vluz)}
+// 3) bolhas (poucas)
+{const b=document.getElementById("bolhas"),n=forte?12:6;for(let i=0;i<n;i++){const e=document.createElement("i"),s=5+Math.random()*14;e.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s}px;--dx:${Math.random()*80-40}px;animation-duration:${16+Math.random()*18}s;animation-delay:${-Math.random()*30}s;opacity:${.3+Math.random()*.45}`;b.appendChild(e)}}
+// 4) o mapa só anima quando está na tela; os cards levam até o ponto
+new IntersectionObserver(es=>{try{mapaF.contentWindow.postMessage({mareAtivo:es[0].isIntersecting},"*")}catch(e){}},{threshold:0}).observe(mapaF);
+document.querySelectorAll(".pc").forEach(b=>b.addEventListener("click",()=>{const ll=b.dataset.ll.split(",").map(Number);try{mapaF.contentWindow.postMessage({mareVoar:ll},"*")}catch(e){}}));
 
-// 3) navegação e medidor
-let last=0;const sup=document.querySelector(".sup");
+// 5) navegação, medidor e animações de entrada
+let last=0;
 const upd=y=>{const h=innerHeight,k=y/Math.max(1,document.documentElement.scrollHeight-h);pt.style.top=`calc(${(k*100).toFixed(2)}% - 6px)`;
- const p=Math.min(1,y/(h*.6));nav.style.setProperty("--p",p.toFixed(3));nav.classList.toggle("claro",p>.6);
- if(y>h&&y>last+2)nav.classList.add("esconde");if(y<last-2||y<h)nav.classList.remove("esconde");last=y};
-const contar=b=>{const n=+b.dataset.n,s=b.dataset.s||"",o={v:0};if(still||!window.gsap){b.textContent=n+s;return}gsap.to(o,{v:n,duration:1.6,ease:"power3.out",onUpdate:()=>b.textContent=Math.round(o.v)+s})};
-if(window.gsap&&window.ScrollTrigger&&!still){
+ nav.classList.toggle("claro",y>h*.7);if(y>h&&y>last+2)nav.classList.add("esconde");if(y<last-2||y<h)nav.classList.remove("esconde");last=y};
+const contar=b=>{const n=+b.dataset.n,s=b.dataset.s||"",o={v:0};if(!window.gsap){b.textContent=n+s;return}gsap.to(o,{v:n,duration:1.6,ease:"power3.out",onUpdate:()=>b.textContent=Math.round(o.v)+s})};
+if(window.gsap&&window.ScrollTrigger){
  gsap.registerPlugin(ScrollTrigger);
- if(window.Lenis){const l=new Lenis({lerp:.09});l.on("scroll",e=>{ScrollTrigger.update();upd(e.scroll)});gsap.ticker.add(t=>l.raf(t*1000));gsap.ticker.lagSmoothing(0);
-  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",e=>{const t=document.querySelector(a.getAttribute("href"));if(t){e.preventDefault();l.scrollTo(t,{offset:-60,duration:1.6})}}))}
+ if(window.Lenis&&forte){const l=new Lenis({lerp:.1});l.on("scroll",e=>{ScrollTrigger.update();upd(e.scroll)});gsap.ticker.add(t=>l.raf(t*1000));gsap.ticker.lagSmoothing(0);
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",e=>{const t=document.querySelector(a.getAttribute("href"));if(t){e.preventDefault();l.scrollTo(t,{offset:-40,duration:1.5})}}))}
  else addEventListener("scroll",()=>upd(scrollY),{passive:true});
- gsap.timeline({defaults:{ease:"power4.out"}}).from(".sup .top small",{y:20,opacity:0,duration:1}).from(".sup h1",{y:40,opacity:0,duration:1.2},"-=.6").from(".sup .acts .btn",{y:20,opacity:0,stagger:.1,duration:.9},"-=.8").from(".dica",{opacity:0,duration:1},"-=.4");
- gsap.to(".sup .base,.sup .top,.dica",{y:-80,opacity:0,ease:"none",scrollTrigger:{trigger:".sup",start:"top top",end:"bottom 30%",scrub:true}});
- gsap.utils.toArray(".mancha").forEach((m,i)=>gsap.fromTo(m,{y:120*(i%2?1:-1),scale:.8},{y:-120*(i%2?1:-1),scale:1.15,ease:"none",scrollTrigger:{trigger:".papel",start:"top bottom",end:"bottom top",scrub:true}}));
- gsap.from(".papel .traco",{scaleX:0,transformOrigin:"left",duration:1,ease:"power3.out",scrollTrigger:{trigger:".papel",start:"top 75%"}});
- gsap.from(".papel h2,.papel .grid>div:first-child>p,.legenda span",{y:40,opacity:0,stagger:.08,duration:1,ease:"power3.out",scrollTrigger:{trigger:".papel",start:"top 70%"}});
- gsap.from(".lista li",{x:-30,opacity:0,stagger:.1,duration:.9,ease:"power3.out",scrollTrigger:{trigger:".lista",start:"top 85%"}});
- gsap.from(".mapa",{clipPath:"inset(12% 12% 12% 12% round 120px)",duration:1.6,ease:"power4.inOut",scrollTrigger:{trigger:".mapa",start:"top 80%"}});
- gsap.utils.toArray(".mergulho h2,.mergulho .in>p").forEach(el=>gsap.from(el,{y:50,opacity:0,duration:1.1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 88%"}}));
- gsap.utils.toArray(".dados,.frentes,.acoes").forEach(g=>gsap.from(g.children,{y:70,opacity:0,stagger:.12,duration:1.1,ease:"power3.out",scrollTrigger:{trigger:g,start:"top 85%",onEnter:()=>g.querySelectorAll("[data-n]").forEach(contar)}}));
- gsap.from(".leito .cta",{y:80,opacity:0,duration:1.2,ease:"power3.out",scrollTrigger:{trigger:".leito",start:"top 80%"}});
+ gsap.timeline({defaults:{ease:"power4.out"}}).from(".sup .top small",{y:20,opacity:0,duration:1}).from(".sup h1",{y:40,opacity:0,duration:1.2},"-=.6").from(".sup .acts .btn",{y:20,opacity:0,stagger:.1,duration:.9},"-=.8");
+ gsap.to(".sup .base,.sup .top",{y:-70,opacity:0,ease:"none",scrollTrigger:{trigger:".sup",start:"top top",end:"bottom 35%",scrub:true}});
+ gsap.from(".vinte",{opacity:0,y:40,duration:1.2,ease:"power3.out",scrollTrigger:{trigger:".abre",start:"top 92%",onEnter:()=>contar(document.querySelector(".vinte"))}});
+ gsap.from(".abre h2,.abre p,.fatos span",{y:30,opacity:0,stagger:.07,duration:1,ease:"power3.out",scrollTrigger:{trigger:".abre",start:"top 92%"}});
+ gsap.from(".pc",{y:40,opacity:0,stagger:.06,duration:.9,ease:"power3.out",scrollTrigger:{trigger:".mapa",start:"top 70%"}});
+ gsap.utils.toArray(".mergulho h2,.mergulho .in>p").forEach(el=>gsap.from(el,{y:40,opacity:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 95%"}}));
+ gsap.utils.toArray(".dados,.frentes,.acoes").forEach(g=>gsap.from(g.children,{y:50,opacity:0,stagger:.1,duration:1,ease:"power3.out",scrollTrigger:{trigger:g,start:"top 95%",onEnter:()=>g.querySelectorAll("[data-n]").forEach(contar)}}));
+ gsap.from(".leito .cta",{y:60,opacity:0,duration:1.1,ease:"power3.out",scrollTrigger:{trigger:".leito",start:"top 90%"}});
  upd(scrollY);
 }else{document.querySelectorAll("[data-n]").forEach(contar);addEventListener("scroll",()=>upd(scrollY),{passive:true});upd(scrollY)}
 </script>
-<script>(()=>{const b=document.getElementById("mov");if(!b)return;const off=document.documentElement.classList.contains("parado");b.textContent=off?"Ligar animações":"Pausar animações";b.onclick=()=>{try{localStorage.setItem("mare_movimento",off?"on":"off")}catch(e){}location.reload()}})()</script>
 </body></html>
