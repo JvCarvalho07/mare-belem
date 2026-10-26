@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MARÉ Belém</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" href="img/logo-onda.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800;900&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: faixa de abertura azul-marinho com a logo da onda; depois seções em coluna larga, cartões só onde separam ideias */
+:root{--bg:#f6f3ec;--card:#ffffff;--fg:#16233d;--mut:#56647c;--line:#e2ddd1;--navy:#1b2a4a;--teal:#0e8a95;--teal2:#14b3bf;--red:#d8382e;--yel:#f2b31b;--hero:#1b2a4a;--herofg:#ffffff;--bar:#9fb3c8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1729;--card:#17223a;--fg:#e8edf5;--mut:#a3b0c5;--line:#29365a;--navy:#cfe0ff;--teal:#2fc4cf;--teal2:#5ad8e1;--red:#ff7a6e;--yel:#ffcb4d;--hero:#0a1222;--bar:#4a5d7c;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1729;--card:#17223a;--fg:#e8edf5;--mut:#a3b0c5;--line:#29365a;--navy:#cfe0ff;--teal:#2fc4cf;--teal2:#5ad8e1;--red:#ff7a6e;--yel:#ffcb4d;--hero:#0a1222;--bar:#4a5d7c;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 "Source Sans 3",system-ui,sans-serif}
+.in{max-width:1040px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:Montserrat,sans-serif;text-wrap:balance;margin:0}
+h2{font-size:clamp(24px,3.4vw,32px);font-weight:800;color:var(--navy);margin-bottom:14px}
+h3{font-size:17px;font-weight:800;margin-bottom:6px}
+p{margin:0 0 12px;max-width:66ch}
+.eb{font:700 12px Montserrat,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.hero{background:var(--hero);color:var(--herofg);padding-block:44px 52px;position:relative;overflow:hidden}
+.hero .in{display:grid;grid-template-columns:200px 1fr;gap:34px;align-items:center}
+.hero img{width:200px;height:200px;border-radius:24px;background:#fff;object-fit:contain;padding:10px}
+.hero h1{font-size:clamp(34px,6vw,58px);font-weight:900;line-height:1.02;letter-spacing:-.01em}
+.hero .sig{font:600 14px Montserrat,sans-serif;letter-spacing:.08em;color:#9ee6ec;margin:8px 0 14px}
+.hero p{color:#d8e2f2;font-size:19px}
+.hero svg{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:46px}
+.cta{display:inline-flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.btn{display:inline-block;padding:12px 20px;border-radius:12px;font:700 15px Montserrat,sans-serif;text-decoration:none}
+.btn.p{background:var(--yel);color:#1b2a4a}.btn.s{border:2px solid #ffffff66;color:#fff}
+.btn:focus-visible{outline:3px solid var(--teal2);outline-offset:2px}
+section{padding-block:46px}
+section+section{border-top:1px solid var(--line)}
+.g3{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g3>*{min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.big{font:900 clamp(32px,5vw,44px)/1 Montserrat,sans-serif;color:var(--teal);font-variant-numeric:tabular-nums;display:block;margin-bottom:6px}
+.vals{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.vals span{padding:6px 12px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:15px}
+.mapcard{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:center}
+.mapcard>*{min-width:0}
+.mock{background:linear-gradient(160deg,#dfe9ef,#cfdde6);border-radius:18px;aspect-ratio:4/3;position:relative;overflow:hidden;border:1px solid var(--line);max-width:100%}
+.mock svg{width:100%;height:100%;display:block}
+.steps{counter-reset:s;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.steps .card{position:relative;padding-top:44px}
+.steps .card::before{counter-increment:s;content:"Fase " counter(s);position:absolute;top:16px;left:20px;font:800 12px Montserrat,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+ul{margin:6px 0 0;padding-left:20px}li{margin:4px 0}
+.bars{display:grid;gap:9px;max-width:760px}
+.bar{display:grid;grid-template-columns:minmax(140px,270px) 1fr 34px;gap:12px;align-items:center;font-size:15px}
+.bar>span{min-width:0}
+.bar i{display:block;height:14px;border-radius:7px;background:var(--bar)}
+.bar.hi i{background:var(--teal)}.bar.hi span{font-weight:700}
+.bar em{font-style:normal;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.logos{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.logos figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.logos img{width:100%;aspect-ratio:1;object-fit:contain;background:#fff;display:block}
+.logos figcaption{padding:12px 14px;font-size:15px}.logos figcaption b{display:block;font-family:Montserrat,sans-serif}
+.note{border-left:4px solid var(--yel);padding:12px 16px;background:var(--card);border-radius:0 12px 12px 0;max-width:72ch}
+.src{font-size:14px;color:var(--mut)}
+a{color:var(--teal)}
+footer{padding-block:30px;color:var(--mut);font-size:14px;border-top:1px solid var(--line)}
+@media(max-width:760px){.hero .in{grid-template-columns:1fr}.hero img{width:130px;height:130px}.mapcard{grid-template-columns:1fr}.bar{grid-template-columns:1fr 1fr 30px}}
+</style></head><body>
+<header class="hero"><div class="in">
+<img src="img/logo-onda.webp" alt="Logo MARÉ Belém · Pará">
+<div><div class="eb" style="color:#9ee6ec">Empresa júnior · Belém do Pará</div>
+<h1>Onde a chuva para, a MARÉ mostra.</h1>
+<div class="sig">MOBILIZAÇÃO · ACESSIBILIDADE · RENOVAÇÃO ESTRUTURAL</div>
+<p>Mapeamos alagamentos e calçadas ruins com fotos dos próprios moradores, e levamos esses dados a quem pode resolver.</p>
+<div class="cta"><a class="btn p" href="https://jvcarvalho07.github.io/mare-belem/mapa.html">Abrir o Mapa MARÉ</a><a class="btn s" href="#proposito">Conhecer a empresa</a></div></div>
+</div>
+<svg viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 26 C150 6 300 46 450 26 S750 6 900 26 S1100 40 1200 22 V46 H0Z" fill="var(--bg)"/></svg>
+</header>
+
+<main>
+<section id="proposito"><div class="in">
+<div class="eb">Quem somos</div><h2>Missão, visão e valores</h2>
+<div class="g3">
+<div class="card"><h3>Missão</h3><p>Transformar os alagamentos e a falta de acessibilidade de Belém em mapas, relatórios e soluções de baixo custo, dando voz aos moradores.</p></div>
+<div class="card"><h3>Visão</h3><p>Ser, em 5 anos, a principal referência jovem em cidade acessível e drenagem urbana na Região Metropolitana de Belém.</p></div>
+<div class="card"><h3>Valores</h3><div class="vals"><span>Escuta ativa</span><span>Transparência</span><span>Acessibilidade para todos</span><span>Sustentabilidade</span><span>Trabalho em equipe</span><span>Compromisso com a comunidade</span></div></div>
+</div></div></section>
+
+<section><div class="in">
+<div class="eb">O problema</div><h2>Belém alaga, e quem mais sofre anda a pé</h2>
+<div class="g3">
+<div class="card"><span class="big">150 mm</span><p>de chuva em menos de 24 horas em abril de 2026. A prefeitura decretou emergência.</p></div>
+<div class="card"><span class="big">Maré + chuva</span><p>Quando a maré alta coincide com chuva forte, a água não escoa e o alagamento piora.</p></div>
+<div class="card"><span class="big">18 de 96</span><p>respostas do nosso formulário apontaram calçadas, acessibilidade e alagamentos como o maior problema.</p></div>
+</div></div></section>
+
+<section><div class="in mapcard">
+<div><div class="eb">A ferramenta</div><h2>Mapa MARÉ, em 3D</h2>
+<p>O morador marca o local no mapa, escolhe o tipo de problema e envia uma foto. O mapa mostra o relevo de Belém em 3D, para ver onde a água se acumula.</p>
+<ul><li>Alagamento, calçada quebrada, falta de rampa e bueiro entupido</li><li>Fotos sem rostos nem placas, com autorização</li><li>Medidor de risco com chuva e maré</li><li>Exporta os dados para relatórios</li></ul>
+<p style="margin-top:14px"><a class="btn p" style="background:var(--teal);color:#fff" href="https://jvcarvalho07.github.io/mare-belem/mapa.html">Abrir o mapa</a></p></div>
+<div class="mock" role="img" aria-label="Ilustração do mapa com pontos de alagamento sobre o relevo">
+<svg viewBox="0 0 400 300"><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14b3bf" stop-opacity=".55"/><stop offset="1" stop-color="#0e8a95" stop-opacity=".25"/></linearGradient></defs>
+<rect width="400" height="300" fill="#e4ecef"/>
+<path d="M0 230 C80 200 120 250 200 225 S330 190 400 215 V300 H0Z" fill="#9fc6d0"/>
+<path d="M30 60 L370 40 M20 120 L380 105 M40 180 L360 170 M90 20 L120 280 M200 15 L215 285 M300 25 L320 280" stroke="#fff" stroke-width="6" fill="none"/>
+<ellipse cx="150" cy="150" rx="70" ry="30" fill="url(#ag)"/><ellipse cx="290" cy="120" rx="50" ry="22" fill="url(#ag)"/>
+<g><path d="M150 140s13-13 13-22a13 13 0 0 0-26 0c0 9 13 22 13 22z" fill="#0e8a95" stroke="#fff" stroke-width="2.5"/><circle cx="150" cy="118" r="5" fill="#fff"/></g>
+<g><path d="M290 110s13-13 13-22a13 13 0 0 0-26 0c0 9 13 22 13 22z" fill="#0e8a95" stroke="#fff" stroke-width="2.5"/><circle cx="290" cy="88" r="5" fill="#fff"/></g>
+<g><path d="M90 90s13-13 13-22a13 13 0 0 0-26 0c0 9 13 22 13 22z" fill="#f2b31b" stroke="#fff" stroke-width="2.5"/><circle cx="90" cy="68" r="5" fill="#fff"/></g>
+<g><path d="M240 200s13-13 13-22a13 13 0 0 0-26 0c0 9 13 22 13 22z" fill="#d8382e" stroke="#fff" stroke-width="2.5"/><circle cx="240" cy="178" r="5" fill="#fff"/></g>
+<rect x="14" y="14" width="120" height="30" rx="8" fill="#fff"/><text x="26" y="34" font-family="Montserrat,sans-serif" font-size="13" font-weight="800" fill="#1b2a4a">Jurunas · 3 pontos</text>
+</svg></div>
+</div></section>
+
+<section><div class="in">
+<div class="eb">Plano</div><h2>Três fases em seis meses</h2>
+<div class="steps">
+<div class="card"><h3>Mapa dos relatos</h3><p>Meses 1 a 3. Formulário com foto e local, primeiros 30 pontos em Souza, Jurunas, Cidade Velha e Umarizal.</p></div>
+<div class="card"><h3>Relevo, chuva e maré</h3><p>Meses 4 e 5. Dados de chuva e maré ao lado do mapa e relatório de prioridades para a prefeitura.</p></div>
+<div class="card"><h3>Risco e alerta</h3><p>Mês 6 em diante. Estimativa de risco por bairro e aviso para quem se cadastrar, validado com a Defesa Civil.</p></div>
+</div>
+<p class="note" style="margin-top:18px"><b>Não existe hoje um dado pronto de alagamento em tempo real.</b> Mostramos chuva, maré e os relatos dos moradores. O risco é uma estimativa e dizemos isso claramente.</p>
+</div></section>
+
+<section><div class="in">
+<div class="eb">Parcerias</div><h2>O que pedimos e o que oferecemos</h2>
+<div class="g3">
+<div class="card"><h3>Prefeitura e vereadores</h3><ul><li>Pedimos: dados de pluviômetros, pontos críticos e um contato técnico.</li><li>Oferecemos: o mapa e um relatório de prioridades, sem custo.</li></ul></div>
+<div class="card"><h3>Defesa Civil e universidades</h3><ul><li>Validação do risco e dados históricos.</li><li>Orientação técnica da UFPA e da UEPA.</li></ul></div>
+<div class="card"><h3>Escolas, associações e comércio</h3><ul><li>Pontos de coleta de relatos e a campanha "Bueiro Livre".</li><li>Divulgação e apoio com materiais.</li></ul></div>
+</div></div></section>
+
+<section><div class="in">
+<div class="eb">Nosso formulário</div><h2>O que 96 moradores responderam</h2>
+<div class="bars" role="img" aria-label="Respostas por área: calçadas e alagamentos 18, lixo 18, transporte 14, desperdício 11, calor 11, outros 10, reutilização 7, informação 4, comércio 3">
+<div class="bar hi"><span>Calçadas, acessibilidade e alagamentos</span><i style="width:100%"></i><em>18</em></div>
+<div class="bar"><span>Lixo e reciclagem</span><i style="width:100%"></i><em>18</em></div>
+<div class="bar"><span>Transporte e deslocamento</span><i style="width:78%"></i><em>14</em></div>
+<div class="bar"><span>Desperdício de alimentos</span><i style="width:61%"></i><em>11</em></div>
+<div class="bar"><span>Calor e conforto térmico</span><i style="width:61%"></i><em>11</em></div>
+<div class="bar"><span>Outros</span><i style="width:56%"></i><em>10</em></div>
+<div class="bar"><span>Reutilização ou descarte</span><i style="width:39%"></i><em>7</em></div>
+<div class="bar"><span>Falta de informação</span><i style="width:22%"></i><em>4</em></div>
+<div class="bar"><span>Comércio e serviços locais</span><i style="width:17%"></i><em>3</em></div>
+</div>
+<p class="src" style="margin-top:14px">Bairros mais citados: Souza (8), Jurunas (7), Cidade Velha e Umarizal (6). Lixo e alagamento andam juntos: lixo entope bueiros.</p>
+</div></section>
+
+<section><div class="in">
+<div class="eb">Identidade</div><h2>Logos em votação</h2>
+<p>A equipe vai escolher a logo por votação. Estas são as opções atuais.</p>
+<div class="logos">
+<figure><img src="img/logo-onda.webp" alt="Logo MARÉ com onda e gota"><figcaption><b>Onda</b>Nome com a linha da maré e a gota.</figcaption></figure>
+<figure><img src="img/logo-cirio.webp" alt="Logo MARÉ com fitas do Círio"><figcaption><b>Círio</b>Fitas do Círio de Nazaré formando a onda.</figcaption></figure>
+<figure><img src="img/logo-emblema.webp" alt="Logo MARÉ emblema de Belém"><figcaption><b>Emblema</b>Onda, Ver-o-Peso, Theatro da Paz, mangueira e açaí.</figcaption></figure>
+<figure><img src="img/logo-ponte.webp" alt="Logo MARÉ com ponte"><figcaption><b>Ponte</b>Onda e ponte acessível sobre a cidade.</figcaption></figure>
+</div></div></section>
+</main>
+
+<footer><div class="in">MARÉ · Mobilização, Acessibilidade e Renovação Estrutural · Belém, Pará · Fontes: questionário "Problemas do cotidiano em Belém" (96 respostas) e notícias sobre as chuvas de abril de 2026.</div></footer>
+</body></html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mapa MARÉ · Belém</title>
+<link rel="icon" href="img/logo-onda.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<style>
+:root{--navy:#1b2a4a;--teal:#0e8a95;--teal2:#14b3bf;--sand:#f6f3ec;--card:#ffffffee;--fg:#16233d;--mut:#5a6880;--line:#dfe5ec;--red:#d8382e;--yel:#f2b31b;--pur:#7b4fd6;--ok:#1f9d61}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{font:15px/1.45 "Source Sans 3",system-ui,sans-serif;color:var(--fg);background:var(--sand);overflow:hidden}
+#map{position:absolute;inset:0}
+.top{position:absolute;top:12px;left:12px;right:12px;display:flex;gap:10px;align-items:center;pointer-events:none;z-index:3}
+.brand{pointer-events:auto;display:flex;align-items:center;gap:10px;background:var(--card);backdrop-filter:blur(8px);padding:6px 14px 6px 6px;border-radius:14px;box-shadow:0 6px 24px #1b2a4a22}
+.brand img{width:46px;height:46px;border-radius:10px;background:#fff;object-fit:contain}
+.brand b{font:800 17px Montserrat,sans-serif;color:var(--navy);display:block;letter-spacing:.02em}
+.brand span{font-size:12px;color:var(--mut)}
+.brand a{color:var(--teal);font-weight:600;font-size:12px;margin-left:8px}
+.panel{position:absolute;top:84px;left:12px;bottom:12px;width:310px;overflow:auto;background:var(--card);backdrop-filter:blur(8px);border-radius:16px;box-shadow:0 10px 30px #1b2a4a26;padding:16px;z-index:3;display:flex;flex-direction:column;gap:16px}
+h2{font:700 11px Montserrat,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin:0 0 8px}
+.mut{color:var(--mut);font-size:12.5px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+button,select,input,textarea{font:inherit;color:var(--fg);background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 11px;width:100%}
+button{cursor:pointer;font-weight:600;transition:transform .12s,box-shadow .12s}
+button:hover{transform:translateY(-1px);box-shadow:0 4px 12px #1b2a4a1f}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--teal2);outline-offset:1px}
+.pri{background:var(--teal);color:#fff;border-color:var(--teal)}
+.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px}
+.stat b{font:800 22px Montserrat,sans-serif;color:var(--navy);display:block;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:13px;user-select:none}
+.chip input{display:none}.chip i{width:10px;height:10px;border-radius:50%}
+.chip:has(input:not(:checked)){opacity:.4}
+.risk{padding:12px;border-radius:12px;font:800 14px Montserrat,sans-serif;text-align:center;background:#fff;border:2px solid var(--line);margin-top:8px}
+.row{display:flex;gap:8px}.row>*{min-width:0}
+input[type=range]{padding:0;border:0;accent-color:var(--teal)}
+#hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:99px;font-weight:600;display:none;z-index:5;box-shadow:0 8px 24px #0004}
+#modal{position:fixed;inset:0;background:#1b2a4a88;display:none;align-items:center;justify-content:center;z-index:9;padding:16px}
+.box{background:#fff;border-radius:16px;padding:18px;width:min(440px,100%);display:flex;flex-direction:column;gap:10px;box-shadow:0 20px 60px #0005}
+.box h3{font:800 18px Montserrat,sans-serif;margin:0;color:var(--navy)}
+label.ck{display:flex;gap:8px;align-items:center;font-size:13.5px}label.ck input{width:auto}
+.pin{width:30px;height:38px;cursor:pointer;filter:drop-shadow(0 3px 3px #0004)}
+.pop{font:14px "Source Sans 3",sans-serif;color:var(--fg);max-width:240px}.pop b{color:var(--navy)}.pop img{width:100%;border-radius:8px;margin-top:6px;display:block}
+.pop .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:99px;color:#fff;margin-bottom:4px}
+.maplibregl-popup-content{border-radius:12px;padding:12px 14px}
+@media(max-width:720px){.panel{top:auto;left:8px;right:8px;width:auto;max-height:46vh;bottom:8px}.top{left:8px;right:8px}.brand span{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<div id="map"></div>
+<div class="top"><div class="brand"><img src="img/logo-onda.webp" alt="MARÉ"><div><b>MAPA MARÉ</b><span>Alagamentos e calçadas de Belém, relatados pelos moradores</span></div><a href="index.html">Sobre o projeto</a></div></div>
+<aside class="panel">
+ <div class="stats"><div class="stat"><b id="sTot">0</b><span>relatos no mapa</span></div><div class="stat"><b id="sAla">0</b><span>pontos de alagamento</span></div></div>
+ <div><h2>Vista</h2><div class="btns"><button id="b3d">Ver em 3D</button><button id="bnew" class="pri">+ Novo relato</button></div>
+  <label class="mut" style="display:block;margin-top:10px">Exagero do relevo: <b id="exv">4×</b><input id="ex" type="range" min="1" max="10" step="0.5" value="4"></label>
+  <div class="mut">Belém é quase plana. O exagero deixa visíveis as áreas baixas, onde a água para.</div></div>
+ <div><h2>Tipos de problema</h2><div class="chips" id="chips"></div></div>
+ <div><h2>Chuva e maré agora</h2>
+  <div class="row"><input id="rain" type="number" min="0" placeholder="Chuva (mm/h)"><select id="tide"><option value="">Maré</option><option value="baixa">Baixa</option><option value="alta">Alta</option></select></div>
+  <div class="risk" id="risk">Informe chuva e maré</div>
+  <div class="mut" style="margin-top:6px">Estimativa simples: chuva de 30 mm/h ou mais com maré alta indica risco alto. A ligação automática com INMET, CEMADEN e tábua de marés vem na fase 2.</div></div>
+ <div><h2>Dados</h2><div class="btns"><button id="bexp">Baixar CSV</button><button id="bjson">Salvar JSON</button></div>
+  <label class="mut" style="display:block;margin-top:8px">Juntar relatos de outra pessoa (JSON)<input id="imp" type="file" accept=".json"></label>
+  <button id="bclr" style="margin-top:8px">Apagar pontos de exemplo</button>
+  <div class="mut" style="margin-top:6px">Os relatos ficam salvos neste navegador.</div></div>
+ <div class="mut">Mapa © OpenStreetMap e CARTO · Relevo: AWS Terrain Tiles · Os 6 pontos iniciais são exemplos fictícios.</div>
+</aside>
+<div id="hint">Toque no mapa onde fica o problema</div>
+<div id="modal"><div class="box"><h3>Novo relato</h3>
+ <select id="t"></select>
+ <input id="bairro" placeholder="Bairro (ex.: Jurunas)">
+ <textarea id="desc" rows="3" placeholder="O que acontece aqui? Não escreva nomes de pessoas."></textarea>
+ <input id="foto" type="file" accept="image/*"><div class="mut">Não fotografe rostos nem placas de carro.</div>
+ <label class="ck"><input type="checkbox" id="ok"> Autorizo publicar esta foto e o local.</label>
+ <div class="btns"><button id="mc">Cancelar</button><button id="ms" class="pri">Salvar relato</button></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+const T={alagamento:["Alagamento","#0e8a95"],calcada:["Calçada quebrada","#f2b31b"],acessibilidade:["Sem acessibilidade","#7b4fd6"],bueiro:["Bueiro entupido","#d8382e"]};
+const $=id=>document.getElementById(id);
+const EX=[["alagamento","Jurunas",-1.4690,-48.4930],["alagamento","Terra Firme",-1.4720,-48.4560],["alagamento","Condor",-1.4640,-48.4850],["calcada","Cidade Velha",-1.4540,-48.5040],["acessibilidade","Umarizal",-1.4500,-48.4850],["bueiro","Batista Campos",-1.4490,-48.4890]];
+let R=null;try{R=JSON.parse(localStorage.getItem("mare_relatos")||"null")}catch(e){}
+if(!Array.isArray(R))R=EX.map((e,i)=>({id:"ex"+i,tipo:e[0],bairro:e[1],lat:e[2],lng:e[3],desc:"Ponto de exemplo (fictício).",foto:"",ex:true,data:"exemplo"}));
+const save=()=>{try{localStorage.setItem("mare_relatos",JSON.stringify(R))}catch(e){alert("O navegador ficou sem espaço. Salve o JSON e apague relatos antigos.")}};
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+for(const k in T){$("chips").insertAdjacentHTML("beforeend",`<label class="chip"><input type="checkbox" class="f" value="${k}" checked><i style="background:${T[k][1]}"></i>${T[k][0]}</label>`);$("t").insertAdjacentHTML("beforeend",`<option value="${k}">${T[k][0]}</option>`)}
+const map=new maplibregl.Map({container:"map",center:[-48.4902,-1.4558],zoom:12.3,maxPitch:75,attributionControl:{compact:true},
+ style:{version:8,sources:{osm:{type:"raster",tiles:["a","b","c","d"].map(s=>`https://${s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png`),tileSize:256,maxzoom:19,attribution:"© OpenStreetMap © CARTO"},
+ dem:{type:"raster-dem",tiles:["https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"],encoding:"terrarium",tileSize:256,maxzoom:14}},
+ layers:[{id:"osm",type:"raster",source:"osm",paint:{"raster-saturation":-0.15}},{id:"hill",type:"hillshade",source:"dem",paint:{"hillshade-exaggeration":0.7,"hillshade-shadow-color":"#1b2a4a"}}]}});
+map.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
+let mk=[],adding=false,pos=null,is3d=false;
+const pin=c=>`<svg class="pin" viewBox="0 0 30 38"><path d="M15 37s13-13.2 13-22A13 13 0 0 0 2 15c0 8.8 13 22 13 22z" fill="${c}" stroke="#fff" stroke-width="2.5"/><circle cx="15" cy="15" r="5" fill="#fff"/></svg>`;
+function draw(){mk.forEach(m=>m.remove());mk=[];const on=[...document.querySelectorAll(".f:checked")].map(x=>x.value);const V=R.filter(r=>on.includes(r.tipo));
+ V.forEach(r=>{const el=document.createElement("div");el.innerHTML=pin(T[r.tipo][1]);if(r.ex)el.style.opacity=.65;
+  const h=`<div class="pop"><span class="tag" style="background:${T[r.tipo][1]}">${T[r.tipo][0]}</span><br><b>${esc(r.bairro)}</b><br>${esc(r.desc)}<br><small style="color:#5a6880">${esc(r.data)}</small>${r.foto?`<img src="${r.foto}" alt="Foto do relato">`:""}</div>`;
+  mk.push(new maplibregl.Marker({element:el,anchor:"bottom"}).setLngLat([r.lng,r.lat]).setPopup(new maplibregl.Popup({offset:30,maxWidth:"260px"}).setHTML(h)).addTo(map))});
+ $("sTot").textContent=V.length;$("sAla").textContent=R.filter(r=>r.tipo==="alagamento").length}
+document.addEventListener("change",e=>{if(e.target.classList.contains("f"))draw()});
+map.on("load",draw);
+$("b3d").onclick=function(){is3d=!is3d;this.classList.toggle("on",is3d);this.textContent=is3d?"Voltar ao 2D":"Ver em 3D";
+ if(is3d){map.setTerrain({source:"dem",exaggeration:+$("ex").value});map.easeTo({pitch:65,bearing:-25,zoom:13.2,duration:1400})}else{map.setTerrain(null);map.easeTo({pitch:0,bearing:0,duration:900})}};
+$("ex").oninput=()=>{$("exv").textContent=$("ex").value+"×";if(is3d)map.setTerrain({source:"dem",exaggeration:+$("ex").value})};
+$("bnew").onclick=()=>{adding=true;$("hint").style.display="block";map.getCanvas().style.cursor="crosshair"};
+map.on("click",e=>{if(!adding)return;adding=false;$("hint").style.display="none";map.getCanvas().style.cursor="";pos=e.lngLat;$("modal").style.display="flex"});
+$("mc").onclick=()=>$("modal").style.display="none";
+function reduz(file){return new Promise(res=>{if(!file)return res("");const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",.72))};im.src=fr.result};fr.readAsDataURL(file)})}
+$("ms").onclick=async()=>{if(!$("ok").checked){alert("Marque a autorização para publicar a foto e o local.");return}
+ R.push({id:"r"+Date.now(),tipo:$("t").value,bairro:$("bairro").value.trim(),desc:$("desc").value.trim(),lat:pos.lat,lng:pos.lng,foto:await reduz($("foto").files[0]),data:new Date().toLocaleString("pt-BR")});
+ save();$("modal").style.display="none";$("desc").value="";$("foto").value="";$("ok").checked=false;draw()};
+$("bclr").onclick=()=>{R=R.filter(r=>!r.ex);save();draw()};
+const dl=(n,txt,m)=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type:m}));a.download=n;a.click()};
+$("bjson").onclick=()=>dl("relatos-mare.json",JSON.stringify(R),"application/json");
+$("bexp").onclick=()=>dl("relatos-mare.csv","﻿tipo;bairro;descricao;lat;lng;data\n"+R.map(r=>[T[r.tipo][0],r.bairro,(r.desc||"").replace(/[;\n]/g," "),r.lat,r.lng,r.data].join(";")).join("\n"),"text/csv");
+$("imp").onchange=async()=>{try{const j=JSON.parse(await $("imp").files[0].text());const ids=new Set(R.map(r=>r.id));j.forEach(r=>{if(r&&T[r.tipo]&&!ids.has(r.id))R.push(r)});save();draw()}catch(e){alert("Esse arquivo não é um JSON de relatos válido.")}};
+function risco(){const c=parseFloat($("rain").value),m=$("tide").value,el=$("risk");if(isNaN(c)||!m){el.textContent="Informe chuva e maré";el.style.borderColor="";el.style.color="";return}
+ let s,col;if(c>=30&&m==="alta"){s="Risco alto de alagamento";col="#d8382e"}else if(c>=30||(c>=15&&m==="alta")){s="Risco médio";col="#c98a00"}else{s="Risco baixo";col="#1f9d61"}el.textContent=s+" (estimativa)";el.style.borderColor=col;el.style.color=col}
+$("rain").oninput=risco;$("tide").onchange=risco;
+</script></body></html>
