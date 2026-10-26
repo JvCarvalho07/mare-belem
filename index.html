@@ -15,7 +15,8 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:90px;scrollbar-width:thin;scrollbar-color:var(--musgo) var(--mata)}
 ::-webkit-scrollbar{width:9px}::-webkit-scrollbar-track{background:var(--mata)}::-webkit-scrollbar-thumb{background:var(--musgo);border-radius:9px}
-body{margin:0;background:var(--mata);color:var(--nevoa);font:18px/1.65 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(50% 40% at 85% 20%,#1d3a2a66,transparent 70%),radial-gradient(45% 35% at 10% 75%,#173a3a55,transparent 70%),var(--mata)}
+body{margin:0;background:transparent;color:var(--nevoa);font:18px/1.65 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:hidden}
 .in{max-width:1220px;margin:0 auto;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:Jost,sans-serif;margin:0;text-wrap:balance}
 h2{font-size:clamp(36px,5vw,68px);font-weight:300;line-height:1.02;letter-spacing:-.02em;margin-bottom:22px}
@@ -33,6 +34,7 @@ section{padding-block:clamp(80px,11vw,140px)}
 .nav.solid{background:#0f1a14d9;backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
 .nav .in{display:flex;align-items:center;gap:26px;height:76px}
 .logo{display:flex;align-items:center;gap:10px;color:var(--nevoa);text-decoration:none;font:800 22px Jost,sans-serif;letter-spacing:.18em}
+.logo span{opacity:0;transform:translateX(-6px);transition:opacity .4s,transform .4s}.nav.solid .logo span{opacity:1;transform:none}
 .logo img{width:36px;height:36px;border-radius:50%;background:#fff;object-fit:contain}
 .nav ul{display:flex;gap:28px;list-style:none;margin:0 0 0 auto;padding:0}
 .nav ul a{color:var(--nevoa);text-decoration:none;font:400 15.5px Jost,sans-serif;opacity:.85;position:relative}
@@ -49,7 +51,7 @@ section{padding-block:clamp(80px,11vw,140px)}
 @keyframes fog{to{transform:translateX(6%)}}
 .hero .in{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;justify-content:center;padding-top:60px}
 .kicker{font:400 clamp(15px,1.4vw,18px) Jost,sans-serif;letter-spacing:.04em;color:var(--mut);margin-bottom:6px}
-.mare{font:800 clamp(112px,23vw,330px)/.8 Jost,sans-serif;letter-spacing:-.04em;margin:0 0 0 -.05em;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1px #e7eee655;filter:drop-shadow(0 20px 40px #0008)}
+.mare{font:800 clamp(112px,23vw,330px)/1 Jost,sans-serif;letter-spacing:-.04em;margin:-.14em 0 -.1em -.05em;padding-top:.06em;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 20px 40px #0008)}
 .hero .lead{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,4vw,60px);align-items:end;margin-top:clamp(14px,3vh,34px)}
 .hero .lead>*{min-width:0}
 .hero h1{font-size:clamp(24px,2.6vw,38px);font-weight:300;line-height:1.2;max-width:24ch}
@@ -61,10 +63,16 @@ section{padding-block:clamp(80px,11vw,140px)}
 .mini .th i::after{content:"";width:12px;height:12px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--mata)}
 @keyframes pulse{70%{box-shadow:0 0 0 14px #b5d96a00}}
 .mini b{font:600 17px Jost,sans-serif;display:block}.mini span{font-size:14px;color:var(--mut)}
-.leaf{position:absolute;z-index:4;pointer-events:none;width:46px;color:#7fa86a;opacity:.8;animation:float 14s ease-in-out infinite}
-.leaf.l2{width:30px;color:#b5d96a;animation-duration:18s;animation-delay:-6s}
-.leaf.l3{width:38px;color:#5f8a52;animation-duration:22s;animation-delay:-11s}
-@keyframes float{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(40px,30px) rotate(25deg)}50%{transform:translate(-10px,70px) rotate(-10deg)}75%{transform:translate(30px,110px) rotate(30deg)}100%{transform:translate(0,0) rotate(0)}}
+.lf{position:absolute;pointer-events:none;z-index:4}
+.lf svg{width:100%;height:auto;display:block}
+.lf.fg1{width:clamp(220px,26vw,420px);left:-6%;bottom:-10%;filter:blur(6px);opacity:.9;transform-origin:20% 90%;animation:sway 9s ease-in-out infinite}
+.lf.fg2{width:clamp(160px,18vw,300px);right:-4%;top:6%;filter:blur(4px);opacity:.75;transform:scaleX(-1) rotate(18deg);transform-origin:80% 10%;animation:sway2 11s ease-in-out infinite}
+.lf.m1{width:54px;left:12%;top:-8%;animation:fall 19s linear infinite}
+.lf.m2{width:38px;left:58%;top:-8%;animation:fall 24s linear infinite -9s;filter:blur(1px)}
+.lf.m3{width:46px;left:83%;top:-8%;animation:fall 28s linear infinite -17s}
+@keyframes sway{50%{transform:rotate(4deg) translateY(-6px)}}
+@keyframes sway2{50%{transform:scaleX(-1) rotate(12deg) translateY(8px)}}
+@keyframes fall{0%{transform:translate(0,0) rotate(0);opacity:0}8%{opacity:.9}50%{transform:translate(-60px,55vh) rotate(160deg)}92%{opacity:.8}100%{transform:translate(30px,112vh) rotate(320deg);opacity:0}}
 .scroll{position:absolute;z-index:3;left:50%;bottom:22px;transform:translateX(-50%);width:1px;height:54px;background:linear-gradient(#e7eee600,#e7eee6aa);overflow:hidden}
 .scroll::after{content:"";position:absolute;left:0;top:-20px;width:1px;height:20px;background:var(--broto);animation:drop 1.8s infinite}
 @keyframes drop{to{top:54px}}
@@ -85,17 +93,16 @@ section{padding-block:clamp(80px,11vw,140px)}
 .fr:hover img{transform:scale(1.06)}
 .fr::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0f1a1400 35%,#0f1a14f2);z-index:-1}
 .fr .tx{position:absolute;left:0;right:0;bottom:0;padding:26px}
-.fr .lt{font:800 74px/.8 Jost,sans-serif;color:transparent;-webkit-text-stroke:1.5px var(--broto);display:block;margin-bottom:12px}
+.fr .lt{font:800 74px/1.05 Jost,sans-serif;padding-top:.08em;background:linear-gradient(180deg,#d6ec9e,#8fbf6a);-webkit-background-clip:text;background-clip:text;color:transparent;display:block;margin-bottom:6px}
 .fr p{font-size:16.5px;color:#d3ddd5;margin:0}
 
 /* serviços */
-.claro{background:var(--nevoa);color:#15241b}
-.claro h2{color:#15241b}
+.claro{background:transparent}
 .svc{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:40px}
-.sv{display:grid;grid-template-columns:150px 1fr;gap:22px;align-items:center;padding:16px;border-radius:22px;background:#fff;min-width:0}
+.sv{display:grid;grid-template-columns:150px 1fr;gap:22px;align-items:center;padding:16px;border-radius:22px;background:#ffffff0d;backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px var(--line);min-width:0;transition:background .3s}.sv:hover{background:#ffffff17}
 .sv img{width:150px;height:150px;object-fit:cover;border-radius:14px}
-.sv p{font-size:16.5px;color:#4b5d50;margin:0}
-.sv small{display:block;font:600 14px Jost,sans-serif;color:#5f8a52;margin-bottom:4px}
+.sv p{font-size:16.5px;color:var(--mut);margin:0}
+.sv small{display:block;font:600 14px Jost,sans-serif;color:var(--broto);margin-bottom:4px}
 
 /* mapa */
 .mapa .top{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:34px}
@@ -130,30 +137,58 @@ footer a{color:var(--nevoa)}
 @media(max-width:980px){.nav ul{display:none}.hero .lead,.mapa .top,footer .in{grid-template-columns:1fr}.mini{justify-self:start}.frentes{grid-template-columns:1fr}.fr{aspect-ratio:4/3}.svc{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.nav .btn{display:none}.sv{grid-template-columns:96px 1fr}.sv img{width:96px;height:96px}.nums,.steps{grid-template-columns:1fr}.mini{display:none}.leaf{display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.ld,.rv{opacity:1;transform:none}.manifesto p span{opacity:1}}
+.rio{position:fixed;left:max(10px,calc(50% - 680px));top:0;height:100vh;width:40px;z-index:5;pointer-events:none}
+.rio path{fill:none;stroke-linecap:round}
+.rio .base{stroke:#ffffff14;stroke-width:2}
+.rio .agua{stroke:url(#gRio);stroke-width:3;filter:drop-shadow(0 0 6px #6fd3c2aa)}
+@media(max-width:1300px){.rio{display:none}}
+/* projetos */
+.proj2{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:auto auto;gap:18px;margin-top:40px}
+.pj{position:relative;border-radius:26px;overflow:hidden;min-height:260px;isolation:isolate;text-decoration:none;color:var(--nevoa);display:flex;align-items:flex-end}
+.pj img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform 1.4s cubic-bezier(.2,.7,.1,1)}
+.pj:hover img{transform:scale(1.05)}
+.pj::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#0f1a1400 30%,#0f1a14e6)}
+.pj.big{grid-row:span 2;min-height:560px}
+.pj .gl{margin:18px;padding:20px 22px;border-radius:18px;background:#0f1a1466;backdrop-filter:blur(16px);box-shadow:inset 0 0 0 1px #ffffff26;max-width:520px}
+.pj .st{display:inline-block;font:600 13px Jost,sans-serif;padding:4px 12px;border-radius:999px;background:var(--broto);color:var(--mata);margin-bottom:10px}
+.pj .st.em{background:#ffffff26;color:var(--nevoa)}
+.pj p{margin:0;font-size:16px;color:#d3ddd5}
+@media(max-width:980px){.proj2{grid-template-columns:1fr}.pj.big{grid-row:auto;min-height:420px}}
 </style></head><body>
 
 <nav class="nav" id="nav" aria-label="Principal"><div class="in">
- <a class="logo" href="#"><img src="img/logo-onda.webp" alt="">MARÉ</a>
- <ul><li><a href="#frentes">Frentes</a></li><li><a href="#servicos">Serviços</a></li><li><a href="#mapa">Mapa</a></li><li><a href="#contato">Contato</a></li></ul>
+ <a class="logo" href="#" aria-label="MARÉ, início"><img src="img/logo-onda.webp" alt=""><span>MARÉ</span></a>
+ <ul><li><a href="#frentes">Frentes</a></li><li><a href="#servicos">Serviços</a></li><li><a href="#projetos">Projetos</a></li><li><a href="#contato">Contato</a></li></ul>
  <a class="btn broto" href="#contato">Fale com a gente</a>
 </div></nav>
 
+<svg class="rio" viewBox="0 0 40 1000" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="gRio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b5d96a"/><stop offset="1" stop-color="#6fd3c2"/></linearGradient></defs>
+ <path class="base" d="M20 0C34 80 6 160 20 240S34 400 20 480 6 640 20 720 34 880 20 1000"/><path class="agua" id="rioAgua" d="M20 0C34 80 6 160 20 240S34 400 20 480 6 640 20 720 34 880 20 1000"/></svg>
 <main>
 <section class="hero" style="padding:0">
  <div class="bg" id="hbg" role="img" aria-label="Floresta amazônica coberta de névoa"></div>
  <div class="fog"></div>
- <svg class="leaf" style="top:18%;left:8%" viewBox="0 0 40 60" aria-hidden="true"><path fill="currentColor" d="M20 2C6 16 2 34 20 58 38 34 34 16 20 2z"/><path d="M20 8v48" stroke="#0f1a14" stroke-width="1.5" opacity=".5"/></svg>
- <svg class="leaf l2" style="top:30%;right:12%" viewBox="0 0 40 60" aria-hidden="true"><path fill="currentColor" d="M20 2C6 16 2 34 20 58 38 34 34 16 20 2z"/><path d="M20 8v48" stroke="#0f1a14" stroke-width="1.5" opacity=".5"/></svg>
- <svg class="leaf l3" style="top:62%;right:30%" viewBox="0 0 40 60" aria-hidden="true"><path fill="currentColor" d="M20 2C6 16 2 34 20 58 38 34 34 16 20 2z"/><path d="M20 8v48" stroke="#0f1a14" stroke-width="1.5" opacity=".5"/></svg>
+ <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9ccf6c"/><stop offset=".55" stop-color="#4f8a45"/><stop offset="1" stop-color="#1f4d2b"/></linearGradient>
+  <linearGradient id="gB" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c3e08a"/><stop offset="1" stop-color="#5b9450"/></linearGradient>
+  <symbol id="folha-larga" viewBox="0 0 200 260"><path fill="url(#gA)" d="M100 6C40 40 8 110 22 178c10 46 44 72 78 76 34-4 68-30 78-76C192 110 160 40 100 6z"/><path d="M100 14v240" stroke="#173d22" stroke-width="3" opacity=".45" fill="none"/><path d="M100 60 58 92M100 92 42 136M100 128 40 178M100 166 56 214M100 60l42 32M100 92l58 44M100 128l60 50M100 166l44 48" stroke="#173d22" stroke-width="2" opacity=".3" fill="none"/></symbol>
+  <symbol id="folha-acai" viewBox="0 0 260 120"><path d="M4 112C80 70 160 40 256 6" stroke="#2f5e33" stroke-width="3" fill="none"/><g fill="url(#gB)"><path d="M40 92c-6-24 4-44 20-56-2 22-6 40-20 56z"/><path d="M40 92c20-10 42-12 62-6-20 8-40 12-62 6z"/><path d="M90 72c-4-26 8-46 24-56-2 22-8 40-24 56z"/><path d="M90 72c22-8 44-8 62 0-20 6-42 8-62 0z"/><path d="M142 50c-2-24 10-42 26-50-4 20-10 36-26 50z"/><path d="M142 50c20-6 40-4 56 4-18 4-38 4-56-4z"/><path d="M196 28c0-18 10-30 22-36-4 16-10 28-22 36z"/><path d="M196 28c14-2 28 0 40 8-14 2-28 0-40-8z"/></g></symbol>
+  <symbol id="folha-peq" viewBox="0 0 40 70"><path fill="url(#gB)" d="M20 2C4 20 2 44 20 68 38 44 36 20 20 2z"/><path d="M20 8v58" stroke="#1f4d2b" stroke-width="1.6" opacity=".5"/></symbol>
+ </defs></svg>
+ <div class="lf fg1" aria-hidden="true"><svg viewBox="0 0 260 120"><use href="#folha-acai"/></svg></div>
+ <div class="lf fg2" aria-hidden="true"><svg viewBox="0 0 200 260"><use href="#folha-larga"/></svg></div>
+ <div class="lf m1" aria-hidden="true"><svg viewBox="0 0 40 70"><use href="#folha-peq"/></svg></div>
+ <div class="lf m2" aria-hidden="true"><svg viewBox="0 0 40 70"><use href="#folha-peq"/></svg></div>
+ <div class="lf m3" aria-hidden="true"><svg viewBox="0 0 200 260"><use href="#folha-larga"/></svg></div>
  <div class="in">
   <div class="kicker ld d1">Empresa júnior socioambiental de Belém do Pará</div>
   <div class="mare ld d2" aria-hidden="true">MARÉ</div>
   <div class="lead">
    <div class="ld d3">
     <h1>Mobilização, acessibilidade e renovação estrutural para a cidade-floresta.</h1>
-    <div class="acts"><a class="btn broto" href="#contato">Quero uma proposta</a><a class="btn vidro" href="#manifesto">Conhecer a MARÉ</a></div>
+    <div class="acts"><a class="btn broto" href="#contato">Quero uma proposta</a><a class="btn vidro" href="#manifesto">Conheça nosso trabalho</a></div>
    </div>
-   <a class="mini ld d4" href="#mapa"><span class="th"><i></i></span><span><b>Mapa MARÉ</b><span>Veja os pontos de alagamento de Belém em 3D</span></span></a>
+   <a class="mini ld d4" href="agua.html"><span class="th"><i></i></span><span><b>Projeto Água</b><span>Os pontos de alagamento de Belém em 3D</span></span></a>
   </div>
  </div>
  <div class="scroll" aria-hidden="true"></div>
@@ -183,16 +218,18 @@ footer a{color:var(--nevoa)}
  </div>
 </div></section>
 
-<section class="mapa" id="mapa"><div class="in">
- <div class="top">
-  <h2 class="rv">Projeto atual: Mapa MARÉ</h2>
-  <p class="rv">Os pontos de alagamento de Belém sobre a cidade em 3D, a partir de notícias e de relatos dos moradores. Viu um problema na sua rua? Mande foto e endereço que a equipe confere e coloca no mapa.</p>
+<section id="projetos"><div class="in">
+ <h2 class="rv">Nossos projetos</h2>
+ <p class="rv">Cada projeto da MARÉ cuida de uma parte da cidade-floresta. O primeiro começou pela água.</p>
+ <div class="proj2">
+  <a class="pj big rv" href="agua.html"><img src="img/u-rio-aereo.webp" alt="Rio sinuoso no meio da floresta, visto de cima" loading="lazy"><div class="gl"><span class="st">Em andamento</span><h3>Projeto Água</h3><p>Mapa 3D dos alagamentos de Belém, com 20 pontos já registrados a partir de notícias e estudos. Entre e mergulhe.</p></div></a>
+  <div class="pj rv"><img src="img/u-sumauma.webp" alt="Raízes de uma sumaúma" loading="lazy"><div class="gl"><span class="st em">Em breve</span><h3>Projeto Raiz</h3><p>Arborização e sombra em escolas e praças.</p></div></div>
+  <div class="pj rv"><img src="img/u-cirio.webp" alt="Fitas do Círio de Nazaré" loading="lazy"><div class="gl"><span class="st em">Em breve</span><h3>Projeto Passagem</h3><p>Calçadas e acessos para todo mundo.</p></div></div>
  </div>
- <div class="mapbox rv"><iframe src="mapa.html?embed=1&amp;tema=escuro" title="Mapa MARÉ de Belém" loading="lazy" allow="fullscreen"></iframe></div>
  <div class="nums">
   <div class="rv"><b data-n="145">145</b><span>pontos críticos de alagamento contados pela prefeitura</span></div>
   <div class="rv"><b data-n="150" data-s=" mm">150 mm</b><span>de chuva em menos de 24 horas em abril de 2026</span></div>
-  <div class="rv"><b data-n="20">20</b><span>pontos já no mapa, do Tapanã ao Jurunas</span></div>
+  <div class="rv"><b data-n="20">20</b><span>pontos já no nosso mapa, do Tapanã ao Jurunas</span></div>
  </div>
 </div></section>
 
@@ -227,7 +264,8 @@ const nav=document.getElementById("nav"),hbg=document.getElementById("hbg"),cbg=
 const mf=document.getElementById("mf");
 mf.innerHTML=mf.innerHTML.split(/(<em>.*?<\/em>|\s+)/).map(t=>/^\s+$/.test(t)||!t?t:`<span>${t}</span>`).join("");
 const words=[...mf.querySelectorAll(":scope>span")];
-const onS=()=>{const y=scrollY,h=innerHeight;nav.classList.toggle("solid",y>h*.6);
+const rio=document.getElementById("rioAgua"),RL=rio.getTotalLength();rio.style.strokeDasharray=RL;rio.style.strokeDashoffset=RL;
+const onS=()=>{const y=scrollY,h=innerHeight;rio.style.strokeDashoffset=RL*(1-y/Math.max(1,document.documentElement.scrollHeight-h));nav.classList.toggle("solid",y>h*.6);
  if(still)return;
  if(y<h)hbg.style.transform=`translateY(${y*.3}px)`;
  const r=mf.getBoundingClientRect(),k=Math.min(1,Math.max(0,(h*.85-r.top)/(r.height+h*.35)));
