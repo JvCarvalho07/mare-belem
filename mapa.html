@@ -103,6 +103,7 @@ const save=()=>{try{localStorage.setItem("mare_relatos",JSON.stringify(R))}catch
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 for(const k in T){$("chips").insertAdjacentHTML("beforeend",`<label class="chip"><input type="checkbox" class="f" value="${k}" checked><i style="background:${T[k][1]}"></i>${T[k][0]}</label>`);$("t").insertAdjacentHTML("beforeend",`<option value="${k}">${T[k][0]}</option>`)}
 const map=new maplibregl.Map({container:"map",center:[-48.4925,-1.4560],zoom:HERO?14.6:12.6,pitch:HERO?62:0,bearing:HERO?-28:0,maxPitch:78,attributionControl:{compact:true},style:"https://tiles.openfreemap.org/styles/liberty",interactive:!HERO||true});
+window.mareMap=map;
 if(!HERO)map.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
 map.on("style.load",()=>{if(map.getSource("dem"))return;
  map.addSource("dem",{type:"raster-dem",tiles:["https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"],encoding:"terrarium",tileSize:256,maxzoom:14});
