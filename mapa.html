@@ -57,6 +57,9 @@ label.ck{display:flex;gap:8px;align-items:flex-start;font-size:14.5px}label.ck i
 body:not(.adm) .admin{display:none!important}.adm .pub{display:none}.embed .panel{top:12px}
 @media(max-width:720px){.panel{top:auto;left:8px;right:8px;width:auto;height:52vh;bottom:8px}.panel.closed{transform:translateY(calc(100% + 20px))}.brand b{display:none}.tools{right:52px}.embed .panel{top:auto}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.esc{--glass:#12201ae8;--ink:#e7eee6;--mut:#9fb3a5;--line:#2a3d31;--chuva:#0f1a14}
+.esc .chip,.esc .sbtn,.esc input,.esc select,.esc textarea{background:#0f1a14;color:#e7eee6}
+.esc .list button:hover{background:#1b2c22}.esc h2{color:#b5d96a}.esc .tb.add{background:#b5d96a;color:#0f1a14}
 </style></head><body>
 <div id="map" role="application" aria-label="Mapa de Belém com relatos de alagamento e calçadas"></div>
 <a class="brand" href="index.html"><img src="img/logo-onda.webp" alt=""><b>Mapa MARÉ</b></a>
@@ -93,7 +96,7 @@ body:not(.adm) .admin{display:none!important}.adm .pub{display:none}.embed .pane
  <div class="row"><button class="sbtn" id="mc">Cancelar</button><button class="sbtn" id="ms" style="background:var(--acai);color:#fff;border-color:var(--acai)">Salvar ponto</button></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
-const Q=new URLSearchParams(location.search),HERO=Q.has("hero");
+const Q=new URLSearchParams(location.search),HERO=Q.has("hero"),ESC=Q.get("tema")==="escuro";if(ESC)document.documentElement.classList.add("esc");
 if(HERO)document.body.classList.add("hero");if(Q.has("admin"))document.body.classList.add("adm");if(Q.has("embed"))document.body.classList.add("embed");
 const T={alagamento:["Alagamento","#1d4f91"],calcada:["Calçada quebrada","#c98410"],acessibilidade:["Sem acessibilidade","#7a3b8f"],bueiro:["Bueiro entupido","#b8402f"]};
 const $=id=>document.getElementById(id);
@@ -103,7 +106,7 @@ if(!Array.isArray(R))R=[];R=R.filter(r=>!r.ex&&!r.imp);const IMP=NEWS.map((e,i)=
 const save=()=>{try{localStorage.setItem("mare_relatos",JSON.stringify(R))}catch(e){alert("O navegador ficou sem espaço. Salve o arquivo e apague pontos antigos.")}};
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 for(const k in T){$("chips").insertAdjacentHTML("beforeend",`<label class="chip"><input type="checkbox" class="f" value="${k}" checked><i style="background:${T[k][1]}"></i>${T[k][0]}</label>`);$("t").insertAdjacentHTML("beforeend",`<option value="${k}">${T[k][0]}</option>`)}
-const map=new maplibregl.Map({container:"map",center:[-48.4925,-1.4560],zoom:HERO?14.6:12.6,pitch:HERO?62:0,bearing:HERO?-28:0,maxPitch:78,attributionControl:{compact:true},style:"https://tiles.openfreemap.org/styles/liberty",interactive:!HERO||true});
+const map=new maplibregl.Map({container:"map",center:[-48.4925,-1.4560],zoom:HERO?14.6:12.6,pitch:HERO?62:0,bearing:HERO?-28:0,maxPitch:78,attributionControl:{compact:true},style:"https://tiles.openfreemap.org/styles/"+(ESC?"dark":"liberty"),interactive:!HERO||true});
 window.mareMap=map;
 if(!HERO)map.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
 map.on("style.load",()=>{if(map.getSource("dem"))return;
@@ -114,12 +117,17 @@ map.on("style.load",()=>{if(map.getSource("dem"))return;
  map.addLayer({id:"hill",type:"hillshade",source:"dem",paint:{"hillshade-exaggeration":.6,"hillshade-shadow-color":"#2b1430"}},"sat");
  L.forEach(l=>{if(/^poi|^highway-shield|^road_shield|^aeroway/.test(l.id))map.setLayoutProperty(l.id,"visibility","none")});
  const P=(id,k,v)=>{if(map.getLayer(id))try{map.setPaintProperty(id,k,v)}catch(e){}};
+ if(ESC){P("background","background-color","#0f1a14");P("water","fill-color","#13261d");
+  if(!map.getLayer("building-3d"))map.addLayer({id:"building-3d",type:"fill-extrusion",source:"openmaptiles","source-layer":"building",minzoom:13.5,paint:{"fill-extrusion-color":"#2d3f33","fill-extrusion-height":["coalesce",["get","render_height"],8],"fill-extrusion-base":["coalesce",["get","render_min_height"],0],"fill-extrusion-opacity":.9}});
+  L.filter(l=>l.type==="fill"&&/park|wood|grass|landcover/.test(l.id)).forEach(l=>P(l.id,"fill-color","#1c3324"));
+ }else{
  P("background","background-color","#eef1f2");
  L.filter(l=>l.type==="fill"&&/landuse|landcover|park|wood|grass/.test(l.id)).forEach(l=>P(l.id,"fill-opacity",.45));
  P("water","fill-color","#a89272");
  P("building","fill-color","#e3ddd4");
  P("building-3d","fill-extrusion-color",["interpolate",["linear"],["coalesce",["get","render_height"],0],0,"#f4efe8",30,"#e6dccd",90,"#c9b79e"]);
  P("building-3d","fill-extrusion-opacity",.92);
+ }
  map.setLight({anchor:"map",position:[1.4,210,35],intensity:.35,color:"#fff6e8"});
 
  if(HERO){map.setTerrain({source:"dem",exaggeration:3})}});
