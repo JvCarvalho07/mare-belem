@@ -47,6 +47,7 @@ label.ck{display:flex;gap:8px;align-items:center;font-size:13.5px}label.ck input
 .pop .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:99px;color:#fff;margin-bottom:4px}
 .maplibregl-popup-content{border-radius:12px;padding:12px 14px}
 @media(max-width:720px){.panel{top:auto;left:8px;right:8px;width:auto;max-height:46vh;bottom:8px}.top{left:8px;right:8px}.brand span{display:none}}
+.embed .top{display:none}.embed .panel{top:12px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head><body>
 <div id="map"></div>
@@ -65,7 +66,7 @@ label.ck{display:flex;gap:8px;align-items:center;font-size:13.5px}label.ck input
   <label class="mut" style="display:block;margin-top:8px">Juntar relatos de outra pessoa (JSON)<input id="imp" type="file" accept=".json"></label>
   <button id="bclr" style="margin-top:8px">Apagar pontos de exemplo</button>
   <div class="mut" style="margin-top:6px">Os relatos ficam salvos neste navegador.</div></div>
- <div class="mut">Mapa © OpenStreetMap e CARTO · Relevo: AWS Terrain Tiles · Os 6 pontos iniciais são exemplos fictícios.</div>
+ <div class="mut">Mapa © OpenStreetMap e OpenFreeMap · Relevo: AWS Terrain Tiles · Os 6 pontos iniciais são exemplos fictícios.</div>
 </aside>
 <div id="hint">Toque no mapa onde fica o problema</div>
 <div id="modal"><div class="box"><h3>Novo relato</h3>
@@ -86,9 +87,12 @@ const save=()=>{try{localStorage.setItem("mare_relatos",JSON.stringify(R))}catch
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 for(const k in T){$("chips").insertAdjacentHTML("beforeend",`<label class="chip"><input type="checkbox" class="f" value="${k}" checked><i style="background:${T[k][1]}"></i>${T[k][0]}</label>`);$("t").insertAdjacentHTML("beforeend",`<option value="${k}">${T[k][0]}</option>`)}
 const map=new maplibregl.Map({container:"map",center:[-48.4902,-1.4558],zoom:12.3,maxPitch:75,attributionControl:{compact:true},
- style:{version:8,sources:{osm:{type:"raster",tiles:["a","b","c","d"].map(s=>`https://${s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png`),tileSize:256,maxzoom:19,attribution:"© OpenStreetMap © CARTO"},
- dem:{type:"raster-dem",tiles:["https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"],encoding:"terrarium",tileSize:256,maxzoom:14}},
- layers:[{id:"osm",type:"raster",source:"osm",paint:{"raster-saturation":-0.15}},{id:"hill",type:"hillshade",source:"dem",paint:{"hillshade-exaggeration":0.7,"hillshade-shadow-color":"#1b2a4a"}}]}});
+ style:"https://tiles.openfreemap.org/styles/liberty"});
+map.on("style.load",()=>{if(map.getSource("dem"))return;
+ map.addSource("dem",{type:"raster-dem",tiles:["https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"],encoding:"terrarium",tileSize:256,maxzoom:14});
+ const first=map.getStyle().layers.find(l=>l.type==="symbol");
+ map.addLayer({id:"hill",type:"hillshade",source:"dem",paint:{"hillshade-exaggeration":0.7,"hillshade-shadow-color":"#1b2a4a"}},first&&first.id)});
+if(new URLSearchParams(location.search).has("embed"))document.body.classList.add("embed");
 map.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
 let mk=[],adding=false,pos=null,is3d=false;
 const pin=c=>`<svg class="pin" viewBox="0 0 30 38"><path d="M15 37s13-13.2 13-22A13 13 0 0 0 2 15c0 8.8 13 22 13 22z" fill="${c}" stroke="#fff" stroke-width="2.5"/><circle cx="15" cy="15" r="5" fill="#fff"/></svg>`;

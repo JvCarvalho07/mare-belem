@@ -37,7 +37,7 @@ section+section{border-top:1px solid var(--line)}
 .big{font:900 clamp(32px,5vw,44px)/1 Montserrat,sans-serif;color:var(--teal);font-variant-numeric:tabular-nums;display:block;margin-bottom:6px}
 .vals{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .vals span{padding:6px 12px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:15px}
-.mapcard{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:center}
+.mapcard{display:grid;grid-template-columns:1fr;gap:26px;align-items:center}
 .mapcard>*{min-width:0}
 .mock{background:linear-gradient(160deg,#dfe9ef,#cfdde6);border-radius:18px;aspect-ratio:4/3;position:relative;overflow:hidden;border:1px solid var(--line);max-width:100%}
 .mock svg{width:100%;height:100%;display:block}
@@ -60,6 +60,7 @@ ul{margin:6px 0 0;padding-left:20px}li{margin:4px 0}
 a{color:var(--teal)}
 footer{padding-block:30px;color:var(--mut);font-size:14px;border-top:1px solid var(--line)}
 @media(max-width:760px){.hero .in{grid-template-columns:1fr}.hero img{width:130px;height:130px}.mapcard{grid-template-columns:1fr}.bar{grid-template-columns:1fr 1fr 30px}}
+.embedbox{border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 12px 34px #1b2a4a22;height:min(78vh,680px)}.embedbox iframe{width:100%;height:100%;border:0;display:block}
 </style></head><body>
 <header class="hero"><div class="in">
 <img src="img/logo-onda.webp" alt="Logo MARÉ Belém · Pará">
@@ -67,7 +68,7 @@ footer{padding-block:30px;color:var(--mut);font-size:14px;border-top:1px solid v
 <h1>Onde a chuva para, a MARÉ mostra.</h1>
 <div class="sig">MOBILIZAÇÃO · ACESSIBILIDADE · RENOVAÇÃO ESTRUTURAL</div>
 <p>Mapeamos alagamentos e calçadas ruins com fotos dos próprios moradores, e levamos esses dados a quem pode resolver.</p>
-<div class="cta"><a class="btn p" href="https://jvcarvalho07.github.io/mare-belem/mapa.html">Abrir o Mapa MARÉ</a><a class="btn s" href="#proposito">Conhecer a empresa</a></div></div>
+<div class="cta"><a class="btn p" href="#mapa">Ver o Mapa MARÉ</a><a class="btn s" href="#proposito">Conhecer a empresa</a></div></div>
 </div>
 <svg viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 26 C150 6 300 46 450 26 S750 6 900 26 S1100 40 1200 22 V46 H0Z" fill="var(--bg)"/></svg>
 </header>
@@ -89,24 +90,14 @@ footer{padding-block:30px;color:var(--mut);font-size:14px;border-top:1px solid v
 <div class="card"><span class="big">18 de 96</span><p>respostas do nosso formulário apontaram calçadas, acessibilidade e alagamentos como o maior problema.</p></div>
 </div></div></section>
 
-<section><div class="in mapcard">
+<section id="mapa"><div class="in mapcard">
 <div><div class="eb">A ferramenta</div><h2>Mapa MARÉ, em 3D</h2>
 <p>O morador marca o local no mapa, escolhe o tipo de problema e envia uma foto. O mapa mostra o relevo de Belém em 3D, para ver onde a água se acumula.</p>
 <ul><li>Alagamento, calçada quebrada, falta de rampa e bueiro entupido</li><li>Fotos sem rostos nem placas, com autorização</li><li>Medidor de risco com chuva e maré</li><li>Exporta os dados para relatórios</li></ul>
-<p style="margin-top:14px"><a class="btn p" style="background:var(--teal);color:#fff" href="https://jvcarvalho07.github.io/mare-belem/mapa.html">Abrir o mapa</a></p></div>
-<div class="mock" role="img" aria-label="Ilustração do mapa com pontos de alagamento sobre o relevo">
-<svg viewBox="0 0 400 300"><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14b3bf" stop-opacity=".55"/><stop offset="1" stop-color="#0e8a95" stop-opacity=".25"/></linearGradient></defs>
-<rect width="400" height="300" fill="#e4ecef"/>
-<path d="M0 230 C80 200 120 250 200 225 S330 190 400 215 V300 H0Z" fill="#9fc6d0"/>
-<path d="M30 60 L370 40 M20 120 L380 105 M40 180 L360 170 M90 20 L120 280 M200 15 L215 285 M300 25 L320 280" stroke="#fff" stroke-width="6" fill="none"/>
-<ellipse cx="150" cy="150" rx="70" ry="30" fill="url(#ag)"/><ellipse cx="290" cy="120" rx="50" ry="22" fill="url(#ag)"/>
-<g><path d="M150 140s13-13 13-22a13 13 0 0 0-26 0c0 9 13 22 13 22z" fill="#0e8a95" stroke="#fff" stroke-width="2.5"/><circle cx="150" cy="118" r="5" fill="#fff"/></g>
-<g><path d="M290 110s13-13 13-22a13 13 0 0 0-26 0c0 9 13 22 13 22z" fill="#0e8a95" stroke="#fff" stroke-width="2.5"/><circle cx="290" cy="88" r="5" fill="#fff"/></g>
-<g><path d="M90 90s13-13 13-22a13 13 0 0 0-26 0c0 9 13 22 13 22z" fill="#f2b31b" stroke="#fff" stroke-width="2.5"/><circle cx="90" cy="68" r="5" fill="#fff"/></g>
-<g><path d="M240 200s13-13 13-22a13 13 0 0 0-26 0c0 9 13 22 13 22z" fill="#d8382e" stroke="#fff" stroke-width="2.5"/><circle cx="240" cy="178" r="5" fill="#fff"/></g>
-<rect x="14" y="14" width="120" height="30" rx="8" fill="#fff"/><text x="26" y="34" font-family="Montserrat,sans-serif" font-size="13" font-weight="800" fill="#1b2a4a">Jurunas · 3 pontos</text>
-</svg></div>
-</div></section>
+<p style="margin-top:14px"><a class="btn p" style="background:var(--teal);color:#fff" href="mapa.html">Abrir em tela cheia</a></p></div>
+
+</div><div class="in" style="margin-top:22px"><div class="embedbox"><iframe src="mapa.html?embed=1" title="Mapa MARÉ de Belém" loading="lazy" allow="fullscreen"></iframe></div>
+<p class="src" style="margin-top:10px">Use o mapa aqui mesmo ou <a href="mapa.html">abra em tela cheia</a>.</p></div></section>
 
 <section><div class="in">
 <div class="eb">Plano</div><h2>Três fases em seis meses</h2>
