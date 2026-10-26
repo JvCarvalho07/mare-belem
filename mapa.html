@@ -120,7 +120,7 @@ map.on("style.load",()=>{if(map.getSource("dem"))return;
  P("building-3d","fill-extrusion-color",["interpolate",["linear"],["coalesce",["get","render_height"],0],0,"#f4efe8",30,"#e6dccd",90,"#c9b79e"]);
  P("building-3d","fill-extrusion-opacity",.92);
  map.setLight({anchor:"map",position:[1.4,210,35],intensity:.35,color:"#fff6e8"});
- if(map.setSky)map.setSky({"sky-color":"#bcd7e6","horizon-color":"#f3ead9","fog-color":"#eef1f2","sky-horizon-blend":.6,"horizon-fog-blend":.7,"fog-ground-blend":.4});
+
  if(HERO){map.setTerrain({source:"dem",exaggeration:3})}});
 let mk=[],adding=false,pos=null,is3d=HERO;
 const pin=c=>`<svg class="pin" viewBox="0 0 30 38" aria-hidden="true"><path d="M15 37s13-13.2 13-22A13 13 0 0 0 2 15c0 8.8 13 22 13 22z" fill="${c}" stroke="#fff" stroke-width="2.5"/><circle cx="15" cy="15" r="5" fill="#fff"/></svg>`;
