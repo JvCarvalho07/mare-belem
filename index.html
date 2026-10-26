@@ -245,6 +245,13 @@ html.parado{scroll-behavior:auto}
  .mini .th{height:56px}
 }
 
+@media(max-width:700px){
+ .hero .in{justify-content:flex-end;padding-bottom:max(36px,env(safe-area-inset-bottom))}
+ .kicker{margin-bottom:6px;font-size:14px}
+ .mare{margin:4px 0 0 -.03em!important;padding-top:0}
+ .mare .lt{background:linear-gradient(180deg,#f6faf2 0%,#dbe9cb 55%,#b5d96a 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;filter:drop-shadow(0 10px 22px #000a)}
+ .hero h1{font-size:22px}
+}
 </style></head><body>
 
 <nav class="nav" id="nav" aria-label="Principal"><div class="in">
@@ -380,7 +387,7 @@ if(window.gsap&&window.ScrollTrigger&&!still){
  else addEventListener("scroll",()=>navUpd(scrollY),{passive:true});
  document.querySelectorAll(".ld").forEach(e=>{e.classList.remove("ld")});
  const tl=gsap.timeline({defaults:{ease:"power4.out"}});
- tl.from(".mare .lt",{yPercent:60,opacity:0,duration:1.1,stagger:.07,ease:"power3.out"})
+ tl.from(".mare .lt",{yPercent:60,opacity:0,duration:1.1,stagger:.07,ease:"power3.out",clearProps:"transform,opacity"})
    .from(".kicker",{y:20,opacity:0,duration:.9},"-=1.1")
    .from(".hero h1",{y:30,opacity:0,duration:1},"-=.8")
    .from(".hero .acts .btn",{y:20,opacity:0,stagger:.1,duration:.8},"-=.7")
