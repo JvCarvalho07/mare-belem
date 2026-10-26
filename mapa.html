@@ -62,6 +62,7 @@ body:not(.adm) .admin{display:none!important}.adm .pub{display:none}.embed .pane
 .esc .list button:hover{background:#1b2c22}.esc h2{color:#b5d96a}.esc .tb.add{background:#b5d96a;color:#0f1a14}
 .est .estonly{display:block!important}
 .embed .panel,.embed .open{display:none!important}
+.maplibregl-cooperative-gesture-screen{font:600 15px Jost,'Atkinson Hyperlegible',sans-serif;background:#0f3a3f99}
 </style></head><body>
 <div id="map" role="application" aria-label="Mapa de Belém com relatos de alagamento e calçadas"></div>
 <a class="brand" href="index.html"><img src="img/logo-onda.webp" alt=""><b>Mapa MARÉ</b></a>
@@ -123,7 +124,7 @@ const ESTILO_ESTUDIO={version:8,glyphs:"https://tiles.openfreemap.org/fonts/{fon
    layout:{"text-field":["get","name"],"text-font":["Noto Sans Regular"],"text-size":12,"text-letter-spacing":.08,"text-transform":"uppercase"},
    paint:{"text-color":"#557173","text-halo-color":"#eef1f0","text-halo-width":1.5}}
  ]};
-const map=new maplibregl.Map({container:"map",center:[-48.4925,-1.4560],zoom:HERO?14.6:12.6,pitch:HERO?62:0,bearing:HERO?-28:0,maxPitch:78,attributionControl:{compact:true},style:EST?ESTILO_ESTUDIO:"https://tiles.openfreemap.org/styles/"+(ESC?"dark":AQ?"positron":"liberty"),interactive:!HERO||true});
+const map=new maplibregl.Map({cooperativeGestures:Q.has("embed"),pixelRatio:Math.min(devicePixelRatio||1,1.5),container:"map",center:[-48.4925,-1.4560],zoom:HERO?14.6:12.6,pitch:HERO?62:0,bearing:HERO?-28:0,maxPitch:78,attributionControl:{compact:true},style:EST?ESTILO_ESTUDIO:"https://tiles.openfreemap.org/styles/"+(ESC?"dark":AQ?"positron":"liberty"),interactive:!HERO||true});
 window.mareMap=map;
 if(!HERO)map.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
 map.on("style.load",()=>{if(map.getSource("dem"))return;
@@ -186,7 +187,7 @@ function manchaAlagamento(){if(!EST||map.getSource("pontos"))return;
  const t0=performance.now();setInterval(()=>{if(!ativo||document.hidden)return;const k=((performance.now()-t0)/2400)%1;map.setPaintProperty("onda","circle-radius",8+k*60);map.setPaintProperty("onda","circle-stroke-opacity",.85*(1-k))},70);
  map.easeTo({pitch:58,bearing:-24,zoom:14,center:[-48.4880,-1.4545],duration:2600});is3d=true;const b=document.getElementById("b3d");if(b)b.setAttribute("aria-pressed","true");}
 let ta;const agendar=()=>{clearTimeout(ta);ta=setTimeout(aguaNasRuas,500)};
-if(EST){map.on("style.load",()=>setTimeout(()=>{manchaAlagamento();agendar()},60));map.on("moveend",agendar);map.on("sourcedata",e=>{if(e.sourceId==="omt"&&e.isSourceLoaded)agendar()})}
+if(EST){map.on("style.load",()=>setTimeout(()=>{manchaAlagamento();agendar()},60));map.on("moveend",agendar);setTimeout(agendar,2500);setTimeout(agendar,6000)}
 draw();map.on("load",()=>{if(HERO&&!matchMedia("(prefers-reduced-motion: reduce)").matches){const spin=()=>{map.easeTo({bearing:map.getBearing()+20,duration:30000,easing:t=>t});};spin();map.on("moveend",spin)}});
 $("b3d").onclick=function(){if(EST){is3d=!is3d;this.setAttribute("aria-pressed",is3d);map.easeTo(is3d?{pitch:58,bearing:-24,zoom:Math.max(map.getZoom(),14)}:{pitch:0,bearing:0},{duration:1200});return}is3d=!is3d;this.setAttribute("aria-pressed",is3d);
  if(is3d){map.setTerrain({source:"dem",exaggeration:1.5});map.easeTo({pitch:62,bearing:-25,zoom:Math.max(map.getZoom(),14.2),duration:1400})}else{map.setTerrain(null);map.easeTo({pitch:0,bearing:0,duration:900})}};

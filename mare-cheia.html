@@ -47,7 +47,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 
 /* ato 1: superfície */
 .sup{position:relative;height:100svh;min-height:620px;overflow:hidden;background:#0d3d3f}
-.agua{position:absolute;inset:0;background-size:cover;background-position:center}
+.agua{position:absolute;inset:-3%;background-size:cover;background-position:center;will-change:transform;animation:deriva 28s ease-in-out infinite alternate}
+@keyframes deriva{from{transform:scale(1) translate3d(0,0,0)}to{transform:scale(1.05) translate3d(-1.5%,1%,0)}}
 .sup::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#00000052,#0000 30%,#0000 62%,#0000003d)}
 .sup .top{position:absolute;z-index:3;left:0;right:0;top:96px;color:#fff;pointer-events:none}
 .sup .top small{font:400 16px Jost,sans-serif;letter-spacing:.04em;opacity:.92}
@@ -82,9 +83,9 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .mapa{position:relative;margin-top:clamp(28px,4vw,44px);height:min(82vh,760px);min-height:460px}
 .mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
 .mapa::before{content:"";position:absolute;left:0;right:0;top:0;height:60px;z-index:2;pointer-events:none;background:linear-gradient(var(--papel),#f3f5f200)}
-.trilho{position:absolute;z-index:3;left:0;right:0;bottom:22px;display:flex;gap:12px;overflow-x:auto;padding:4px max(22px,calc(50% - 568px)) 10px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.trilho{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:20px}
 .trilho::-webkit-scrollbar{display:none}
-.pc{flex:none;width:260px;scroll-snap-align:start;text-align:left;padding:14px 16px;border-radius:16px;background:#ffffffee;box-shadow:0 10px 26px #0f3a3f26;border:0;font:inherit;color:var(--tinta);cursor:pointer;transition:transform .2s}
+.pc{text-align:left;padding:14px 16px;border-radius:16px;background:#ffffffee;box-shadow:0 10px 26px #0f3a3f26;border:0;font:inherit;color:var(--tinta);cursor:pointer;transition:transform .2s}
 .pc:hover{transform:translateY(-3px)}
 .pc small{display:block;font:600 13px Jost,sans-serif;color:var(--barro)}
 .pc b{display:block;font:600 17px Jost,sans-serif;line-height:1.2;margin:2px 0 4px}
@@ -115,7 +116,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .ac{padding:22px;min-width:0;counter-increment:a}
 .ac::before{content:"Passo " counter(a);display:block;font:600 14px Jost,sans-serif;color:var(--barro);margin-bottom:8px}
 .ac p{font-size:15.5px;color:#bcdcd9;margin:0}
-.leito{position:relative;padding-top:clamp(90px,11vw,140px)}
+.leito{position:relative;padding-block:clamp(90px,11vw,140px) clamp(70px,9vw,110px)}
 .leito .cta{padding:clamp(26px,4vw,44px);display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:end;background:#ffffff12}
 .leito .cta>*{min-width:0}
 .plantas{display:block;width:100%;height:clamp(110px,13vw,180px);margin-top:70px}
@@ -123,7 +124,7 @@ footer{background:var(--fundo);color:#8fb3b0;padding-block:26px;font-size:14px}
 footer .in{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-between}
 footer a{color:#cde9e6}
 @media(max-width:980px){.nav ul{display:none}.sup .base .in{grid-template-columns:1fr}.sup .acts{justify-content:flex-start}.abre{grid-template-columns:1fr}.dados,.frentes{grid-template-columns:1fr}.acoes{grid-template-columns:1fr 1fr}.leito .cta{grid-template-columns:1fr}.prof{display:none}.vfundo{display:none}}
-@media(max-width:600px){.acoes{grid-template-columns:1fr}.nav .btn{display:none}.mapa{height:70vh}.pc{width:220px}}
+@media(max-width:600px){.acoes{grid-template-columns:1fr}.nav .btn{display:none}.mapa{height:70vh}}
 </style></head><body>
 
 <nav class="nav" id="nav" aria-label="Principal">
@@ -163,8 +164,10 @@ footer a{color:#cde9e6}
   </div>
  </div>
  <div class="mapa">
-  <iframe id="mapaF" src="mapa.html?embed=1&amp;tema=estudio&amp;v=5" title="Mapa 3D dos alagamentos de Belém" loading="lazy" allow="fullscreen"></iframe>
-  <div class="trilho" id="trilho">
+  <iframe id="mapaF" src="mapa.html?embed=1&amp;tema=estudio&amp;v=6" title="Mapa 3D dos alagamentos de Belém" loading="lazy" allow="fullscreen"></iframe>
+
+ </div>
+ <div class="in">  <div class="trilho" id="trilho">
    <button class="pc" data-ll="-48.4800,-1.4640"><small>Pedreira e Cremação</small><b>Rua dos Mundurucus</b><span>A mais citada. Parte do canal foi entregue nas obras recentes.</span></button>
    <button class="pc" data-ll="-48.4936,-1.4462"><small>Reduto</small><b>Doca com Manoel Barata</b><span>Alaga na maré alta. Canal reformado para a COP30.</span></button>
    <button class="pc" data-ll="-48.4985,-1.4590"><small>Batista Campos</small><b>Canal da Tamandaré</b><span>Transbordava e tomava a avenida. Conferir após a obra.</span></button>
@@ -172,8 +175,7 @@ footer a{color:#cde9e6}
    <button class="pc" data-ll="-48.4700,-1.4295"><small>Pedreira</small><b>Chuva de 5 de maio de 2026</b><span>Alagamento prendeu uma ambulância.</span></button>
    <button class="pc" data-ll="-48.4468,-1.4172"><small>Souza</small><b>Túnel do Entroncamento</b><span>O túnel do BRT alagou em 8 de maio de 2026.</span></button>
    <button class="pc" data-ll="-48.4570,-1.4746"><small>Guamá</small><b>Augusto Corrêa, UFPA</b><span>Alaga em frente à universidade.</span></button>
-  </div>
- </div>
+  </div></div>
  <p class="nota"><a href="mapa.html?tema=estudio">Abrir o mapa em tela cheia</a>. As faixas verde-água nas ruas são uma simulação a partir das notícias.</p>
 </section>
 
@@ -208,12 +210,11 @@ footer a{color:#cde9e6}
    <div style="display:flex;gap:12px;flex-wrap:wrap"><span class="btn claro" style="cursor:default">Contato em breve</span><a class="btn linha" href="index.html">Voltar para a MARÉ</a></div>
   </div>
  </div>
- <svg class="plantas" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true"><path fill="#062a2f" d="M0 200V150c30-20 50-80 60-140 10 70 24 110 50 140 20-50 36-90 40-150 10 60 26 110 56 150 30-40 44-90 50-130 12 50 28 100 56 130h1128v50z"/><path fill="#04222a" d="M520 200V140c24-30 40-80 46-120 10 50 22 90 46 120 24-40 34-80 40-130 14 60 30 100 60 130 20-30 34-70 40-110 12 50 26 90 52 110 26-40 40-90 44-130 10 60 28 100 58 130V200z"/><path fill="#031b20" d="M1000 200V150c26-30 40-70 48-120 8 50 22 90 48 120 30-40 40-80 46-120 12 50 26 90 54 120 26-30 40-80 46-130 10 60 26 100 56 130 30-40 44-80 50-120 10 50 24 90 52 120V200z"/></svg>
  </div>
 </section>
 </main>
 
-<footer><div class="in"><span>MARÉ · Projeto Maré Cheia · Belém do Pará</span><span>Fotos: Unsplash. Vídeo: Pexels. Mapa: OpenStreetMap, OpenFreeMap. Água: <a href="https://github.com/sirxemic/jquery.ripples" target="_blank" rel="noopener">jQuery Ripples</a>.</span></div></footer>
+<footer><div class="in"><span>MARÉ · Projeto Maré Cheia · Belém do Pará</span><span>Fotos: Unsplash. Vídeo: Pexels. Mapa: OpenStreetMap, OpenFreeMap.</span></div></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -231,20 +232,7 @@ function assar(){return new Promise(res=>{const img=new Image();img.onload=()=>{
  let fs=Math.min(W*.17,H*.3);g.font=`800 ${fs}px Jost, sans-serif`;const mw=g.measureText("MARÉ CHEIA").width;if(mw>W*.86){fs*=W*.86/mw;g.font=`800 ${fs}px Jost, sans-serif`}
  g.textAlign="center";g.textBaseline="middle";g.shadowColor="rgba(0,30,35,.4)";g.shadowBlur=fs*.15;g.fillStyle="rgba(236,250,247,.84)";g.fillText("MARÉ CHEIA",W/2,H*.42);
  res(c.toDataURL("image/jpeg",.86))};img.src="img/u-rio-aereo-hd.webp"})}
-let ondas=false,gotas=null,visivel=true;
-function carregarScript(src){return new Promise((ok,err)=>{const s=document.createElement("script");s.src=src;s.onload=ok;s.onerror=err;document.head.appendChild(s)})}
-async function iniciarAgua(){
- try{await document.fonts.load("800 100px Jost")}catch(e){}
- agua.style.backgroundImage=`url(${await assar()})`;
- if(!forte)return;
- try{
-  if(!window.jQuery||!jQuery.fn.ripples){await carregarScript("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js");await carregarScript("https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js")}
-  if(ondas)jQuery(agua).ripples("destroy");
-  jQuery(agua).ripples({resolution:192,dropRadius:14,perturbance:.014,interactive:true});ondas=true;
-  clearInterval(gotas);gotas=setInterval(()=>{if(!visivel)return;const r=agua.getBoundingClientRect();jQuery(agua).ripples("drop",Math.random()*r.width,Math.random()*r.height,12,.018)},2600);
- }catch(e){}
-}
-new IntersectionObserver(es=>{visivel=es[0].isIntersecting;if(ondas)try{jQuery(agua).ripples(visivel?"play":"pause")}catch(e){}},{threshold:0}).observe(agua);
+async function iniciarAgua(){try{await document.fonts.load("800 100px Jost")}catch(e){}agua.style.backgroundImage=`url(${await assar()})`}
 iniciarAgua();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(iniciarAgua,500)});
 
 // 2) vídeo só no computador e só quando aparece
