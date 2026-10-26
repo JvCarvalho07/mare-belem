@@ -3,6 +3,7 @@
 <title>MARÉ Belém</title>
 <meta name="description" content="MARÉ: empresa júnior socioambiental de Belém. Mobilização, acessibilidade e renovação estrutural para uma cidade-floresta mais justa.">
 <meta name="claude:viewport-fit-sides" content="cover">
+<meta property="og:type" content="website"><meta property="og:title" content="MARÉ Belém"><meta property="og:description" content="Empresa júnior socioambiental de Belém: mobilização, acessibilidade e renovação estrutural."><meta property="og:image" content="https://jvcarvalho07.github.io/mare-belem/img/u-floresta-nevoa-m.webp"><meta property="og:url" content="https://jvcarvalho07.github.io/mare-belem/"><meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#0f1a14">
 <link rel="icon" href="img/logo-onda.webp">
 <link rel="preload" as="image" href="img/u-floresta-nevoa-2k.webp" media="(min-width:801px)"><link rel="preload" as="image" href="img/u-floresta-nevoa-m.webp" media="(max-width:800px)">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,7 +54,7 @@ section{padding-block:clamp(56px,7vw,96px)}
 @keyframes fog{to{transform:translateX(6%)}}
 .hero .in{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;justify-content:center;padding-top:60px}
 .kicker{font:400 clamp(15px,1.4vw,18px) Jost,sans-serif;letter-spacing:.04em;color:var(--mut);margin-bottom:6px}
-.mare{font:800 clamp(112px,23vw,330px)/1 Jost,sans-serif;letter-spacing:-.04em;margin:-.14em 0 -.1em -.05em;padding-top:.06em;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 20px 40px #0008)}
+.mare{white-space:nowrap;font:800 clamp(76px,22vw,330px)/1 Jost,sans-serif;letter-spacing:-.04em;margin:-.14em 0 -.1em -.05em;padding-top:.06em;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 20px 40px #0008)}
 .hero .lead{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,4vw,60px);align-items:end;margin-top:clamp(14px,3vh,34px)}
 .hero .lead>*{min-width:0}
 .hero h1{font-size:clamp(24px,2.6vw,38px);font-weight:300;line-height:1.2;max-width:24ch}
@@ -170,11 +171,14 @@ html.parado{scroll-behavior:auto}
 @media(max-width:800px){.hero .bg{background-image:url(img/u-floresta-nevoa-m.webp)}}
 .hero .bg{will-change:transform}
 .lf{will-change:transform}
+.menuBtn{display:none;margin-left:auto;font:600 15px Jost,sans-serif;color:inherit;background:#ffffff1f;border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
+@media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
 </style></head><body>
 
 <nav class="nav" id="nav" aria-label="Principal"><div class="in">
  <a class="logo" href="#" aria-label="MARÉ, início"><img src="img/logo-onda.webp" alt=""><span>MARÉ</span></a>
- <ul><li><a href="#frentes">Frentes</a></li><li><a href="#servicos">Serviços</a></li><li><a href="#projetos">Projetos</a></li><li><a href="#contato">Contato</a></li></ul>
+ <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista">Menu</button>
+ <ul id="menuLista"><li><a href="#frentes">Frentes</a></li><li><a href="#servicos">Serviços</a></li><li><a href="#projetos">Projetos</a></li><li><a href="#contato">Contato</a></li></ul>
  <a class="btn broto" href="#contato">Fale com a gente</a>
 </div></nav>
 
@@ -327,4 +331,5 @@ if(window.gsap&&window.ScrollTrigger&&!still){
 }
 </script>
 
+<script>(()=>{const b=document.getElementById("menuBtn"),l=document.getElementById("menuLista");if(!b)return;b.onclick=()=>{const a=l.classList.toggle("aberto");b.setAttribute("aria-expanded",a);b.textContent=a?"Fechar":"Menu"};l.querySelectorAll("a").forEach(x=>x.addEventListener("click",()=>{l.classList.remove("aberto");b.setAttribute("aria-expanded","false");b.textContent="Menu"}))})()</script>
 </body></html>

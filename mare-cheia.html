@@ -2,6 +2,7 @@
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Maré Cheia · MARÉ</title>
 <meta name="description" content="Maré Cheia, projeto da MARÉ: alagamentos, calçadas e acessibilidade em Belém, com mapa 3D e ações nos bairros.">
+<meta property="og:type" content="website"><meta property="og:title" content="Maré Cheia · MARÉ"><meta property="og:description" content="Alagamentos, calçadas e acessibilidade em Belém: 22 pontos num mapa 3D."><meta property="og:image" content="https://jvcarvalho07.github.io/mare-belem/img/u-rio-aereo.webp"><meta property="og:url" content="https://jvcarvalho07.github.io/mare-belem/mare-cheia.html"><meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#0f1a14">
 <link rel="icon" href="img/logo-onda.webp">
 <link rel="preload" as="image" href="img/u-rio-aereo-hd.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -125,11 +126,15 @@ footer .in{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-betwe
 footer a{color:#cde9e6}
 @media(max-width:980px){.nav ul{display:none}.sup .base .in{grid-template-columns:1fr}.sup .acts{justify-content:flex-start}.abre{grid-template-columns:1fr}.dados,.frentes{grid-template-columns:1fr}.acoes{grid-template-columns:1fr 1fr}.leito .cta{grid-template-columns:1fr}.prof{display:none}.vfundo{display:none}}
 @media(max-width:600px){.acoes{grid-template-columns:1fr}.nav .btn{display:none}.mapa{height:70vh}}
+.menuBtn{display:none;margin-left:auto;font:600 15px Jost,sans-serif;color:inherit;background:#ffffff1f;border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
+@media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
+.nav .menuBtn{color:#fff}.nav.claro .menuBtn{color:var(--tinta);background:#0f7f8614}
 </style></head><body>
 
 <nav class="nav" id="nav" aria-label="Principal">
  <a class="back" href="index.html"><img src="img/logo-onda.webp" alt="">MARÉ</a>
- <ul><li><a href="#pontos">Pontos</a></li><li><a href="#mergulho">O problema</a></li><li><a href="#acoes">Ações</a></li></ul>
+ <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista">Menu</button>
+ <ul id="menuLista"><li><a href="#pontos">Pontos</a></li><li><a href="#mergulho">O problema</a></li><li><a href="#acoes">Ações</a></li></ul>
  <a class="btn teal" href="#enviar">Enviar um ponto</a>
 </nav>
 
@@ -265,4 +270,5 @@ if(window.gsap&&window.ScrollTrigger){
  upd(scrollY);
 }else{document.querySelectorAll("[data-n]").forEach(contar);addEventListener("scroll",()=>upd(scrollY),{passive:true});upd(scrollY)}
 </script>
+<script>(()=>{const b=document.getElementById("menuBtn"),l=document.getElementById("menuLista");if(!b)return;b.onclick=()=>{const a=l.classList.toggle("aberto");b.setAttribute("aria-expanded",a);b.textContent=a?"Fechar":"Menu"};l.querySelectorAll("a").forEach(x=>x.addEventListener("click",()=>{l.classList.remove("aberto");b.setAttribute("aria-expanded","false");b.textContent="Menu"}))})()</script>
 </body></html>
