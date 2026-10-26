@@ -111,8 +111,16 @@ map.on("style.load",()=>{if(map.getSource("dem"))return;
  const L=map.getStyle().layers,first=L.find(l=>l.type==="symbol");
  map.addLayer({id:"sat",type:"raster",source:"sat",layout:{visibility:"none"}},first&&first.id);
  map.addLayer({id:"hill",type:"hillshade",source:"dem",paint:{"hillshade-exaggeration":.6,"hillshade-shadow-color":"#2b1430"}},"sat");
- if(map.getLayer("building-3d"))map.setPaintProperty("building-3d","fill-extrusion-color",["interpolate",["linear"],["coalesce",["get","render_height"],0],0,"#efe6da",40,"#d9c6ae",120,"#b99a77"]);
- if(map.getLayer("water"))map.setPaintProperty("water","fill-color","#9c8a6b");
+ L.forEach(l=>{if(/^poi|^highway-shield|^road_shield|^aeroway/.test(l.id))map.setLayoutProperty(l.id,"visibility","none")});
+ const P=(id,k,v)=>{if(map.getLayer(id))try{map.setPaintProperty(id,k,v)}catch(e){}};
+ P("background","background-color","#eef1f2");
+ L.filter(l=>l.type==="fill"&&/landuse|landcover|park|wood|grass/.test(l.id)).forEach(l=>P(l.id,"fill-opacity",.45));
+ P("water","fill-color","#a89272");
+ P("building","fill-color","#e3ddd4");
+ P("building-3d","fill-extrusion-color",["interpolate",["linear"],["coalesce",["get","render_height"],0],0,"#f4efe8",30,"#e6dccd",90,"#c9b79e"]);
+ P("building-3d","fill-extrusion-opacity",.92);
+ map.setLight({anchor:"map",position:[1.4,210,35],intensity:.35,color:"#fff6e8"});
+ if(map.setSky)map.setSky({"sky-color":"#bcd7e6","horizon-color":"#f3ead9","fog-color":"#eef1f2","sky-horizon-blend":.6,"horizon-fog-blend":.7,"fog-ground-blend":.4});
  if(HERO){map.setTerrain({source:"dem",exaggeration:3})}});
 let mk=[],adding=false,pos=null,is3d=HERO;
 const pin=c=>`<svg class="pin" viewBox="0 0 30 38" aria-hidden="true"><path d="M15 37s13-13.2 13-22A13 13 0 0 0 2 15c0 8.8 13 22 13 22z" fill="${c}" stroke="#fff" stroke-width="2.5"/><circle cx="15" cy="15" r="5" fill="#fff"/></svg>`;
@@ -122,7 +130,7 @@ function draw(){mk.forEach(m=>m.remove());mk=[];const on=[...document.querySelec
   mk.push(new maplibregl.Marker({element:el,anchor:"bottom"}).setLngLat([r.lng,r.lat]).setPopup(new maplibregl.Popup({offset:30,maxWidth:"260px"}).setHTML(h)).addTo(map))});
  $("list").innerHTML=V.map((r,i)=>`<li><button data-i="${i}"><i style="background:${T[r.tipo][1]}"></i><span><b>${esc(r.local||r.bairro||T[r.tipo][0])}</b>${esc(r.bairro)} · ${r.imp?"imprensa":"morador"}</span></button></li>`).join("");$("list").querySelectorAll("button").forEach(b=>b.onclick=()=>{const r=V[+b.dataset.i];map.flyTo({center:[r.lng,r.lat],zoom:16});mk[+b.dataset.i].togglePopup()})}
 document.addEventListener("change",e=>{if(e.target.classList.contains("f"))draw()});
-draw();map.on("load",()=>{if(HERO&&!matchMedia("(prefers-reduced-motion: reduce)").matches){const spin=()=>{map.easeTo({bearing:map.getBearing()+30,duration:24000,easing:t=>t});};spin();map.on("moveend",spin)}});
+draw();map.on("load",()=>{if(HERO&&!matchMedia("(prefers-reduced-motion: reduce)").matches){const spin=()=>{map.easeTo({bearing:map.getBearing()+20,duration:30000,easing:t=>t});};spin();map.on("moveend",spin)}});
 $("b3d").onclick=function(){is3d=!is3d;this.setAttribute("aria-pressed",is3d);
  if(is3d){map.setTerrain({source:"dem",exaggeration:+$("ex").value});map.easeTo({pitch:62,bearing:-25,zoom:Math.max(map.getZoom(),14.2),duration:1400})}else{map.setTerrain(null);map.easeTo({pitch:0,bearing:0,duration:900})}};
 $("bsat").onclick=function(){const on=this.getAttribute("aria-pressed")!=="true";this.setAttribute("aria-pressed",on);map.setLayoutProperty("sat","visibility",on?"visible":"none")};
