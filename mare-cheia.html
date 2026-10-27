@@ -13,9 +13,9 @@
    Atos: superfície (rio + água) → papel (22 pontos + mapa de ponta a ponta) → mergulho (dados e ações) → leito (contato). */
 :root{--papel:#f3f5f2;--tinta:#123236;--mut:#557173;--teal:#0f7f86;--teal2:#2bb3b1;--fundo:#03161b;--espuma:#e6f6f3;--barro:#b88a52;color-scheme:light}
 *{box-sizing:border-box}
-html{scrollbar-width:none}
-::-webkit-scrollbar{width:0;height:0;display:none}
-body{margin:0;color:var(--tinta);background:var(--papel);font:18px/1.65 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:hidden}
+html{scrollbar-color:#9db7b5 var(--papel);overflow-x:clip}
+::-webkit-scrollbar{width:12px}::-webkit-scrollbar-track{background:var(--papel)}::-webkit-scrollbar-thumb{background:#9db7b5;border-radius:999px;border:3px solid var(--papel)}::-webkit-scrollbar-thumb:hover{background:var(--teal)}
+body{margin:0;color:var(--tinta);background:var(--papel);font:18px/1.65 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
 .in{max-width:1180px;margin:0 auto;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:Jost,sans-serif;margin:0;text-wrap:balance}
 h2{font-size:clamp(36px,4.8vw,64px);font-weight:300;line-height:1.02;letter-spacing:-.02em;margin-bottom:18px}
