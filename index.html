@@ -50,6 +50,22 @@ section{padding-block:clamp(56px,7vw,96px)}
 /* abertura */
 .hero{position:relative;height:100svh;min-height:620px;max-height:1060px;overflow:hidden}
 .hero .bg{position:absolute;inset:-8% 0 0;background:url(img/u-floresta-nevoa-2k.webp) center 30%/cover;will-change:transform;}
+.folhas{position:absolute;top:0;left:0;right:0;height:210vh;overflow:hidden;pointer-events:none;z-index:4}
+.lf{position:absolute;pointer-events:none}
+.lf img,.lf svg{width:100%;height:auto;display:block}
+.lf.fg1{--w:clamp(220px,26vw,420px);width:calc(var(--w)*1.143);left:calc(-6% - var(--w)*.0714);top:calc(min(100svh,1060px) - 12vw - var(--w)*.0714);opacity:.9}
+.lf.fg1 img{transform-origin:20% 90%;animation:sway 9s ease-in-out infinite}
+.lf.fg2{--w:clamp(130px,15vw,250px);width:calc(var(--w)*1.553);right:-8%;top:-3%;opacity:.8}
+.lf.fg2 img{transform-origin:80% 10%;animation:sway2 11s ease-in-out infinite}
+.lf.m1{width:54px;left:12%;top:-8%;animation:fall 26s linear infinite}
+.lf.m2{width:38px;left:58%;top:-8%;animation:fall 32s linear infinite -11s}
+.lf.m3{width:46px;left:83%;top:-8%;animation:fall 38s linear infinite -21s}
+@keyframes sway{50%{transform:rotate(4deg) translateY(-6px)}}
+@keyframes sway2{50%{transform:rotate(-5deg) translateY(8px)}}
+@keyframes fall{0%{transform:translate(0,0) rotate(0);opacity:0}6%{opacity:.9}45%{transform:translate(-60px,80vh) rotate(150deg);opacity:.85}100%{transform:translate(40px,190vh) rotate(330deg);opacity:0}}
+.calmo .lf.m1,.calmo .lf.m2,.calmo .lf.m3{display:none}.calmo .lf img{animation-play-state:paused}
+.folhas.fora{visibility:hidden}.fora .lf,.fora .lf img{animation-play-state:paused}
+@media(max-width:700px){.lf.m3,.lf.fg2{display:none}.lf.fg1{--w:200px;opacity:.7}}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;z-index:2;pointer-events:none;background:linear-gradient(180deg,#0f1a1400,#0f1a14)}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 50% 40%,#0f1a1400 0%,#0f1a1499 60%,#0f1a14 100%),linear-gradient(180deg,#0f1a1480,#0f1a1400 30%,#0f1a1400 100%)}
 .fog{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.55;background:radial-gradient(40% 25% at 20% 60%,#e7eee633,transparent 70%),radial-gradient(35% 20% at 75% 45%,#e7eee626,transparent 70%)}
@@ -58,9 +74,11 @@ section{padding-block:clamp(56px,7vw,96px)}
 .mare{white-space:nowrap;font:800 clamp(76px,22vw,330px)/1 Jost,sans-serif;letter-spacing:-.04em;margin:-.14em 0 -.1em -.05em;padding-top:.06em;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero .lead{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,4vw,60px);align-items:end;margin-top:clamp(14px,3vh,34px)}
 .hero .lead>*{min-width:0}
-.proj::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:999px;box-shadow:0 0 26px 5px #b5d96a88;animation:brilho 2.4s ease-in-out infinite alternate}
-.proj i,.rpin i{position:relative;isolation:isolate;width:9px;height:9px;border-radius:50%;background:var(--broto)}
-.proj i::before,.rpin i::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:#b5d96a99;animation:anel 2.2s ease-out infinite}
+.selo{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:10px;justify-self:end;align-self:end;padding:11px 20px;border-radius:999px;font:600 15px Jost,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--broto);background:#0f1a14d9;box-shadow:inset 0 0 0 1px #b5d96a99;text-decoration:none}
+.selo::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:999px;box-shadow:0 0 30px 6px #b5d96a77;animation:brilho 2.4s ease-in-out infinite alternate}
+.selo:hover{transform:translateY(-2px)}
+.selo i,.rpin i{position:relative;isolation:isolate;width:9px;height:9px;border-radius:50%;background:var(--broto)}
+.selo i::before,.rpin i::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:#b5d96a99;animation:anel 2.2s ease-out infinite}
 @keyframes brilho{from{opacity:.25}to{opacity:1}}
 @keyframes anel{from{transform:scale(1);opacity:.8}to{transform:scale(2.6);opacity:0}}
 .hero h1{font-size:clamp(24px,2.6vw,38px);font-weight:300;line-height:1.2;max-width:24ch}
@@ -126,7 +144,7 @@ footer a{color:var(--nevoa)}
 .rv{opacity:0;transform:translateY(34px);transition:opacity 1s,transform 1s cubic-bezier(.2,.7,.1,1)}
 .rv.on{opacity:1;transform:none}
 
-@media(max-width:980px){.nav ul{display:none}.hero .lead,.mapa .top,footer .in{grid-template-columns:1fr}.mini{justify-self:start}.frentes{grid-template-columns:1fr}.fr{aspect-ratio:4/3}.svc{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:980px){.nav ul{display:none}.hero .lead,.mapa .top,footer .in{grid-template-columns:1fr}.selo{justify-self:start;margin-top:6px}.frentes{grid-template-columns:1fr}.fr{aspect-ratio:4/3}.svc{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.nav .btn{display:none}.sv{grid-template-columns:96px 1fr}.sv img{width:96px;height:96px}.nums,.steps{grid-template-columns:1fr}.mini{display:none}.leaf{display:none}}
 html.parado{scroll-behavior:auto}
 .parado *,.parado *::before,.parado *::after{animation:none!important;transition:none!important}
@@ -159,7 +177,7 @@ html.parado{scroll-behavior:auto}
 @media(max-width:980px){.proj2{grid-template-columns:1fr}.pj.big{grid-row:auto;min-height:420px}}
 .mare{background:none!important;filter:none!important}
 .mare{letter-spacing:0!important}
-.mare .lt{display:inline-block;padding-top:.2em;margin-top:-.2em;margin-right:.035em;letter-spacing:0;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 20px 40px #0008)}
+.mare .lt{display:inline-block;padding-top:.2em;margin-top:-.2em;margin-right:.035em;letter-spacing:0;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent}
 @media(max-width:800px){.hero .bg{background-image:url(img/u-floresta-nevoa-m.webp)}}
 .hero .bg{will-change:transform}
 .menuBtn{display:none;margin-left:auto;font:600 15px Jost,sans-serif;color:inherit;background:#ffffff1f;border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
@@ -169,21 +187,18 @@ html.parado{scroll-behavior:auto}
 .dfoto{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,#000 70%,transparent);mask-image:linear-gradient(90deg,#000 70%,transparent)}
 .dfoto img{position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;will-change:transform}
 .dtexto{display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,6vw,90px) max(22px,calc((100vw - 1220px)/2 + 22px)) clamp(40px,6vw,90px) clamp(10px,3vw,40px)}
-.etq{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;padding:7px 16px;border-radius:999px;font:600 14px Jost,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--broto);background:#b5d96a22;box-shadow:inset 0 0 0 1px #b5d96a88;margin-bottom:16px}
-.etq i{position:relative;isolation:isolate;width:9px;height:9px;border-radius:50%;background:var(--broto)}
-.etq i::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:#b5d96a99;animation:anel 2.2s ease-out infinite}
+.etq{font:600 15px Jost,sans-serif;color:var(--broto);margin-bottom:10px}
 .dsite{font-size:15px;color:var(--mut);margin:0 0 18px;padding-left:14px;border-left:2px solid var(--broto)}
 .destaque h2{font-size:clamp(56px,8vw,120px);font-weight:800;letter-spacing:-.03em;line-height:.9;margin-bottom:22px}
 .dnum{list-style:none;margin:10px 0 30px;padding:0;display:flex;flex-wrap:wrap;gap:12px 34px}
 .dnum b{display:block;font:300 clamp(40px,4vw,58px)/1 Jost,sans-serif;color:var(--broto);font-variant-numeric:tabular-nums}
 .dnum span{font-size:15px;color:var(--mut)}
-.destaque .btn{align-self:flex-start;padding:18px 34px;font-size:17px;box-shadow:0 0 36px #b5d96a55}
+.destaque .btn{align-self:flex-start;padding:18px 34px;font-size:17px}
 
-.faixa{overflow:hidden;border-block:1px solid var(--line);padding-block:18px;white-space:nowrap}
-.trilha{display:inline-flex;align-items:center;gap:34px;animation:corre 40s linear infinite;will-change:transform}
-.trilha span{font:300 clamp(30px,4vw,56px)/1 Jost,sans-serif;color:var(--nevoa)}
-.trilha span:nth-child(4n+3){color:transparent;-webkit-text-stroke:1px #e7eee688}
-.trilha i{width:12px;height:12px;border-radius:50% 0;background:var(--broto);transform:rotate(45deg);flex:none}
+.faixa{overflow:hidden;border-block:1px solid var(--line);padding-block:12px;white-space:nowrap}
+.trilha{display:inline-flex;align-items:center;gap:28px;animation:corre 90s linear infinite;will-change:transform}
+.trilha span{font:300 clamp(15px,1.4vw,19px)/1 Jost,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.trilha i{width:7px;height:7px;opacity:.7;border-radius:50% 0;background:var(--broto);transform:rotate(45deg);flex:none}
 @keyframes corre{to{transform:translate3d(-50%,0,0)}}
 
 .frentes-s{padding-bottom:0}
@@ -243,7 +258,7 @@ html.parado{scroll-behavior:auto}
  .hero .in{justify-content:flex-end;padding-bottom:max(36px,env(safe-area-inset-bottom))}
  .kicker{margin-bottom:6px;font-size:14px}
  .mare{margin:4px 0 0 -.03em!important;padding-top:0}
- .mare .lt{background:linear-gradient(180deg,#f6faf2 0%,#dbe9cb 55%,#b5d96a 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;filter:drop-shadow(0 10px 22px #000a)}
+ .mare .lt{background:linear-gradient(180deg,#f6faf2 0%,#dbe9cb 55%,#b5d96a 100%)!important;-webkit-background-clip:text!important;background-clip:text!important}
  .hero h1{font-size:22px}
 }
 
@@ -253,37 +268,29 @@ html.parado{scroll-behavior:auto}
    letras: sombra menor; no celular, cor lisa (a letra recortada na foto sumia em alguns aparelhos);
    animações param quando a parte sai da tela. */
 .hero .in{will-change:transform,opacity}
-.mare .lt{filter:drop-shadow(0 12px 22px #0007)}
+
 .rio .agua{filter:none}
-.trilha.fora,.nav.fora .proj::before{animation-play-state:paused}
+.trilha.fora,.hero.fora .selo::before,.hero.fora .selo i::before{animation-play-state:paused}
 @media(max-width:700px){
  .mare .lt{background:none!important;-webkit-background-clip:border-box!important;background-clip:border-box!important;color:#eef5e8!important;-webkit-text-fill-color:#eef5e8;filter:none!important;text-shadow:0 6px 24px #0009}
  .hero .bg{will-change:auto}
 }
 
 /* ---- atalho do projeto Maré Cheia ---- */
-.proj{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:8px;margin-left:auto;padding:8px 14px 8px 12px;border-radius:999px;background:#b5d96a1f;box-shadow:inset 0 0 0 1px #b5d96a66;color:var(--nevoa);text-decoration:none;font:600 15px Jost,sans-serif;white-space:nowrap;transition:background .3s}
-.proj:hover{background:#b5d96a33}
-.proj i{width:8px;height:8px}
-.proj .seta{opacity:.7}
-.nav ul{margin-left:0}
 .flutua{display:none}
 @media(max-width:980px){
- .proj{margin-left:auto;padding:8px 12px;font-size:14px}
- .menuBtn{margin-left:8px}
+ .menuBtn{margin-left:auto}
  .flutua{position:fixed;z-index:29;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:8px 16px 8px 8px;border-radius:18px;background:#0f1a14eb;box-shadow:0 14px 34px #0008,inset 0 0 0 1px #b5d96a55;color:var(--nevoa);text-decoration:none;transform:translateY(140%);transition:transform .45s cubic-bezier(.2,.7,.1,1)}
  .flutua.on{transform:none}
  .flutua .fth{height:44px;border-radius:12px;background:url(img/poster-mapa.jpg) center/cover}
  .flutua b{display:block;font:600 16px Jost,sans-serif}.flutua small{font-size:13px;color:var(--mut)}
  .flutua .seta{font-size:22px;color:var(--broto)}
 }
-@media(max-width:600px){.proj .lg{display:none}.menuBtn{padding:8px 13px}.nav .in{gap:10px}.logo span{display:none}}
-@media(max-width:420px){.proj{font-size:13.5px;padding:7px 11px}}
+@media(max-width:600px){.menuBtn{padding:8px 13px}.nav .in{gap:10px}.logo span{display:none}}
 </style></head><body>
 
 <nav class="nav" id="nav" aria-label="Principal"><div class="in">
  <a class="logo" href="#" aria-label="MARÉ, início"><img class="nova" src="img/logo-mare-escura-forte.webp" alt="MARÉ" width="700" height="381"></a>
- <a class="proj" href="mare-cheia.html"><i aria-hidden="true"></i>Projeto atual<span class="seta" aria-hidden="true">↗</span></a>
  <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista">Menu</button>
  <ul id="menuLista"><li><a href="#projeto">O projeto</a></li><li><a href="#frentes">Frentes</a></li><li><a href="#servicos">Serviços</a></li><li><a href="#contato">Contato</a></li></ul>
  <a class="btn broto contato" href="#contato">Fale com a gente</a>
@@ -293,6 +300,20 @@ html.parado{scroll-behavior:auto}
 <svg class="rio" id="rio" viewBox="0 0 40 1000" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="gRio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b5d96a"/><stop offset="1" stop-color="#6fd3c2"/></linearGradient></defs>
  <path class="base" d="M20 0C34 80 6 160 20 240S34 400 20 480 6 640 20 720 34 880 20 1000"/><path class="agua" id="rioAgua" d="M20 0C34 80 6 160 20 240S34 400 20 480 6 640 20 720 34 880 20 1000"/></svg>
 <a class="rpin" id="rpin" href="#projeto" aria-label="Ir ao projeto Maré Cheia"><i></i><span>Maré Cheia</span></a>
+<div class="folhas" aria-hidden="true">
+ <div class="lf fg1"><img src="img/folha-fg1.webp" alt="" width="960" height="508" decoding="async"></div>
+ <div class="lf fg2"><img src="img/folha-fg2.webp" alt="" width="932" height="1047" decoding="async"></div>
+ <div class="lf m1"><svg viewBox="0 0 40 70"><use href="#folha-peq"/></svg></div>
+ <div class="lf m2"><svg viewBox="0 0 40 70"><use href="#folha-peq"/></svg></div>
+ <div class="lf m3"><svg viewBox="0 0 200 260"><use href="#folha-larga"/></svg></div>
+</div>
+ <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9ccf6c"/><stop offset=".55" stop-color="#4f8a45"/><stop offset="1" stop-color="#1f4d2b"/></linearGradient>
+  <linearGradient id="gB" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c3e08a"/><stop offset="1" stop-color="#5b9450"/></linearGradient>
+  <symbol id="folha-larga" viewBox="0 0 200 260"><path fill="url(#gA)" d="M100 6C40 40 8 110 22 178c10 46 44 72 78 76 34-4 68-30 78-76C192 110 160 40 100 6z"/><path d="M100 14v240" stroke="#173d22" stroke-width="3" opacity=".45" fill="none"/><path d="M100 60 58 92M100 92 42 136M100 128 40 178M100 166 56 214M100 60l42 32M100 92l58 44M100 128l60 50M100 166l44 48" stroke="#173d22" stroke-width="2" opacity=".3" fill="none"/></symbol>
+  <symbol id="folha-acai" viewBox="0 0 260 120"><path d="M4 112C80 70 160 40 256 6" stroke="#2f5e33" stroke-width="3" fill="none"/><g fill="url(#gB)"><path d="M40 92c-6-24 4-44 20-56-2 22-6 40-20 56z"/><path d="M40 92c20-10 42-12 62-6-20 8-40 12-62 6z"/><path d="M90 72c-4-26 8-46 24-56-2 22-8 40-24 56z"/><path d="M90 72c22-8 44-8 62 0-20 6-42 8-62 0z"/><path d="M142 50c-2-24 10-42 26-50-4 20-10 36-26 50z"/><path d="M142 50c20-6 40-4 56 4-18 4-38 4-56-4z"/><path d="M196 28c0-18 10-30 22-36-4 16-10 28-22 36z"/><path d="M196 28c14-2 28 0 40 8-14 2-28 0-40-8z"/></g></symbol>
+  <symbol id="folha-peq" viewBox="0 0 40 70"><path fill="url(#gB)" d="M20 2C4 20 2 44 20 68 38 44 36 20 20 2z"/><path d="M20 8v58" stroke="#1f4d2b" stroke-width="1.6" opacity=".5"/></symbol>
+ </defs></svg>
 <main>
 <section class="hero" style="padding:0">
  <div class="bg" id="hbg" role="img" aria-label="Floresta amazônica coberta de névoa"></div>
@@ -305,7 +326,7 @@ html.parado{scroll-behavior:auto}
     <h1>Mobilização, acessibilidade e renovação estrutural para a cidade-floresta.</h1>
     <div class="acts"><a class="btn broto contato" href="#contato">Quero uma proposta</a><a class="btn vidro" href="#manifesto">Conheça nosso trabalho</a></div>
    </div>
-   
+   <a class="selo ld d4" href="mare-cheia.html"><i></i>Projeto atual</a>
   </div>
  </div>
  
@@ -318,7 +339,7 @@ html.parado{scroll-behavior:auto}
 <section class="destaque" id="projeto" aria-label="Projeto atual: Maré Cheia">
  <div class="dfoto"><img src="img/u-rio-aereo.webp" alt="Rio sinuoso cortando a floresta, visto de cima" loading="lazy"></div>
  <div class="dtexto">
-  <span class="etq"><i></i>Projeto atual</span>
+  <span class="etq">Projeto atual</span>
   <h2>Maré Cheia</h2>
   <p>Alagamentos, calçadas e acessibilidade em Belém. Um mapa 3D com 22 pontos já registrados, para levar cada problema a quem pode resolver.</p>
   <ul class="dnum"><li><b data-n="22">22</b><span>pontos no mapa</span></li><li><b data-n="145">145</b><span>pontos críticos na cidade</span></li><li><b data-n="150" data-s=" mm">150 mm</b><span>de chuva num só dia</span></li></ul>
@@ -394,7 +415,9 @@ const flutuaUpd=y=>{if(!flutua||innerWidth>980)return;const r=secProj.getBoundin
 addEventListener("scroll",()=>flutuaUpd(scrollY),{passive:true});
 // animações contínuas param fora da tela
 {const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("fora",!e.isIntersecting)),{rootMargin:"80px"});
- document.querySelectorAll(".hero,.trilha").forEach(el=>io.observe(el))}
+ document.querySelectorAll(".hero,.folhas,.trilha").forEach(el=>io.observe(el))}
+// depois de 14 s parado, o movimento de enfeite das folhas para (economiza placa de vídeo)
+setTimeout(()=>document.documentElement.classList.add("calmo"),14000);
 const mf=document.getElementById("mf");
 mf.innerHTML=mf.innerHTML.split(/(<em>.*?<\/em>|\s+)/).map(t=>/^\s+$/.test(t)||!t?t:`<span>${t}</span>`).join("");
 const words=[...mf.querySelectorAll(":scope>span")];
@@ -417,8 +440,11 @@ if(window.gsap&&window.ScrollTrigger&&!still){
    .from(".kicker",{y:20,opacity:0,duration:.9},"-=1.1")
    .from(".hero h1",{y:30,opacity:0,duration:1},"-=.8")
    .from(".hero .acts .btn",{y:20,opacity:0,stagger:.1,duration:.8},"-=.7")
-   .from(".mini",{x:40,opacity:0,duration:1},"-=.8");
+   .from(".selo",{x:40,opacity:0,duration:1},"-=.8")
+   .from(".lf.fg1,.lf.fg2",{opacity:0,duration:1.6},"-=1.4");
  gsap.to(hbg,{yPercent:14,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
+ gsap.to(".lf.fg1",{y:-160,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
+ gsap.to(".lf.fg2",{y:120,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
  gsap.to(".hero .in",{y:-120,opacity:0,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom 20%",scrub:true}});
  gsap.set(words,{opacity:.16});
  gsap.to(words,{opacity:1,stagger:.05,ease:"none",scrollTrigger:{trigger:mf,start:"top 80%",end:"bottom 45%",scrub:true}});
