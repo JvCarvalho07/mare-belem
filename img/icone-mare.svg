@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Ícone MARÉ: um M cujas pontas são as torres do Ver-o-Peso, sobre a linha da maré -->
+  <rect width="64" height="64" rx="16" fill="#2471ad"/>
+  <path fill="#fff" d="M14 46 V23.5 L19 9 L24 23.5 L32 36 L40 23.5 L45 9 L50 23.5 V46 H44.6 V28 L32 46.5 L19.4 28 V46 Z"/>
+  <path d="M11 52.5 q5.25 -4 10.5 0 t10.5 0 t10.5 0 t10.5 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+</svg>
