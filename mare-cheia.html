@@ -149,15 +149,15 @@ footer a{color:#cde9e6}
 .carrega{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:#03161b;color:#e6f6f3;transition:opacity .7s ease,visibility .7s}
 .carrega.sai{opacity:0;visibility:hidden}
 .carrega .cw{display:flex;flex-direction:column;align-items:center;gap:16px}
-.carrega .gota{position:relative;width:86px;height:86px;border-radius:50%;overflow:hidden;background:#0a2a2e;box-shadow:0 0 0 2px #2bb3b155}
-.carrega .gota img{position:absolute;inset:16px;width:54px;height:54px;border-radius:50%;background:#fff;object-fit:contain;z-index:2}
-.carrega .gota i{position:absolute;left:-50%;width:200%;height:200%;top:100%;border-radius:42%;background:#2bb3b1;animation:enche 2.4s ease-in-out forwards,gira 3s linear infinite}
-@keyframes enche{to{top:8%}}@keyframes gira{to{transform:rotate(360deg)}}
-.carrega b{font:800 22px Jost,sans-serif;letter-spacing:.12em}
-.carrega small{font:400 14px Jost,sans-serif;color:#8fc9c4}
-.parado .carrega .gota i{animation:none;top:8%}
+/* referência (Pinterest): só um círculo enchendo de água com a porcentagem no meio */
+.carrega .gota{position:relative;width:132px;height:132px;border-radius:50%;overflow:hidden;background:#0a2a2e;box-shadow:0 0 0 2px #2bb3b155}
+.carrega .gota i{position:absolute;left:-50%;width:200%;height:200%;top:100%;border-radius:42%;background:#2bb3b1;transition:top .4s linear;animation:gira 3s linear infinite}
+.carrega .gota span{position:absolute;inset:0;z-index:2;display:grid;place-items:center;font:300 30px Jost,sans-serif;color:#fff;font-variant-numeric:tabular-nums}
+@keyframes gira{to{transform:rotate(360deg)}}
+.carrega small{font:400 14px Jost,sans-serif;color:#8fc9c4;letter-spacing:.04em}
+.parado .carrega .gota i{animation:none}
 </style></head><body>
-<div class="carrega" id="carrega" role="status" aria-live="polite"><div class="cw"><div class="gota"><i></i><img src="img/icone-mare-redondo.png" alt=""></div><b>MARÉ CHEIA</b><small>Enchendo a página…</small></div></div>
+<div class="carrega" id="carrega" role="status" aria-live="polite"><div class="cw"><div class="gota"><i></i><span id="carregaPct">0%</span></div><small>Carregando</small></div></div>
 
 <nav class="nav" id="nav" aria-label="Principal">
  <a class="back" href="index.html" aria-label="Voltar ao início"><img src="img/icone-mare-redondo.png" alt="">Início</a>
@@ -270,7 +270,12 @@ function assar(){return new Promise(res=>{const img=new Image();img.onload=()=>{
  res(c.toDataURL("image/jpeg",.92))};img.onerror=()=>res("");img.src=innerWidth<900?"img/u-rio-aereo.webp":"img/u-rio-aereo-hd.webp"})}
 async function iniciarAgua(){try{await document.fonts.load("800 100px Jost")}catch(e){}const u=await assar();if(u)agua.style.backgroundImage=`url(${u})`;tiraCarrega()}
 // some a tela de carregamento quando a foto fica pronta (ou depois de 8 s, para nunca prender a página)
-const carrega=document.getElementById("carrega");function tiraCarrega(){if(carrega&&!carrega.classList.contains("sai")){carrega.classList.add("sai");setTimeout(()=>carrega.remove(),800)}}setTimeout(tiraCarrega,8000);
+// a porcentagem anda até 90% sozinha e só chega a 100% quando a foto está pronta (no mínimo 1,8 s; no máximo 8 s)
+const carrega=document.getElementById("carrega");let pronto=false;
+if(carrega){const pct=document.getElementById("carregaPct"),agua=carrega.querySelector(".gota i"),t0=performance.now();let p=0;
+ const passo=setInterval(()=>{const k=Math.min(1,(performance.now()-t0)/1800);p=Math.max(p,Math.round(pronto?k*100:Math.min(90,k*90)));pct.textContent=p+"%";agua.style.top=(100-p*.9)+"%";
+  if(p>=100){clearInterval(passo);setTimeout(()=>{carrega.classList.add("sai");setTimeout(()=>carrega.remove(),800)},350)}},80)}
+function tiraCarrega(){pronto=true}setTimeout(tiraCarrega,8000);
 iniciarAgua();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(iniciarAgua,500)});
 
 // 2) vídeo só no computador e só quando aparece
