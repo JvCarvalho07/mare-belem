@@ -3,7 +3,7 @@
 <title>Maré Cheia · MARÉ</title>
 <meta name="description" content="Maré Cheia, projeto da MARÉ: alagamentos, calçadas e acessibilidade em Belém, com mapa 3D e ações nos bairros.">
 <meta property="og:type" content="website"><meta property="og:title" content="Maré Cheia · MARÉ"><meta property="og:description" content="Alagamentos, calçadas e acessibilidade em Belém: 22 pontos num mapa 3D."><meta property="og:image" content="https://jvcarvalho07.github.io/mare-belem/img/u-rio-aereo.webp"><meta property="og:url" content="https://jvcarvalho07.github.io/mare-belem/mare-cheia.html"><meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#0f1a14">
-<link rel="icon" href="img/logo-onda.webp">
+<link rel="icon" href="img/icone-mare-redondo.png">
 <link rel="preload" as="image" href="img/u-rio-aereo-hd.webp" media="(min-width: 900px)">
 <link rel="preload" as="image" href="img/u-rio-aereo.webp" media="(max-width: 899px)">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -149,18 +149,17 @@ footer a{color:#cde9e6}
 .carrega{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:#03161b;color:#e6f6f3;transition:opacity .7s ease,visibility .7s}
 .carrega.sai{opacity:0;visibility:hidden}
 .carrega .cw{display:flex;flex-direction:column;align-items:center;gap:16px}
-.carrega .gota{position:relative;width:86px;height:86px;border-radius:50%;overflow:hidden;background:#0a2a2e;box-shadow:0 0 0 2px #2bb3b155}
-.carrega .gota img{position:absolute;inset:16px;width:54px;height:54px;border-radius:50%;background:#fff;object-fit:contain;z-index:2}
-.carrega .gota i{position:absolute;left:-50%;width:200%;height:200%;top:100%;border-radius:42%;background:#2bb3b1;animation:enche 2.4s ease-in-out forwards,gira 3s linear infinite}
-@keyframes enche{to{top:8%}}@keyframes gira{to{transform:rotate(360deg)}}
-.carrega b{font:800 22px Jost,sans-serif;letter-spacing:.12em}
+.carrega .lg{width:min(300px,70vw);height:auto;animation:surge .9s ease-out both}
+.carrega .nivel{width:min(220px,56vw);height:4px;border-radius:2px;background:#ffffff1f;overflow:hidden}
+.carrega .nivel i{display:block;height:100%;width:0;border-radius:2px;background:#2bb3b1;animation:enche 2.6s cubic-bezier(.2,.7,.1,1) forwards}
+@keyframes enche{to{width:92%}}@keyframes surge{from{opacity:0;transform:translateY(8px)}}
 .carrega small{font:400 14px Jost,sans-serif;color:#8fc9c4}
-.parado .carrega .gota i{animation:none;top:8%}
+.parado .carrega .nivel i{animation:none;width:92%}
 </style></head><body>
-<div class="carrega" id="carrega" role="status" aria-live="polite"><div class="cw"><div class="gota"><i></i><img src="img/logo-onda.webp" alt=""></div><b>MARÉ CHEIA</b><small>Enchendo a página…</small></div></div>
+<div class="carrega" id="carrega" role="status" aria-live="polite"><div class="cw"><img class="lg" src="img/logo-mare-escura-curta.webp" alt="MARÉ" width="700" height="381"><div class="nivel"><i></i></div><small>Carregando o Maré Cheia…</small></div></div>
 
 <nav class="nav" id="nav" aria-label="Principal">
- <a class="back" href="index.html"><img src="img/logo-onda.webp" alt="">MARÉ</a>
+ <a class="back" href="index.html"><img src="img/icone-mare-redondo.png" alt="">MARÉ</a>
  <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista">Menu</button>
  <ul id="menuLista"><li><a href="#pontos">Pontos</a></li><li><a href="#mergulho">O problema</a></li><li><a href="#acoes">Ações</a></li></ul>
  <a class="btn teal contato" href="#enviar">Enviar um ponto</a>
