@@ -30,7 +30,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .btn.linha{color:#fff;box-shadow:inset 0 0 0 1.5px #ffffffb0}
 
 /* navegação em pílula */
-.nav{position:fixed;z-index:40;top:max(14px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(1100px,calc(100% - 28px));display:flex;align-items:center;gap:16px;padding:7px 7px 7px 16px;border-radius:999px;background:#0a2a2ecc;box-shadow:inset 0 0 0 1px #ffffff33;transition:background .4s,box-shadow .4s,transform .5s cubic-bezier(.2,.7,.1,1)}
+.nav{position:fixed;z-index:40;top:max(14px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(1100px,calc(100% - 28px));display:flex;align-items:center;gap:16px;padding:7px 7px 7px 16px;border-radius:999px;background:#0a2a2e59;box-shadow:inset 0 0 0 1px #ffffff33;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background .4s,box-shadow .4s,transform .5s cubic-bezier(.2,.7,.1,1)}
 .nav.claro{background:#ffffffeb;box-shadow:0 8px 28px #0f7f861f}
 .nav.esconde{transform:translate(-50%,-140%)}
 .nav a.back{display:flex;align-items:center;gap:9px;text-decoration:none;font:600 16px Jost,sans-serif;color:#fff;transition:color .3s}
@@ -49,7 +49,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 
 /* ato 1: superfície */
 .sup{position:relative;height:100svh;min-height:620px;overflow:hidden;background:#0d3d3f}
-.agua{position:absolute;inset:-3%;background-size:cover;background-position:center;}
+.agua{position:absolute;inset:-3%;background-size:cover;background-position:center;will-change:transform;animation:deriva 28s ease-in-out infinite alternate}
 @keyframes deriva{from{transform:scale(1) translate3d(0,0,0)}to{transform:scale(1.05) translate3d(-1.5%,1%,0)}}
 .sup::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#00000052,#0000 30%,#0000 62%,#0000003d)}
 .sup .top{position:absolute;z-index:3;left:0;right:0;top:96px;color:#fff;pointer-events:none}
@@ -61,16 +61,17 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .aves{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
 .ave{position:absolute;color:#fff;will-change:transform;animation:voa linear infinite}
 .ave svg{width:100%;height:auto;display:block}
+.ave .asa{transform-origin:50% 60%;animation:bate .8s ease-in-out infinite alternate}
 
 @keyframes voa{from{transform:translate3d(-15vw,0,0)}to{transform:translate3d(115vw,-8vh,0)}}
 @keyframes bate{to{transform:scaleY(-.6)}}
 /* ondas de ponta a ponta */
 .fora,.fora *{animation-play-state:paused!important}
-.calmo .ave{display:none}.calmo .ondas svg,.calmo .bolhas i{animation-play-state:paused!important}
+.ocioso .ave,.ocioso .ave .asa,.ocioso .ondas svg,.ocioso .bolhas i,.ocioso .agua{animation-play-state:paused!important}
 .ondas{position:absolute;z-index:5;left:0;right:0;bottom:-1px;height:clamp(70px,9vw,130px);overflow:hidden;pointer-events:none}
 .ondas svg{position:absolute;bottom:0;left:0;width:200%;height:100%;will-change:transform}
-.ondas .o1{opacity:.45;transform:translate3d(-12%,0,0)}
-.ondas .o2{opacity:.7;transform:translate3d(-30%,0,0)}
+.ondas .o1{animation:corre 18s linear infinite;opacity:.45}
+.ondas .o2{animation:corre 26s linear infinite reverse;opacity:.7}
 .ondas .o3{will-change:transform;animation:corre 34s linear infinite}
 @keyframes corre{to{transform:translate3d(-50%,0,0)}}
 
@@ -109,7 +110,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 
 /* ato 3: mergulho */
 .mergulho{position:relative;color:var(--espuma);background:linear-gradient(180deg,var(--papel) 0,#bfe3df 3%,#2a9a9a 12%,#0d5f66 30%,#073c44 60%,var(--fundo) 100%);padding-top:clamp(120px,14vw,190px);overflow:hidden}
-.vfundo{position:absolute;left:0;top:clamp(110px,12vw,170px);width:100%;height:110vh;object-fit:cover;opacity:.32;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,#0000,#000 18%,#000 55%,#0000);mask-image:linear-gradient(180deg,#0000,#000 18%,#000 55%,#0000)}
+.vfundo{position:absolute;left:0;top:clamp(110px,12vw,170px);width:100%;height:110vh;object-fit:cover;opacity:.5;mix-blend-mode:screen;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,#0000,#000 18%,#000 55%,#0000);mask-image:linear-gradient(180deg,#0000,#000 18%,#000 55%,#0000)}
 .raios{position:absolute;left:0;right:0;top:0;height:120vh;pointer-events:none;opacity:.28;background:repeating-linear-gradient(100deg,#ffffff00 0 70px,#ffffff26 90px,#ffffff00 130px);-webkit-mask-image:linear-gradient(180deg,#0000 6%,#000 20%,#0000 70%);mask-image:linear-gradient(180deg,#0000 6%,#000 20%,#0000 70%)}
 .bolhas{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .bolhas i{position:absolute;bottom:-20px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ffffffbb,#9fe8e022 60%,transparent 72%);animation:sobe linear infinite;will-change:transform}
@@ -166,6 +167,7 @@ footer a{color:#cde9e6}
  <div class="top"><div class="in"><small>Projeto em andamento</small></div></div>
  <div class="aves" aria-hidden="true">
   <div class="ave" style="top:22%;width:66px;animation-duration:26s"><svg viewBox="0 0 80 40"><g class="asa"><path fill="currentColor" d="M40 22C30 8 16 4 2 10c14 0 24 6 34 16zM40 22C50 8 64 4 78 10c-14 0-24 6-34 16z"/></g><ellipse cx="40" cy="24" rx="7" ry="3" fill="currentColor"/></svg></div>
+  <div class="ave" style="top:34%;width:46px;animation-duration:33s;animation-delay:-13s"><svg viewBox="0 0 80 40"><g class="asa" style="animation-duration:.7s"><path fill="currentColor" d="M40 22C30 8 16 4 2 10c14 0 24 6 34 16zM40 22C50 8 64 4 78 10c-14 0-24 6-34 16z"/></g><ellipse cx="40" cy="24" rx="7" ry="3" fill="currentColor"/></svg></div>
  </div>
  <div class="base"><div class="in">
   <h1>Alagamentos, calçadas e acessibilidade. Mapeamos onde a água para e onde a rua barra o caminho, para Belém voltar a fluir.</h1>
@@ -207,7 +209,7 @@ footer a{color:#cde9e6}
 </section>
 
 <section class="mergulho" id="mergulho">
- <img class="vfundo" src="img/poster-luz.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+ <video class="vfundo" id="vluz" muted loop playsinline preload="none" poster="img/poster-luz.jpg" aria-hidden="true"></video>
  <div class="raios"></div><div class="bolhas" id="bolhas"></div>
  <div class="in">
   <h2>Uma cidade ao nível do rio</h2>
@@ -266,13 +268,15 @@ setTimeout(tiraCarrega,4000);
 iniciarAgua();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(iniciarAgua,500)});
 
 {const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("fora",!e.isIntersecting)),{rootMargin:"60px"});document.querySelectorAll(".sup,.mergulho").forEach(el=>io.observe(el))}
-// depois de 20 s parados na abertura, o movimento de enfeite para (economiza placa de vídeo)
-setTimeout(()=>document.documentElement.classList.add("calmo"),20000);
-// avisa o mapa (iframe) que a pessoa está mexendo aqui fora, para os anéis dele não pararem à toa
-{let ult=0;const mexeu=()=>{const t=performance.now();if(t-ult<2000)return;ult=t;const f=document.getElementById("mapaF");if(f)try{f.contentWindow.postMessage({mareMexeu:1},"*")}catch(e){}};
+// 2) vídeo só no computador e só quando aparece
+const vluz=document.getElementById("vluz");
+if(forte){new IntersectionObserver(es=>{if(es[0].isIntersecting){if(!vluz.src)vluz.src="video/luz-agua.mp4";vluz.play().catch(()=>{})}else vluz.pause()},{threshold:.05}).observe(vluz)}
+// ninguém mexe há 40 s: enfeites e vídeo pausam até a próxima interação; o mapa (iframe) também é avisado
+{const h=document.documentElement;let ult=0,uMov=performance.now();setInterval(()=>{if(performance.now()-uMov>40000&&!h.classList.contains("ocioso")){h.classList.add("ocioso");vluz.pause()}},5000);
+ const mexeu=()=>{const t=performance.now();uMov=t;if(h.classList.contains("ocioso")){h.classList.remove("ocioso");const r=vluz.getBoundingClientRect();if(vluz.src&&r.bottom>0&&r.top<innerHeight)vluz.play().catch(()=>{})}if(t-ult<2000)return;ult=t;const f=document.getElementById("mapaF");if(f)try{f.contentWindow.postMessage({mareMexeu:1},"*")}catch(e){}};
  ["pointermove","pointerdown","keydown","wheel","scroll","touchstart"].forEach(e=>addEventListener(e,mexeu,{passive:true}))}
 // 3) bolhas (poucas)
-{const b=document.getElementById("bolhas"),n=forte?7:4;for(let i=0;i<n;i++){const e=document.createElement("i"),s=5+Math.random()*14;e.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s}px;--dx:${Math.random()*80-40}px;animation-duration:${16+Math.random()*18}s;animation-delay:${-Math.random()*30}s;opacity:${.3+Math.random()*.45}`;b.appendChild(e)}}
+{const b=document.getElementById("bolhas"),n=forte?12:6;for(let i=0;i<n;i++){const e=document.createElement("i"),s=5+Math.random()*14;e.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s}px;--dx:${Math.random()*80-40}px;animation-duration:${16+Math.random()*18}s;animation-delay:${-Math.random()*30}s;opacity:${.3+Math.random()*.45}`;b.appendChild(e)}}
 // 4) o mapa só anima quando está na tela; os cards levam até o ponto
 // O mapa 3D é pesado (MapLibre, prédios, ruas): só nasce quando a pessoa pede, para a rolagem não engasgar.
 const poster=document.getElementById("poster"),caixaMapa=poster.parentElement;let mapaPronto=null;
