@@ -14,12 +14,11 @@
    Tipo: Jost (800 para a palavra MARÉ, 300 para títulos), Atkinson Hyperlegible no texto. */
 :root{--mata:#0f1a14;--sombra:#15241b;--musgo:#2f4a35;--nevoa:#e7eee6;--mut:#a9bcae;--line:#ffffff1f;--broto:#b5d96a;--barro:#c2a173;color-scheme:dark}
 *{box-sizing:border-box}
-/* barra de rolagem visível (quem usa touchpad ou só o teclado precisa dela), nas cores do site; overflow-x:clip impede a rolagem para os lados no celular */
-html{scroll-behavior:smooth;scroll-padding-top:90px;scrollbar-color:#4d6b55 var(--mata);overflow-x:clip}
-::-webkit-scrollbar{width:12px}
+/* barra de rolagem como no começo: fina, musgo sobre o fundo; overflow-x:clip impede a rolagem para os lados no celular */
+html{scroll-behavior:smooth;scroll-padding-top:90px;scrollbar-width:thin;scrollbar-color:var(--musgo) var(--mata);overflow-x:clip}
+::-webkit-scrollbar{width:9px}
 ::-webkit-scrollbar-track{background:var(--mata)}
-::-webkit-scrollbar-thumb{background:#4d6b55;border-radius:999px;border:3px solid var(--mata)}
-::-webkit-scrollbar-thumb:hover{background:var(--broto)}
+::-webkit-scrollbar-thumb{background:var(--musgo);border-radius:9px}
 body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(50% 40% at 85% 20%,#1d3a2a66,transparent 70%),radial-gradient(45% 35% at 10% 75%,#173a3a55,transparent 70%),var(--mata)}
 body{margin:0;background:transparent;color:var(--nevoa);font:18px/1.65 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
 .in{max-width:1220px;margin:0 auto;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
@@ -41,7 +40,6 @@ section{padding-block:clamp(56px,7vw,96px)}
 .nav::before{content:"";position:absolute;inset:0 0 -48px;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#0b140fec 0%,#0b140fb0 50%,#0b140f00 100%);opacity:0;transition:opacity .5s}
 .nav.fora::before{opacity:1}
 .nav .in>*{pointer-events:auto}
-.nav.esconde{transform:translateY(-130%)}
 .nav .in{display:flex;align-items:center;gap:34px;height:76px}
 .logo{display:flex;align-items:center;gap:10px;color:var(--nevoa);text-decoration:none;font:800 22px Jost,sans-serif;letter-spacing:.18em}
 .logo img{width:36px;height:36px;border-radius:50%;background:#fff;object-fit:contain}
@@ -106,7 +104,7 @@ section{padding-block:clamp(56px,7vw,96px)}
 @keyframes up{to{opacity:1;transform:none}}
 
 /* manifesto revelado na rolagem */
-.manifesto p{font:300 clamp(28px,3.6vw,52px)/1.18 Jost,sans-serif;max-width:24ch;margin:0;letter-spacing:-.01em}
+.manifesto p{font:300 clamp(28px,4vw,60px)/1.16 Jost,sans-serif;max-width:none;margin:0;letter-spacing:-.015em;text-wrap:pretty}
 .manifesto p span{opacity:.18;transition:opacity .4s}
 .manifesto p span.on{opacity:1}
 .manifesto em{font-style:normal;color:var(--barro)}
@@ -164,7 +162,11 @@ section{padding-block:clamp(56px,7vw,96px)}
 .form .chips{display:flex;flex-wrap:wrap;gap:8px}
 .form .chips label{display:block;color:var(--nevoa);font:400 14px Jost,sans-serif;letter-spacing:0;cursor:pointer}
 .form .chips input{position:absolute;opacity:0;width:1px;height:1px}
-.form .chips span{display:block;padding:8px 14px;border-radius:999px;box-shadow:inset 0 0 0 1px #ffffff40;transition:background .2s,color .2s}
+.form .chips span{display:block;padding:8px 14px;border-radius:999px;box-shadow:inset 0 0 0 1px #ffffff40;transition:background .3s,color .3s,box-shadow .3s,transform .2s}
+.form .chips label:hover span{box-shadow:inset 0 0 0 1px #b5d96aa6}
+.form .chips label:active span{transform:scale(.96)}
+.form .entra{animation:entra .5s cubic-bezier(.16,1,.3,1) both}
+@keyframes entra{from{opacity:0;transform:translateY(10px)}}
 .form .chips input:checked+span{background:var(--broto);color:var(--mata);box-shadow:none}
 .form .chips input:focus-visible+span{outline:2px solid var(--broto);outline-offset:2px}
 .form .acoes{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:4px}
@@ -192,14 +194,14 @@ html.parado{scroll-behavior:auto}
 .parado *,.parado *::before,.parado *::after{animation:none!important;transition:none!important}
 .parado .ld,.parado .rv{opacity:1;transform:none}
 .parado .manifesto p span{opacity:1}
-/* rio da rolagem: do lado direito (preenche o vazio da direita e não passa por cima dos textos da esquerda); só no computador */
-.rio{position:fixed;left:calc(100% - 40px - max(10px,calc(50% - 680px)));top:0;height:100vh;width:40px;z-index:5;pointer-events:none;opacity:0;transition:opacity .6s}
+/* rio da rolagem: do lado esquerdo, preso à tela, na margem (não passa por cima dos textos); só no computador */
+.rio{position:fixed;left:max(10px,calc(50% - 680px));top:0;height:100vh;width:40px;z-index:5;pointer-events:none;opacity:0;transition:opacity .6s}
 .rio.on{opacity:1}
-.rpin{position:fixed;z-index:6;left:calc(100% - 40px - max(10px,calc(50% - 680px)));top:0;display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;color:var(--broto);font:600 13px Jost,sans-serif;letter-spacing:.06em;text-decoration:none;white-space:nowrap;transition:opacity .6s}
+.rpin{position:fixed;z-index:6;left:max(10px,calc(50% - 680px));top:0;display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;color:var(--broto);font:600 13px Jost,sans-serif;letter-spacing:.06em;text-decoration:none;white-space:nowrap;transition:opacity .6s}
 .rpin:not(.on){visibility:hidden}
 .rpin.on{opacity:1;pointer-events:auto}
 .rpin i{width:13px;height:13px;box-shadow:0 0 0 3px #0f1a14,0 0 14px #b5d96a}
-.rpin span{position:absolute;right:calc(100% + 10px);opacity:0;transform:translateX(6px);transition:opacity .3s,transform .3s;background:#0f1a14e6;padding:4px 10px;border-radius:999px}
+.rpin span{position:absolute;left:calc(100% + 10px);opacity:0;transform:translateX(-6px);transition:opacity .3s,transform .3s;background:#0f1a14e6;padding:4px 10px;border-radius:999px}
 .rpin:hover span,.rpin:focus-visible span{opacity:1;transform:none}
 @media(max-width:1300px){.rpin{display:none}}
 .rio path{fill:none;stroke-linecap:round}
@@ -301,21 +303,19 @@ html.parado{scroll-behavior:auto}
 .tira .lt{display:block;font:800 clamp(70px,8vw,120px)/1 Jost,sans-serif;padding-top:.1em;background:linear-gradient(180deg,#d6ec9e,#8fbf6a);-webkit-background-clip:text;background-clip:text;color:transparent}
 .tira p{font-size:16.5px;color:#d3ddd5;margin:0;max-width:34ch}
 
-.zig{display:grid;gap:clamp(30px,5vw,60px);margin-top:44px}
-.zz{display:grid;grid-template-columns:clamp(150px,22vw,280px) 1fr;gap:clamp(24px,4vw,60px);align-items:center;max-width:900px}
-.zz:nth-child(even){grid-template-columns:1fr clamp(150px,22vw,280px);margin-left:auto;text-align:right}
-.zz:nth-child(even) .circ{order:2}
-.zz:nth-child(even) p{margin-left:auto}
-.circ{position:relative;aspect-ratio:1;border-radius:50%;overflow:hidden;box-shadow:0 0 0 6px #ffffff10,0 0 0 14px #b5d96a14}
-.circ img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.7,.1,1)}
-.zz:hover .circ img{transform:scale(1.07)}
-.zz small{display:block;font:600 15px Jost,sans-serif;color:var(--broto);margin-bottom:6px}
-.zz h3{font-size:clamp(26px,2.6vw,36px);font-weight:400}
-.zz p{color:var(--mut);margin-top:8px}
+/* O que fazemos: grade 2×2, foto retangular em cima, título e texto embaixo (sem caixa nem rótulo) */
+.svc2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(44px,5vw,76px) clamp(24px,3vw,48px);margin-top:48px}
+.sv2 .ft{overflow:hidden;aspect-ratio:3/2;margin-bottom:22px;background:#0b1410}
+.sv2 img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.7,.1,1)}
+.sv2:hover img{transform:scale(1.04)}
+.sv2 h3{font-size:clamp(24px,2.4vw,34px);font-weight:400;margin-bottom:8px}
+.sv2 p{color:var(--mut);margin:0;max-width:44ch}
+@media(max-width:700px){.svc2{grid-template-columns:1fr}}
 
 .prox{list-style:none;margin:30px 0 0;padding:0;border-top:1px solid var(--line)}
-.prox li{display:grid;grid-template-columns:84px 1fr;gap:22px;align-items:center;padding:20px 0;border-bottom:1px solid var(--line)}
-.prox img{width:84px;height:84px;border-radius:50%;object-fit:cover}
+.prox li>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:8px 40px;align-items:baseline}
+.prox li{padding:22px 0;border-bottom:1px solid var(--line)}
+@media(max-width:700px){.prox li>div{grid-template-columns:1fr}}
 .prox h3{font-size:clamp(26px,3vw,40px);font-weight:300;margin:0}
 .prox p{margin:4px 0 0;color:var(--mut)}
 
@@ -338,9 +338,7 @@ html.parado{scroll-behavior:auto}
  .tiras{flex-direction:column;height:auto}
  .tira{min-height:62vh;flex:none}
  .tira+.tira{border-left:0;border-top:1px solid #0f1a14}
- .zz,.zz:nth-child(even){grid-template-columns:110px 1fr;text-align:left;margin-left:0}
- .zz:nth-child(even) .circ{order:0}
- .linha{grid-template-columns:1fr;gap:28px;padding-left:64px}
+  .linha{grid-template-columns:1fr;gap:28px;padding-left:64px}
  .linha::before{left:21px;right:auto;top:0;bottom:0;width:2px;height:auto;background:linear-gradient(180deg,var(--broto),#6fd3c2)}
  .linha li{padding-top:0}
  .linha li::before{left:-64px}
@@ -442,7 +440,7 @@ html.parado{scroll-behavior:auto}
  </div>
 </section>
 
-<div class="faixa" aria-hidden="true"><div class="trilha"><span>Mobilização</span><i></i><span>Acessibilidade</span><i></i><span>Renovação estrutural</span><i></i><span>Belém</span><i></i><span>Mobilização</span><i></i><span>Acessibilidade</span><i></i><span>Renovação estrutural</span><i></i><span>Belém</span><i></i></div></div>
+<div class="faixa" aria-hidden="true"><div class="trilha"><span>Guamá</span><i></i><span>Jurunas</span><i></i><span>Pedreira</span><i></i><span>Cremação</span><i></i><span>Marco</span><i></i><span>Batista Campos</span><i></i><span>Reduto</span><i></i><span>Umarizal</span><i></i><span>Telégrafo</span><i></i><span>Terra Firme</span><i></i><span>Condor</span><i></i><span>Sacramenta</span><i></i><span>Guamá</span><i></i><span>Jurunas</span><i></i><span>Pedreira</span><i></i><span>Cremação</span><i></i><span>Marco</span><i></i><span>Batista Campos</span><i></i><span>Reduto</span><i></i><span>Umarizal</span><i></i><span>Telégrafo</span><i></i><span>Terra Firme</span><i></i><span>Condor</span><i></i><span>Sacramenta</span><i></i></div></div>
 
 <section id="frentes" class="frentes-s">
  <div class="in"><h2 class="rv">Três frentes, um só propósito</h2></div>
@@ -456,20 +454,20 @@ html.parado{scroll-behavior:auto}
 <section id="servicos"><div class="in">
  <h2 class="rv">O que fazemos</h2>
  <p class="rv">Para escolas, comunidades, empresas e poder público que querem cuidar de Belém de forma sustentável.</p>
- <div class="zig">
-  <article class="zz"><div class="circ"><img src="img/u-rio-aereo.webp" alt="Rio sinuoso no meio da floresta, visto do alto" loading="lazy"></div><div><small>Água</small><h3>Drenagem e alagamentos</h3><p>Mapeamos pontos críticos e propomos jardins de chuva, limpeza de canais e campanhas.</p></div></article>
-  <article class="zz"><div class="circ"><img src="img/u-sumauma.webp" alt="Raízes enormes de uma sumaúma" loading="lazy"></div><div><small>Verde</small><h3>Arborização e áreas verdes</h3><p>Projetos de praças, sombra e plantio em escolas e bairros.</p></div></article>
-  <article class="zz"><div class="circ"><img src="img/u-floresta-sol.webp" alt="Raios de sol entre as árvores da floresta" loading="lazy"></div><div><small>Comunidade</small><h3>Educação ambiental</h3><p>Oficinas, rodas de conversa e pesquisas com quem vive no lugar.</p></div></article>
-  <article class="zz"><div class="circ"><img src="img/u-barco-rio.webp" alt="Pequeno barco navegando no rio perto de um trapiche" loading="lazy"></div><div><small>Acesso</small><h3>Acessibilidade urbana</h3><p>Diagnóstico de calçadas, rampas e trapiches, com a lista do que corrigir primeiro.</p></div></article>
+ <div class="svc2">
+  <article class="sv2"><div class="ft"><img src="img/u-rio-aereo.webp" alt="Rio sinuoso no meio da floresta, visto do alto" loading="lazy"></div><h3>Drenagem e alagamentos</h3><p>Mapeamos pontos críticos e propomos jardins de chuva, limpeza de canais e campanhas.</p></article>
+  <article class="sv2"><div class="ft"><img src="img/u-sumauma.webp" alt="Raízes enormes de uma sumaúma" loading="lazy"></div><h3>Arborização e áreas verdes</h3><p>Projetos de praças, sombra e plantio em escolas e bairros.</p></article>
+  <article class="sv2"><div class="ft"><img src="img/u-floresta-sol.webp" alt="Raios de sol entre as árvores da floresta" loading="lazy"></div><h3>Educação ambiental</h3><p>Oficinas, rodas de conversa e pesquisas com quem vive no lugar.</p></article>
+  <article class="sv2"><div class="ft"><img src="img/u-barco-rio.webp" alt="Pequeno barco navegando no rio perto de um trapiche" loading="lazy"></div><h3>Acessibilidade urbana</h3><p>Diagnóstico de calçadas, rampas e trapiches, com a lista do que corrigir primeiro.</p></article>
  </div>
 </div></section>
 
 <section id="projetos" class="proximos"><div class="in">
  <h2 class="rv">Próximos projetos</h2>
  <ul class="prox">
-  <li><img src="img/u-sumauma.webp" alt="" loading="lazy"><div><h3>Sumaúma</h3><p>Arborização, sombra e áreas verdes em escolas e praças.</p></div></li>
-  <li><img src="img/foto-garca.webp" alt="" loading="lazy"><div><h3>Ciclo</h3><p>Lixo e reciclagem, do bueiro entupido à coleta seletiva.</p></div></li>
-  <li><img src="img/u-barco-rio.webp" alt="" loading="lazy"><div><h3>Rota</h3><p>Transporte e mobilidade, nas ruas e nos rios da cidade.</p></div></li>
+  <li><div><h3>Sumaúma</h3><p>Arborização, sombra e áreas verdes em escolas e praças.</p></div></li>
+  <li><div><h3>Ciclo</h3><p>Lixo e reciclagem, do bueiro entupido à coleta seletiva.</p></div></li>
+  <li><div><h3>Rota</h3><p>Transporte e mobilidade, nas ruas e nos rios da cidade.</p></div></li>
  </ul>
 </div></section>
 
@@ -541,14 +539,14 @@ html.parado{scroll-behavior:auto}
 
 <footer><div class="in">
  <div class="big">MARÉ</div>
- <div><p>Mobilização, Acessibilidade e Renovação Estrutural. Empresa júnior socioambiental de Belém do Pará.</p>
+ <div><p>Para falar com a equipe, use o <a href="#contato">formulário logo acima</a>.</p>
  <p style="font-size:13px">Fotos: <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> (licença Unsplash). Mapa: OpenStreetMap, OpenFreeMap, Esri.</p></div>
 </div></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-const still=(()=>{try{return localStorage.getItem("mare_movimento")==="off"||matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){return false}})();if(still)document.documentElement.classList.add("parado");
+const still=(()=>{try{return localStorage.getItem("mare_movimento")==="off"}catch(e){return false}})();if(still)document.documentElement.classList.add("parado");
 const nav=document.getElementById("nav"),hbg=document.getElementById("hbg");
 // atalho flutuante (celular): aparece depois da abertura e some na seção do projeto e no fim da página
 const flutua=document.getElementById("flutua"),secProj=document.getElementById("projeto");
@@ -574,7 +572,7 @@ const rioUpd=y=>{const H=altH;rioP.style.strokeDashoffset=RL*(1-Math.min(1,y/Mat
 const heroEl=document.querySelector(".hero");
 const heroH=()=>document.documentElement.style.setProperty("--heroH",heroEl.offsetHeight+"px");heroH();addEventListener("resize",heroH);
 const navUpd=y=>{rioUpd(y);nav.classList.toggle("fora",y>heroEl.offsetHeight-90);flutuaUpd(y);
- if(y>innerHeight&&y>lastY+2)nav.classList.add("esconde");if(y<lastY-2||y<innerHeight)nav.classList.remove("esconde");lastY=y};
+ lastY=y};
 const contar=b=>{const n=+b.dataset.n,s=b.dataset.s||"",o={v:0};if(still||!window.gsap){b.textContent=n+s;return}gsap.to(o,{v:n,duration:1.6,ease:"power3.out",onUpdate:()=>b.textContent=Math.round(o.v)+s})};
 if(window.gsap&&window.ScrollTrigger&&!still){
  gsap.registerPlugin(ScrollTrigger);
@@ -594,7 +592,7 @@ if(window.gsap&&window.ScrollTrigger&&!still){
  gsap.from(".destaque h2,.destaque p,.dnum li,.destaque .btn,.dprints",{y:40,opacity:0,stagger:.08,duration:1,ease:"power3.out",scrollTrigger:{trigger:".destaque",start:"top 75%",onEnter:()=>document.querySelectorAll(".dnum [data-n]").forEach(contar)}});
  gsap.from(".tira",{clipPath:"inset(100% 0% 0% 0%)",stagger:.14,duration:1.3,ease:"power4.inOut",scrollTrigger:{trigger:".tiras",start:"top 92%"}});
  gsap.from(".tira .tx",{y:40,opacity:0,stagger:.14,duration:1,delay:.5,ease:"power3.out",scrollTrigger:{trigger:".tiras",start:"top 92%"}});
- gsap.utils.toArray(".zz").forEach((el,i)=>{gsap.from(el.querySelector(".circ"),{scale:.6,opacity:0,duration:1.1,ease:"back.out(1.4)",scrollTrigger:{trigger:el,start:"top 92%"}});gsap.from(el.querySelector("div:not(.circ)"),{...(innerWidth>980?{x:i%2?-40:40}:{y:30}),opacity:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 92%"}})});
+ gsap.utils.toArray(".sv2").forEach((el,i)=>gsap.from(el,{y:40,opacity:0,duration:1,delay:(i%2)*.12,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 90%"}}));
  gsap.from(".prox li",{y:30,opacity:0,stagger:.1,duration:.9,ease:"power3.out",scrollTrigger:{trigger:".prox",start:"top 92%"}});
  gsap.fromTo(".linha",{"--k":0},{"--k":1,duration:1.6,ease:"power2.inOut",scrollTrigger:{trigger:".linha",start:"top 85%"}});
  gsap.from(".linha li",{y:30,opacity:0,stagger:.18,duration:.9,ease:"power3.out",scrollTrigger:{trigger:".linha",start:"top 85%"}});
@@ -623,10 +621,18 @@ if(window.gsap&&window.ScrollTrigger&&!still){
 const FORMS={url:"",campos:{perfil:"",organizacao:"",nome:"",cargo:"",bairro:"",interesse:"",prazo:"",mensagem:"",email:"",telefone:""}},WHATS="";
 {const fm=document.getElementById("formContato"),av=document.getElementById("formAviso"),zap=document.getElementById("zap"),quer=document.getElementById("querResposta");
  if(WHATS){zap.href="https://wa.me/"+WHATS;zap.classList.add("on")}
+ let primeira=true;
  const mostra=()=>{const p=fm.querySelector("[name=perfil]:checked").value,marcas=new Set([p]);if(p==="morador"&&quer.checked)marcas.add("resposta");
-  fm.querySelectorAll("[data-p]").forEach(el=>el.hidden=!el.dataset.p.split(" ").some(x=>marcas.has(x)));
+  const h0=fm.offsetHeight,novos=[];
+  fm.querySelectorAll("[data-p]").forEach(el=>{const v=el.dataset.p.split(" ").some(x=>marcas.has(x));if(v&&el.hidden)novos.push(el);el.hidden=!v});
   fm.querySelectorAll("input,textarea,select").forEach(i=>i.disabled=!!i.closest("[data-p][hidden]"));
-  av.textContent=""};
+  av.textContent="";
+  // a caixa muda de altura com suavidade e os campos que aparecem entram com fade (em vez de um corte seco)
+  if(!primeira&&!document.documentElement.classList.contains("parado")){const h1=fm.offsetHeight;
+   novos.forEach(el=>{el.classList.remove("entra");void el.offsetWidth;el.classList.add("entra")});
+   if(h1!==h0){clearTimeout(fm._t);fm.style.overflow="hidden";fm.style.height=h0+"px";void fm.offsetHeight;fm.style.transition="height .5s cubic-bezier(.16,1,.3,1)";fm.style.height=h1+"px";
+    fm._t=setTimeout(()=>{fm.style.height="";fm.style.transition="";fm.style.overflow=""},520)}}
+  primeira=false};
  fm.addEventListener("change",e=>{if(e.target.name==="perfil"||e.target===quer)mostra()});mostra();
  fm.addEventListener("submit",async e=>{e.preventDefault();av.className="aviso";
   const falta=[...fm.querySelectorAll("[required]")].filter(i=>!i.disabled).find(i=>!i.value.trim());
