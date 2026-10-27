@@ -3,7 +3,7 @@
 <title>Maré Cheia · MARÉ</title>
 <meta name="description" content="Maré Cheia, projeto da MARÉ: alagamentos, calçadas e acessibilidade em Belém, com mapa 3D e ações nos bairros.">
 <meta property="og:type" content="website"><meta property="og:title" content="Maré Cheia · MARÉ"><meta property="og:description" content="Alagamentos, calçadas e acessibilidade em Belém: 22 pontos num mapa 3D."><meta property="og:image" content="https://jvcarvalho07.github.io/mare-belem/img/u-rio-aereo.webp"><meta property="og:url" content="https://jvcarvalho07.github.io/mare-belem/mare-cheia.html"><meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#0f1a14">
-<link rel="icon" href="img/icone-mare.svg" type="image/svg+xml"><link rel="icon" href="img/icone-mare-64.png" sizes="64x64"><link rel="apple-touch-icon" href="img/icone-mare-192.png">
+<link rel="icon" href="img/icone-mare-redondo.png">
 <link rel="preload" as="image" href="img/u-rio-aereo-hd.webp" media="(min-width: 900px)">
 <link rel="preload" as="image" href="img/u-rio-aereo.webp" media="(max-width: 899px)">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +34,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .nav.claro{background:#ffffffeb;box-shadow:0 8px 28px #0f7f861f}
 .nav.esconde{transform:translate(-50%,-140%)}
 .nav a.back{display:flex;align-items:center;gap:9px;text-decoration:none;font:600 16px Jost,sans-serif;color:#fff;transition:color .3s}
-.nav a.back img{width:30px;height:30px;border-radius:8px}
+.nav a.back img{width:30px;height:30px;border-radius:50%;background:#fff;object-fit:contain}
 .nav ul{display:flex;gap:4px;list-style:none;margin:0 0 0 auto;padding:0}
 .nav ul a{display:block;padding:7px 13px;border-radius:999px;color:#fff;text-decoration:none;font:400 15px Jost,sans-serif;transition:background .2s,color .3s}
 .nav ul a:hover{background:#ffffff26}
@@ -145,35 +145,22 @@ footer a{color:#cde9e6}
 @media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
 .nav .menuBtn{color:#fff}.nav.claro .menuBtn{color:var(--tinta);background:#0f7f8614}
 @media(max-width:700px){.sup .base .in{gap:18px}.sup h1{font-size:19px}.sup .acts{margin-top:4px}.nota{margin-top:24px}}
-/* abertura: o ícone enche de água e estoura em bolhas; uma onda fraca e depois uma forte varrem a tela da esquerda
-   para a direita e a página aparece atrás delas. Só transform, opacity e clip-path (leve para o celular). */
-.carrega{position:fixed;inset:0;z-index:200;background:#062a33;color:#e6f6f3;transition:background-color .25s}
-.carrega .copo{position:absolute;left:50%;top:50%;width:112px;height:112px;margin:-56px 0 0 -56px;border-radius:50%;overflow:hidden;background:#0b3a45;box-shadow:0 0 0 3px #ffffff26}
-.carrega .copo i{position:absolute;left:-60%;width:220%;height:220%;top:100%;border-radius:43%;background:#2bb3b1;animation:enche 1.7s cubic-bezier(.4,0,.3,1) forwards,gira 2.6s linear infinite}
-.carrega .copo img{position:absolute;inset:26px;width:60px;height:60px;z-index:2}
-.carrega small{position:absolute;left:0;right:0;top:calc(50% + 78px);text-align:center;font:400 14px Jost,sans-serif;color:#9fd8d2;letter-spacing:.04em}
-.carrega .bolha{position:absolute;left:50%;top:50%;width:var(--t);height:var(--t);margin:calc(var(--t)/-2) 0 0 calc(var(--t)/-2);border-radius:50%;border:2px solid #bff1ee;opacity:0}
-.carrega.estoura .copo{animation:estoura .42s cubic-bezier(.3,1.6,.6,1) forwards}
-.carrega.estoura small{transition:opacity .2s;opacity:0}
-.carrega.estoura .bolha{animation:voa .9s cubic-bezier(.2,.7,.3,1) forwards}
-.carrega .frente{position:absolute;top:0;bottom:0;width:180px;pointer-events:none}
-.carrega .frente.f1{left:0;transform:translateX(-200px);z-index:3}
-.carrega .frente.f2{right:100%;width:170px}
-.carrega .frente svg{width:100%;height:100%}
-.carrega.fraca .frente.f1{animation:varre .85s cubic-bezier(.5,0,.5,1) forwards}
-.carrega.abre{background-color:#1f9ea6;animation:sai 1.1s cubic-bezier(.6,0,.35,1) .12s forwards}
-.carrega.abre .copo,.carrega.abre small{opacity:0}
-@keyframes enche{to{top:4%}}@keyframes gira{to{transform:rotate(360deg)}}
-@keyframes estoura{60%{transform:scale(1.18);opacity:1}100%{transform:scale(1.5);opacity:0}}
-@keyframes voa{0%{opacity:.9;transform:translate(0,0) scale(.4)}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1)}}
-@keyframes varre{to{transform:translateX(calc(100vw + 20px))}}
-@keyframes sai{to{transform:translateX(calc(100% + 190px))}}
-.parado .carrega .copo i{animation:none;top:4%}
+/* tela de carregamento: aparece até a foto da abertura ficar pronta */
+.carrega{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:#03161b;color:#e6f6f3;transition:opacity .7s ease,visibility .7s}
+.carrega.sai{opacity:0;visibility:hidden}
+.carrega .cw{display:flex;flex-direction:column;align-items:center;gap:16px}
+.carrega .gota{position:relative;width:86px;height:86px;border-radius:50%;overflow:hidden;background:#0a2a2e;box-shadow:0 0 0 2px #2bb3b155}
+.carrega .gota img{position:absolute;inset:16px;width:54px;height:54px;border-radius:50%;background:#fff;object-fit:contain;z-index:2}
+.carrega .gota i{position:absolute;left:-50%;width:200%;height:200%;top:100%;border-radius:42%;background:#2bb3b1;animation:enche 2.4s ease-in-out forwards,gira 3s linear infinite}
+@keyframes enche{to{top:8%}}@keyframes gira{to{transform:rotate(360deg)}}
+.carrega b{font:800 22px Jost,sans-serif;letter-spacing:.12em}
+.carrega small{font:400 14px Jost,sans-serif;color:#8fc9c4}
+.parado .carrega .gota i{animation:none;top:8%}
 </style></head><body>
-<div class="carrega" id="carrega" role="status" aria-live="polite"><div class="copo" aria-hidden="true"><i></i><img src="img/icone-mare-traco.svg" alt=""></div><small>Carregando o projeto…</small><div class="frente f1" aria-hidden="true"><svg viewBox="0 0 180 800" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 H110 C150 60 70 140 110 200 S150 340 110 400 S70 540 110 600 S150 740 110 800 H0Z" fill="#2bb3b1" fill-opacity=".35"/><path d="M110 0 C150 60 70 140 110 200 S150 340 110 400 S70 540 110 600 S150 740 110 800" fill="none" stroke="#e6fbf8" stroke-width="6" stroke-opacity=".75"/></svg></div><div class="frente f2" aria-hidden="true"><svg viewBox="0 0 170 800" preserveAspectRatio="none" aria-hidden="true"><path d="M170 0 H60 C20 60 100 140 60 200 S20 340 60 400 S100 540 60 600 S20 740 60 800 H170Z" fill="#1f9ea6"/><path d="M60 0 C20 60 100 140 60 200 S20 340 60 400 S100 540 60 600 S20 740 60 800" fill="none" stroke="#e6fbf8" stroke-width="7" stroke-opacity=".8"/></svg></div></div>
+<div class="carrega" id="carrega" role="status" aria-live="polite"><div class="cw"><div class="gota"><i></i><img src="img/icone-mare-redondo.png" alt=""></div><b>MARÉ CHEIA</b><small>Enchendo a página…</small></div></div>
 
 <nav class="nav" id="nav" aria-label="Principal">
- <a class="back" href="index.html" aria-label="Voltar ao início"><img src="img/icone-mare.svg" alt="">Início</a>
+ <a class="back" href="index.html" aria-label="Voltar ao início"><img src="img/icone-mare-redondo.png" alt="">Início</a>
  <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista">Menu</button>
  <ul id="menuLista"><li><a href="#pontos">Pontos</a></li><li><a href="#mergulho">O problema</a></li><li><a href="#acoes">Ações</a></li></ul>
  <a class="btn teal contato" href="#enviar">Enviar um ponto</a>
@@ -282,14 +269,8 @@ function assar(){return new Promise(res=>{const img=new Image();img.onload=()=>{
  g.textAlign="center";g.textBaseline="middle";g.shadowColor="rgba(0,30,35,.4)";g.shadowBlur=fs*.15;g.fillStyle="rgba(236,250,247,.84)";g.fillText("MARÉ CHEIA",W/2,H*.42);
  res(c.toDataURL("image/jpeg",.92))};img.onerror=()=>res("");img.src=innerWidth<900?"img/u-rio-aereo.webp":"img/u-rio-aereo-hd.webp"})}
 async function iniciarAgua(){try{await document.fonts.load("800 100px Jost")}catch(e){}const u=await assar();if(u)agua.style.backgroundImage=`url(${u})`;tiraCarrega()}
-// Abertura: espera a foto da abertura ficar pronta (no mínimo 1,7 s, o tempo do ícone encher; no máximo 7 s),
-// estoura o ícone em bolhas, passa a onda fraca e depois a forte, que leva a tela embora da esquerda para a direita.
-const carrega=document.getElementById("carrega"),t0=performance.now(),MIN=1700;
-if(carrega){for(let i=0;i<14;i++){const b=document.createElement("i"),a=i/14*Math.PI*2,d=90+Math.random()*120;b.className="bolha";b.style.cssText=`--t:${8+Math.random()*18}px;--x:${Math.cos(a)*d}px;--y:${Math.sin(a)*d}px;animation-delay:${Math.random()*.12}s`;carrega.appendChild(b)}}
-function tiraCarrega(){if(!carrega||carrega.dataset.saindo)return;const falta=MIN-(performance.now()-t0);if(falta>0)return setTimeout(tiraCarrega,falta);carrega.dataset.saindo=1;
- if(document.documentElement.classList.contains("parado")){carrega.remove();return}
- carrega.classList.add("estoura");setTimeout(()=>carrega.classList.add("fraca"),380);setTimeout(()=>carrega.classList.add("abre"),900);setTimeout(()=>carrega.remove(),2250)}
-setTimeout(tiraCarrega,7000);
+// some a tela de carregamento quando a foto fica pronta (ou depois de 8 s, para nunca prender a página)
+const carrega=document.getElementById("carrega");function tiraCarrega(){if(carrega&&!carrega.classList.contains("sai")){carrega.classList.add("sai");setTimeout(()=>carrega.remove(),800)}}setTimeout(tiraCarrega,8000);
 iniciarAgua();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(iniciarAgua,500)});
 
 // 2) vídeo só no computador e só quando aparece
