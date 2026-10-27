@@ -55,19 +55,18 @@ section{padding-block:clamp(56px,7vw,96px)}
 .nav ul a:hover::after{right:0}
 /* "Fale com a gente" é o último item do próprio menu (era repetido com "Contato"), em broto e separado por um fio */
 .seta{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s cubic-bezier(.16,1,.3,1)}
-.nav ul .contatoItem{padding-left:34px;border-left:1px solid #e7eee633}
+.nav ul .contatoItem{margin-left:14px}
 .nav ul .contatoItem a{display:inline-flex;align-items:center;gap:8px;color:var(--broto);opacity:1;font-weight:500}
 .nav ul .contatoItem a::after{display:none}
 .nav ul .contatoItem a:hover .seta{transform:translateX(3px)}
-.nav.menuAberto .logo{opacity:1;transform:none;visibility:visible;transition:opacity .5s,transform .5s}
 
 /* abertura */
 .hero{position:relative;height:100svh;min-height:620px;max-height:1060px;overflow:hidden}
-.hero .bg{position:absolute;inset:-8% 0 0;background:url(img/u-floresta-nevoa-2k.webp) center 30%/cover;will-change:transform;}
+.hero .bg{position:absolute;inset:0;background:url(img/u-floresta-nevoa-2k.webp) center 30%/cover}
 .folhas{position:absolute;top:0;left:0;right:0;height:210vh;overflow:hidden;pointer-events:none;z-index:4}
 .lf{position:absolute;pointer-events:none;will-change:transform}
 .lf svg{width:100%;height:auto;display:block}
-.lf.fg1{width:clamp(220px,26vw,420px);left:-6%;top:calc(min(100svh,1060px) - 12vw);filter:blur(6px);opacity:.9;transform-origin:20% 90%;animation:sway 9s ease-in-out infinite}
+.lf.fg1{width:clamp(220px,26vw,420px);left:-6%;top:calc(min(100svh,1060px) - 4.5vw);filter:blur(6px);opacity:.9;transform-origin:20% 90%;animation:sway 9s ease-in-out infinite}
 .lf.fg2{width:clamp(160px,18vw,300px);right:-4%;top:6%;filter:blur(4px);opacity:.75;transform:scaleX(-1) rotate(18deg);transform-origin:80% 10%;animation:sway2 11s ease-in-out infinite}
 .lf.m1{width:54px;left:12%;top:-8%;animation:fall 26s linear infinite}
 .lf.m2{width:38px;left:58%;top:-8%;animation:fall 32s linear infinite -11s;filter:blur(1px)}
@@ -78,27 +77,27 @@ section{padding-block:clamp(56px,7vw,96px)}
 @keyframes fall{0%{transform:translate(0,0) rotate(0);opacity:0}6%{opacity:.9}45%{transform:translate(-60px,80vh) rotate(150deg);opacity:.85}63%{opacity:.58}80%{opacity:.19}100%{transform:translate(40px,190vh) rotate(330deg);opacity:0}}
 .folhas.fora{visibility:hidden}.fora .lf,.fora .fog{animation-play-state:paused}
 /* ninguém mexe há 40 s: enfeites param e as folhas que caem somem (o notebook não esquenta); voltam ao mexer */
-.ocioso .lf,.ocioso .fog,.ocioso .trilha,.ocioso .selo::before,.ocioso .selo i::before,.ocioso .rpin i::before{animation-play-state:paused!important}
+.ocioso .lf,.ocioso .fog,.ocioso .trilha,.ocioso .rpin i::before{animation-play-state:paused!important}
 .lf svg{transition:opacity 1.2s}.ocioso .lf.m1 svg,.ocioso .lf.m2 svg,.ocioso .lf.m3 svg{opacity:0}
 @media(max-width:700px){.lf.m3,.lf.fg2{display:none}.lf{filter:none!important}.lf.fg1{width:200px;opacity:.7}}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;z-index:2;pointer-events:none;background:linear-gradient(180deg,#0f1a1400,#0f1a14)}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 50% 40%,#0f1a1400 0%,#0f1a1499 60%,#0f1a14 100%),linear-gradient(180deg,#0f1a1480,#0f1a1400 30%,#0f1a1400 100%)}
 .fog{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.55;background:radial-gradient(40% 25% at 20% 60%,#e7eee633,transparent 70%),radial-gradient(35% 20% at 75% 45%,#e7eee626,transparent 70%);will-change:transform;animation:fog 24s linear infinite alternate}
 @keyframes fog{to{transform:translateX(6%)}}
-.hero .in{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;justify-content:center;padding-top:60px}
-.kicker{font:400 clamp(15px,1.4vw,18px) Jost,sans-serif;letter-spacing:.04em;color:var(--mut);margin-bottom:6px}
-.mare{white-space:nowrap;font:800 clamp(76px,22vw,330px)/1 Jost,sans-serif;letter-spacing:-.04em;margin:-.14em 0 -.1em -.05em;padding-top:.06em;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero .lead{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,4vw,60px);align-items:end;margin-top:clamp(14px,3vh,34px)}
+.hero .in{position:relative;z-index:3;height:100%;display:grid;grid-template-rows:1fr auto;gap:clamp(18px,3.4vh,40px);padding-top:clamp(84px,12vh,120px);padding-bottom:clamp(30px,6vh,64px)}
+.hero .in>.mare{align-self:end}
+.kicker{position:absolute;left:max(22px,env(safe-area-inset-left,0px));top:calc(env(safe-area-inset-top,0px) + 27px);font:400 15px/22px Jost,sans-serif;letter-spacing:.01em;color:#e7eee6d9;text-shadow:0 1px 10px #0009}
+.mare{white-space:nowrap;text-align:center;font:800 min(calc((min(100vw,1220px) - 44px) / 3.04),50svh)/1 Jost,sans-serif;letter-spacing:-.04em;margin:-.14em 0 -.1em;padding-top:.06em;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,4vw,60px);align-items:end}
 .hero .lead>*{min-width:0}
-.selo{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:10px;justify-self:end;align-self:end;padding:11px 20px;border-radius:999px;font:600 15px Jost,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--broto);background:#0f1a14d9;box-shadow:inset 0 0 0 1px #b5d96a99;text-decoration:none}
-.selo::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:999px;box-shadow:0 0 30px 6px #b5d96a77;will-change:opacity;animation:brilho 2.4s ease-in-out infinite alternate}
-.selo:hover{transform:translateY(-2px)}
-.selo i,.rpin i{position:relative;isolation:isolate;width:9px;height:9px;border-radius:50%;background:var(--broto)}
-.selo i::before,.rpin i::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:#b5d96a99;will-change:transform,opacity;animation:anel 2.2s ease-out infinite}
+.hero .lead>div{display:contents}
+.rpin i{position:relative;isolation:isolate;width:9px;height:9px;border-radius:50%;background:var(--broto)}
+.rpin i::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:#b5d96a99;will-change:transform,opacity;animation:anel 2.2s ease-out infinite}
 @keyframes brilho{from{opacity:.25}to{opacity:1}}
 @keyframes anel{from{transform:scale(1);opacity:.8}to{transform:scale(2.6);opacity:0}}
 .hero h1{font-size:clamp(24px,2.6vw,38px);font-weight:300;line-height:1.2;max-width:24ch}
-.hero .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.hero .acts{display:flex;justify-content:flex-end}
+.btn .seta{width:16px;height:16px}.btn:hover .seta{transform:translateX(3px)}
 .scroll{position:absolute;z-index:3;left:50%;bottom:22px;transform:translateX(-50%);width:1px;height:54px;background:linear-gradient(#e7eee600,#e7eee6aa);overflow:hidden}
 .scroll::after{content:"";position:absolute;left:0;top:-20px;width:1px;height:20px;background:var(--broto);animation:drop 1.8s infinite}
 @keyframes drop{to{top:54px}}
@@ -187,7 +186,7 @@ footer a{color:var(--nevoa)}
 .rv{opacity:0;transform:translateY(34px);transition:opacity 1s,transform 1s cubic-bezier(.2,.7,.1,1)}
 .rv.on{opacity:1;transform:none}
 
-@media(max-width:980px){.nav ul{display:none}.hero .lead,.mapa .top,footer .in{grid-template-columns:1fr}.selo{justify-self:start;margin-top:6px}.frentes{grid-template-columns:1fr}.fr{aspect-ratio:4/3}.svc{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:980px){.nav ul{display:none}.hero .lead,.mapa .top,footer .in{grid-template-columns:1fr}.frentes{grid-template-columns:1fr}.fr{aspect-ratio:4/3}.svc{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.sv{grid-template-columns:96px 1fr}.sv img{width:96px;height:96px}.nums,.steps{grid-template-columns:1fr}.mini{display:none}.leaf{display:none}}
 html.parado{scroll-behavior:auto}
 .parado *,.parado *::before,.parado *::after{animation:none!important;transition:none!important}
@@ -197,6 +196,7 @@ html.parado{scroll-behavior:auto}
 .rio{position:fixed;left:calc(100% - 40px - max(10px,calc(50% - 680px)));top:0;height:100vh;width:40px;z-index:5;pointer-events:none;opacity:0;transition:opacity .6s}
 .rio.on{opacity:1}
 .rpin{position:fixed;z-index:6;left:calc(100% - 40px - max(10px,calc(50% - 680px)));top:0;display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;color:var(--broto);font:600 13px Jost,sans-serif;letter-spacing:.06em;text-decoration:none;white-space:nowrap;transition:opacity .6s}
+.rpin:not(.on){visibility:hidden}
 .rpin.on{opacity:1;pointer-events:auto}
 .rpin i{width:13px;height:13px;box-shadow:0 0 0 3px #0f1a14,0 0 14px #b5d96a}
 .rpin span{position:absolute;right:calc(100% + 10px);opacity:0;transform:translateX(6px);transition:opacity .3s,transform .3s;background:#0f1a14e6;padding:4px 10px;border-radius:999px}
@@ -223,9 +223,10 @@ html.parado{scroll-behavior:auto}
 @media(max-width:980px){.proj2{grid-template-columns:1fr}.pj.big{grid-row:auto;min-height:420px}}
 .mare{background:none!important;filter:none!important}
 .mare{letter-spacing:0!important}
+.mare .lt:last-child{margin-right:0!important}
 .mare .lt{display:inline-block;padding-top:.2em;margin-top:-.2em;margin-right:.035em;letter-spacing:0;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 12px #0004)}
 @media(max-width:800px){.hero .bg{background-image:url(img/u-floresta-nevoa-m.webp)}}
-.hero .bg{will-change:transform}
+
 .menuBtn{display:none;margin-left:auto;margin-right:-12px;width:48px;height:48px;padding:0;border:0;border-radius:50%;background:none;color:var(--nevoa);cursor:pointer}
 .menuBtn svg{display:block;width:26px;height:26px;margin:auto;overflow:visible;filter:drop-shadow(0 1px 6px #0009)}
 .menuBtn path{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;transform-box:fill-box;transform-origin:center;transition:transform .5s cubic-bezier(.16,1,.3,1),stroke-dasharray .5s cubic-bezier(.16,1,.3,1),stroke-dashoffset .5s cubic-bezier(.16,1,.3,1)}
@@ -235,15 +236,22 @@ html.parado{scroll-behavior:auto}
 .menuBtn[aria-expanded="true"] .l2{stroke-dasharray:18 40;stroke-dashoffset:0;transform:translateY(-3px) rotate(-45deg)}
 @media(max-width:980px){
  .menuBtn{display:block}
- .nav ul#menuLista{position:fixed;inset:0;z-index:-1;display:flex;flex-direction:column;justify-content:center;gap:2px;margin:0;padding:96px max(28px,env(safe-area-inset-right,0px)) 56px max(28px,env(safe-area-inset-left,0px));background:var(--mata);visibility:hidden;clip-path:inset(0 0 100% 0);transition:clip-path .6s cubic-bezier(.16,1,.3,1),visibility 0s .6s}
- .nav ul#menuLista.aberto{visibility:visible;clip-path:inset(0);transition:clip-path .6s cubic-bezier(.16,1,.3,1)}
- .nav ul#menuLista a{display:inline-flex;align-items:center;gap:14px;padding:6px 0;color:var(--nevoa);opacity:1;font:300 clamp(36px,10vw,52px)/1.12 Jost,sans-serif;letter-spacing:-.015em;text-shadow:none}
+ /* menu do celular: painel que desce do botão (não cobre a tela), cada destino com uma linha dizendo o que tem lá; o fio em onda (a maré) separa o contato */
+ .nav ul#menuLista{position:absolute;top:calc(100% - 4px);right:max(12px,env(safe-area-inset-right,0px));width:min(340px,calc(100vw - 24px));display:flex;flex-direction:column;gap:2px;margin:0;padding:8px;border-radius:22px;background:#101c16;box-shadow:0 34px 70px -16px #000e,0 0 0 1px #ffffff17;visibility:hidden;opacity:0;clip-path:inset(0 0 100% 0 round 22px);transition:clip-path .55s cubic-bezier(.16,1,.3,1),opacity .3s,visibility 0s .55s}
+ .nav ul#menuLista.aberto{visibility:visible;opacity:1;clip-path:inset(0 0 0 0 round 22px);transition:clip-path .55s cubic-bezier(.16,1,.3,1),opacity .2s}
+ .nav ul#menuLista a{display:block;padding:13px 16px;border-radius:14px;color:var(--nevoa);opacity:1;font:400 20px/1.2 Jost,sans-serif;letter-spacing:0;text-shadow:none;transition:background .2s}
+ .nav ul#menuLista a small{display:block;margin-top:3px;font:400 13.5px/1.35 "Atkinson Hyperlegible",system-ui,sans-serif;color:var(--mut)}
+ .nav ul#menuLista a:hover,.nav ul#menuLista a:focus-visible{background:#ffffff0b}
  .nav ul#menuLista a::after{display:none}
- .nav ul#menuLista .contatoItem{margin-top:26px;padding:26px 0 0;border-left:0;border-top:1px solid var(--line)}
- .nav ul#menuLista .contatoItem a{color:var(--broto);font-weight:400}
- .nav ul#menuLista .seta{width:26px;height:26px;stroke-width:1.4}
- .nav.menuAberto::before{opacity:0}
+ .nav ul#menuLista .onda{display:block;width:calc(100% - 32px);height:10px;margin:6px 16px 10px;fill:none;stroke:#ffffff26;stroke-width:1.2}
+ .nav ul#menuLista .contatoItem{margin:0;padding:0;border:0}
+ .nav ul#menuLista .contatoItem a{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;background:var(--broto);color:var(--mata);font-weight:500;font-size:18px}
+ .nav ul#menuLista .contatoItem a:hover{background:#c4e284}
+ .nav ul#menuLista .contatoItem .seta{width:18px;height:18px}
+ .nav::after{content:"";position:fixed;inset:0;z-index:-2;background:#050a07;opacity:0;visibility:hidden;transition:opacity .4s,visibility 0s .4s}
+ .nav.menuAberto::after{opacity:.5;visibility:visible;transition:opacity .4s}
 }
+.nav ul a small,.nav ul .onda{display:none}
 /* ---- seções sem cartões (referências: faixas de foto, fotos redondas, faixa de palavras, linha do tempo) ---- */
 .destaque{position:relative;display:grid;grid-template-columns:1.15fr 1fr;min-height:clamp(480px,66vh,660px);padding:0;overflow:hidden;border-block:1px solid var(--line)}
 /* apresentação do site do Maré Cheia: prints de verdade numa janela de navegador; clicar entra no site.
@@ -262,11 +270,9 @@ html.parado{scroll-behavior:auto}
 .dprints:hover .janela,.dprints:focus-visible .janela{transform:translateY(-6px);box-shadow:0 0 0 1px #b5d96a66,0 40px 70px -20px #000d}
 .destaque.fora .janela .tela img,.ocioso .janela .tela img{animation-play-state:paused}
 .dtexto{display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,6vw,90px) max(22px,calc((100vw - 1220px)/2 + 22px)) clamp(40px,6vw,90px) clamp(10px,3vw,40px)}
-.etq{font:600 15px Jost,sans-serif;color:var(--broto);margin-bottom:10px}
-.dsite{font-size:15px;color:var(--mut);margin:0 0 22px}
 .destaque h2{font-size:clamp(44px,5.4vw,84px);font-weight:800;letter-spacing:-.03em;line-height:.9;margin-bottom:22px}
 /* números como anotações sobre a foto aérea: ponto no lugar, haste e legenda */
-.dnum{list-style:none;margin:0 0 26px;padding:0;display:flex;flex-wrap:wrap;gap:10px 30px}
+.dnum{list-style:none;margin:6px 0 30px;padding:0;display:flex;flex-wrap:wrap;gap:10px 30px}
 .dnum b{display:block;font:300 clamp(28px,2.6vw,38px)/1 Jost,sans-serif;color:var(--broto);font-variant-numeric:tabular-nums}
 .dnum span{font-size:14px;color:var(--mut)}
 .destaque .btn{align-self:flex-start}
@@ -315,8 +321,14 @@ html.parado{scroll-behavior:auto}
 
 @media(max-width:980px){
  .destaque{grid-template-columns:1fr;min-height:0;height:auto}
- .dfoto{padding:24px 22px 6px}
- .dtexto{padding:10px 22px 60px}
+ .dfoto{order:2;padding:0 22px 8px}
+ .dtexto{display:contents}
+ .destaque h2{order:0;margin:56px 22px 14px}
+ .destaque .dtexto>p{order:1;margin:0 22px 26px;max-width:46ch}
+ .dnum{order:3;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 22px 26px}
+ .dnum b{font-size:clamp(24px,6.4vw,34px)}
+ .dnum span{display:block;font-size:13px;line-height:1.3;margin-top:4px}
+ .destaque .btn{order:4;justify-self:start;margin:0 22px 56px}
  .tiras{flex-direction:column;height:auto}
  .tira{min-height:62vh;flex:none}
  .tira+.tira{border-left:0;border-top:1px solid #0f1a14}
@@ -331,9 +343,11 @@ html.parado{scroll-behavior:auto}
 }
 
 @media(max-width:700px){
- .hero .in{justify-content:flex-end;padding-bottom:max(36px,env(safe-area-inset-bottom))}
- .kicker{margin-bottom:6px;font-size:14px}
- .mare{margin:4px 0 0 -.03em!important;padding-top:0}
+ .hero .in{padding-top:96px;padding-bottom:max(30px,env(safe-area-inset-bottom));gap:22px}
+ .hero .lead{grid-template-columns:1fr;gap:30px}
+ .hero .acts{justify-content:flex-start}
+ .kicker{top:calc(env(safe-area-inset-top,0px) + 14px);font-size:13px;line-height:18px;max-width:calc(100% - 84px)}
+ .mare{margin:0!important;padding-top:0}
  .mare .lt{background:linear-gradient(180deg,#f6faf2 0%,#dbe9cb 55%,#b5d96a 100%)!important;-webkit-background-clip:text!important;background-clip:text!important}
  .hero h1{font-size:22px}
 }
@@ -345,7 +359,7 @@ html.parado{scroll-behavior:auto}
    animações param quando a parte sai da tela. */
 .hero .in{will-change:transform,opacity}
 
-.trilha.fora,.hero.fora .selo::before,.hero.fora .selo i::before{animation-play-state:paused}
+.trilha.fora{animation-play-state:paused}
 @media(max-width:700px){
  .mare .lt{background:none!important;-webkit-background-clip:border-box!important;background-clip:border-box!important;color:#eef5e8!important;-webkit-text-fill-color:#eef5e8;filter:none!important;text-shadow:0 6px 24px #0009}
  .hero .bg{will-change:auto}
@@ -356,6 +370,7 @@ html.parado{scroll-behavior:auto}
 @media(max-width:980px){
  .menuBtn{margin-left:auto}
  .flutua{position:fixed;z-index:29;left:50%;bottom:max(16px,calc(env(safe-area-inset-bottom) + 10px));display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 20px 0 24px;border-radius:999px;background:var(--broto);color:var(--mata);text-decoration:none;font:500 15.5px Jost,sans-serif;letter-spacing:.01em;white-space:nowrap;box-shadow:0 14px 30px -10px #000d,0 2px 6px #0005;transform:translate(-50%,calc(100% + 40px));transition:transform .55s cubic-bezier(.16,1,.3,1)}
+ .flutua:not(.on){visibility:hidden;transition:transform .55s cubic-bezier(.16,1,.3,1),visibility 0s .55s}
  .flutua.on{transform:translate(-50%,0)}
  .flutua.on:active{transform:translate(-50%,0) scale(.97);transition-duration:.15s}
  .flutua:focus-visible{outline:2px solid var(--nevoa);outline-offset:3px}
@@ -367,7 +382,7 @@ html.parado{scroll-behavior:auto}
 <nav class="nav" id="nav" aria-label="Principal"><div class="in">
  <a class="logo" href="#" aria-label="MARÉ, início"><img class="nova" src="img/logo-mare-branca-curta.webp" alt="MARÉ" width="700" height="381"></a>
  <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista" aria-label="Abrir menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="l1" d="M3 9h18"/><path class="l2" d="M3 15h18"/></svg></button>
- <ul id="menuLista"><li><a href="#projeto">O projeto</a></li><li><a href="#frentes">Frentes</a></li><li><a href="#servicos">Serviços</a></li><li class="contatoItem"><a href="#contato">Fale com a gente<svg class="seta" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></li></ul>
+ <ul id="menuLista"><li><a href="#projeto">O projeto<small>O mapa dos alagamentos e calçadas</small></a></li><li><a href="#frentes">Frentes<small>Mobilização, acessibilidade e renovação</small></a></li><li><a href="#servicos">Serviços<small>Para escolas, empresas e poder público</small></a></li><li class="contatoItem"><svg class="onda" viewBox="0 0 300 10" preserveAspectRatio="none" aria-hidden="true"><path d="M0 5c25 0 25-4 50-4s25 8 50 8 25-8 50-8 25 8 50 8 25-8 50-8 25 4 50 4"/></svg><a href="#contato">Fale com a gente<svg class="seta" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></li></ul>
 </div></nav>
 <a class="flutua" id="flutua" href="mare-cheia.html">Ver o mapa do Maré Cheia<svg class="seta" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
 
@@ -398,9 +413,8 @@ html.parado{scroll-behavior:auto}
   <div class="lead">
    <div class="ld d3">
     <h1>Mobilização, acessibilidade e renovação estrutural para a cidade-floresta.</h1>
-    <div class="acts"><a class="btn broto contato" href="#contato">Quero uma proposta</a><a class="btn vidro" href="#manifesto">Conheça nosso trabalho</a></div>
+    <div class="acts"><a class="btn broto" href="mare-cheia.html">Ver o mapa do Maré Cheia<svg class="seta" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
    </div>
-   <a class="selo ld d4" href="mare-cheia.html"><i></i>Projeto atual</a>
   </div>
  </div>
  
@@ -411,16 +425,14 @@ html.parado{scroll-behavior:auto}
 </div></section>
 
 <section class="destaque" id="projeto" aria-label="Projeto atual: Maré Cheia">
- <div class="dfoto"><a class="dprints" href="mare-cheia.html" aria-label="Entrar no site do Maré Cheia">
-  <div class="janela"><div class="barra" aria-hidden="true"><i></i><i></i><i></i><span>mare-belem / mare-cheia</span></div>
+ <div class="dfoto"><a class="dprints" href="mare-cheia.html" aria-hidden="true" tabindex="-1">
+  <div class="janela"><div class="barra" aria-hidden="true"><i></i><i></i><i></i></div>
    <div class="tela"><img src="img/print-mc-abertura.webp" alt="Abertura do site do Maré Cheia" width="1440" height="900" loading="lazy" decoding="async"><img src="img/print-mc-mapa.webp" alt="Mapa 3D com os pontos de alagamento em Belém" width="1440" height="900" loading="lazy" decoding="async"><img src="img/print-mc-mergulho.webp" alt="Seção Uma cidade ao nível do rio" width="1440" height="900" loading="lazy" decoding="async"></div></div></a></div>
  <div class="dtexto">
-  <span class="etq">Projeto atual</span>
   <h2>Maré Cheia</h2>
-  <p>Alagamentos, calçadas e acessibilidade em Belém. Um mapa 3D com 22 pontos já registrados, para levar cada problema a quem pode resolver.</p>
+  <p>Nosso projeto atual mapeia alagamentos, calçadas e acessibilidade em Belém, para levar cada problema a quem pode resolver.</p>
   <ul class="dnum"><li><b data-n="22">22</b><span>pontos no mapa</span></li><li><b data-n="145">145</b><span>pontos críticos na cidade</span></li><li><b data-n="150" data-s=" mm">150 mm</b><span>de chuva num só dia</span></li></ul>
-  <p class="dsite">O Maré Cheia tem um site só dele: o mapa 3D interativo abre em outra página.</p>
-  <a class="btn broto" href="mare-cheia.html">Entrar no site do Maré Cheia →</a>
+  <a class="btn broto" href="mare-cheia.html">Abrir o mapa 3D<svg class="seta" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
  </div>
 </section>
 
@@ -530,11 +542,11 @@ html.parado{scroll-behavior:auto}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-const still=(()=>{try{return localStorage.getItem("mare_movimento")==="off"}catch(e){return false}})();if(still)document.documentElement.classList.add("parado");
+const still=(()=>{try{return localStorage.getItem("mare_movimento")==="off"||matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){return false}})();if(still)document.documentElement.classList.add("parado");
 const nav=document.getElementById("nav"),hbg=document.getElementById("hbg");
 // atalho flutuante (celular): aparece depois da abertura e some na seção do projeto e no fim da página
 const flutua=document.getElementById("flutua"),secProj=document.getElementById("projeto");
-const flutuaUpd=y=>{if(!flutua||innerWidth>980)return;const r=secProj.getBoundingClientRect(),noProj=r.top<innerHeight&&r.bottom>0;flutua.classList.toggle("on",y>innerHeight*.85&&!noProj&&y<altH-innerHeight*.9)};
+const flutuaUpd=y=>{if(!flutua||innerWidth>980)return;const r=secProj.getBoundingClientRect(),noProj=r.top<innerHeight*.9&&r.bottom>innerHeight*.15;flutua.classList.toggle("on",y>innerHeight*.85&&!noProj&&y<altH-innerHeight*.9)};
 addEventListener("scroll",()=>flutuaUpd(scrollY),{passive:true});
 // animações contínuas param fora da tela
 {const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("fora",!e.isIntersecting)),{rootMargin:"80px"});
@@ -559,7 +571,7 @@ const navUpd=y=>{rioUpd(y);nav.classList.toggle("fora",y>heroEl.offsetHeight-90)
 const contar=b=>{const n=+b.dataset.n,s=b.dataset.s||"",o={v:0};if(still||!window.gsap){b.textContent=n+s;return}gsap.to(o,{v:n,duration:1.6,ease:"power3.out",onUpdate:()=>b.textContent=Math.round(o.v)+s})};
 if(window.gsap&&window.ScrollTrigger&&!still){
  gsap.registerPlugin(ScrollTrigger);
- ScrollTrigger.create({trigger:document.body,start:"top top",end:"bottom bottom",snap:{snapTo:v=>Math.abs(v-projF)<.03?projF:v,delay:.18,duration:{min:.25,max:.6},ease:"power2.inOut"}});
+ if(innerWidth>1300)ScrollTrigger.create({trigger:document.body,start:"top top",end:"bottom bottom",snap:{snapTo:v=>Math.abs(v-projF)<.03?projF:v,delay:.18,duration:{min:.25,max:.6},ease:"power2.inOut"}});
  addEventListener("scroll",()=>navUpd(scrollY),{passive:true});
  document.querySelectorAll(".ld").forEach(e=>{e.classList.remove("ld")});
  const tl=gsap.timeline({defaults:{ease:"power4.out"}});
@@ -567,16 +579,12 @@ if(window.gsap&&window.ScrollTrigger&&!still){
    .from(".kicker",{y:20,opacity:0,duration:.9},"-=1.1")
    .from(".hero h1",{y:30,opacity:0,duration:1},"-=.8")
    .from(".hero .acts .btn",{y:20,opacity:0,stagger:.1,duration:.8},"-=.7")
-   .from(".selo",{x:40,opacity:0,duration:1},"-=.8")
    .from(".lf.fg1,.lf.fg2",{opacity:0,duration:1.6},"-=1.4");
- gsap.to(hbg,{yPercent:14,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
- gsap.to(".lf.fg1",{y:-160,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
- gsap.to(".lf.fg2",{y:120,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
  gsap.to(".hero .in",{y:-120,opacity:0,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom 20%",scrub:true}});
  gsap.set(words,{opacity:.16});
  gsap.to(words,{opacity:1,stagger:.05,ease:"none",scrollTrigger:{trigger:mf,start:"top 80%",end:"bottom 45%",scrub:true}});
  gsap.utils.toArray("h2.rv,p.rv,.cta .rv").forEach(el=>{el.classList.remove("rv");gsap.from(el,{y:50,opacity:0,duration:1.1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 98%"}})});
- gsap.from(".destaque .etq,.destaque h2,.destaque p,.dnum li,.destaque .btn,.dprints",{y:40,opacity:0,stagger:.08,duration:1,ease:"power3.out",scrollTrigger:{trigger:".destaque",start:"top 75%",onEnter:()=>document.querySelectorAll(".dnum [data-n]").forEach(contar)}});
+ gsap.from(".destaque h2,.destaque p,.dnum li,.destaque .btn,.dprints",{y:40,opacity:0,stagger:.08,duration:1,ease:"power3.out",scrollTrigger:{trigger:".destaque",start:"top 75%",onEnter:()=>document.querySelectorAll(".dnum [data-n]").forEach(contar)}});
  gsap.from(".tira",{clipPath:"inset(100% 0% 0% 0%)",stagger:.14,duration:1.3,ease:"power4.inOut",scrollTrigger:{trigger:".tiras",start:"top 92%"}});
  gsap.from(".tira .tx",{y:40,opacity:0,stagger:.14,duration:1,delay:.5,ease:"power3.out",scrollTrigger:{trigger:".tiras",start:"top 92%"}});
  gsap.utils.toArray(".zz").forEach((el,i)=>{gsap.from(el.querySelector(".circ"),{scale:.6,opacity:0,duration:1.1,ease:"back.out(1.4)",scrollTrigger:{trigger:el,start:"top 92%"}});gsap.from(el.querySelector("div:not(.circ)"),{...(innerWidth>980?{x:i%2?-40:40}:{y:30}),opacity:0,duration:1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 92%"}})});
@@ -594,9 +602,10 @@ if(window.gsap&&window.ScrollTrigger&&!still){
 </script>
 
 <script>(()=>{const b=document.getElementById("menuBtn"),l=document.getElementById("menuLista"),n=document.getElementById("nav");if(!b)return;
- // menu do celular em tela cheia: trava a rolagem enquanto aberto; fecha no link, no Esc e ao voltar para tela larga
- const set=a=>{l.classList.toggle("aberto",a);n.classList.toggle("menuAberto",a);b.setAttribute("aria-expanded",a);b.setAttribute("aria-label",a?"Fechar menu":"Abrir menu");document.documentElement.style.overflow=a?"hidden":""};
- b.onclick=()=>set(!l.classList.contains("aberto"));
+ // painel do menu no celular: fecha no link, ao tocar fora, no Esc e ao voltar para tela larga
+ const set=a=>{l.classList.toggle("aberto",a);n.classList.toggle("menuAberto",a);b.setAttribute("aria-expanded",a);b.setAttribute("aria-label",a?"Fechar menu":"Abrir menu")};
+ b.onclick=e=>{e.stopPropagation();const a=!l.classList.contains("aberto");set(a);if(a&&e.detail===0)l.querySelector("a").focus()};
+ document.addEventListener("click",e=>{if(l.classList.contains("aberto")&&!l.contains(e.target))set(false)});
  l.querySelectorAll("a").forEach(x=>x.addEventListener("click",()=>set(false)));
  addEventListener("keydown",e=>{if(e.key==="Escape"&&l.classList.contains("aberto")){set(false);b.focus()}});
  addEventListener("resize",()=>{if(innerWidth>980&&l.classList.contains("aberto"))set(false)})})()</script>
