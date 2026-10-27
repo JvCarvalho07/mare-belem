@@ -49,14 +49,17 @@ section{padding-block:clamp(56px,7vw,96px)}
 .nav .logo{opacity:0;transform:translateY(-8px);visibility:hidden;transition:opacity .5s,transform .5s,visibility 0s .5s}
 .nav.fora .logo{opacity:1;transform:none;visibility:visible;transition:opacity .5s,transform .5s}
 .nav ul{display:flex;gap:34px;list-style:none;margin:0 0 0 auto;padding:0}
-.nav ul a{color:var(--nevoa);text-decoration:none;font:400 14.5px Jost,sans-serif;letter-spacing:.05em;opacity:.78;position:relative;transition:opacity .25s;text-shadow:0 1px 8px #0008}
+.nav ul a{color:var(--nevoa);text-decoration:none;font:400 15px Jost,sans-serif;letter-spacing:.01em;opacity:.8;position:relative;transition:opacity .25s;text-shadow:0 1px 8px #0008}
 .nav ul a:hover{opacity:1}
 .nav ul a::after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:1px;background:var(--broto);transition:right .3s}
 .nav ul a:hover::after{right:0}
-.nav .btn{padding:9px 18px;gap:8px;background:#0b140f33;color:var(--nevoa);font:500 14px Jost,sans-serif;letter-spacing:.04em;box-shadow:inset 0 0 0 1px #e7eee670;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.nav .btn::after{content:"→";transition:transform .25s}
-.nav .btn:hover{background:var(--broto);color:var(--mata);box-shadow:inset 0 0 0 1px var(--broto);transform:none}
-.nav .btn:hover::after{transform:translateX(3px)}
+/* "Fale com a gente" é o último item do próprio menu (era repetido com "Contato"), em broto e separado por um fio */
+.seta{width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.nav ul .contatoItem{padding-left:34px;border-left:1px solid #e7eee633}
+.nav ul .contatoItem a{display:inline-flex;align-items:center;gap:8px;color:var(--broto);opacity:1;font-weight:500}
+.nav ul .contatoItem a::after{display:none}
+.nav ul .contatoItem a:hover .seta{transform:translateX(3px)}
+.nav.menuAberto .logo{opacity:1;transform:none;visibility:visible;transition:opacity .5s,transform .5s}
 
 /* abertura */
 .hero{position:relative;height:100svh;min-height:620px;max-height:1060px;overflow:hidden}
@@ -185,7 +188,7 @@ footer a{color:var(--nevoa)}
 .rv.on{opacity:1;transform:none}
 
 @media(max-width:980px){.nav ul{display:none}.hero .lead,.mapa .top,footer .in{grid-template-columns:1fr}.selo{justify-self:start;margin-top:6px}.frentes{grid-template-columns:1fr}.fr{aspect-ratio:4/3}.svc{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.nav .btn{display:none}.sv{grid-template-columns:96px 1fr}.sv img{width:96px;height:96px}.nums,.steps{grid-template-columns:1fr}.mini{display:none}.leaf{display:none}}
+@media(max-width:600px){.sv{grid-template-columns:96px 1fr}.sv img{width:96px;height:96px}.nums,.steps{grid-template-columns:1fr}.mini{display:none}.leaf{display:none}}
 html.parado{scroll-behavior:auto}
 .parado *,.parado *::before,.parado *::after{animation:none!important;transition:none!important}
 .parado .ld,.parado .rv{opacity:1;transform:none}
@@ -223,9 +226,24 @@ html.parado{scroll-behavior:auto}
 .mare .lt{display:inline-block;padding-top:.2em;margin-top:-.2em;margin-right:.035em;letter-spacing:0;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 12px #0004)}
 @media(max-width:800px){.hero .bg{background-image:url(img/u-floresta-nevoa-m.webp)}}
 .hero .bg{will-change:transform}
-.menuBtn{display:none;margin-left:auto;font:500 14.5px Jost,sans-serif;letter-spacing:.06em;color:var(--nevoa);background:none;border:0;padding:10px 2px;cursor:pointer;text-shadow:0 1px 8px #0008}
-.menuBtn::before{content:"";display:inline-block;width:18px;height:7px;margin-right:10px;vertical-align:2px;border-block:1.5px solid currentColor}
-@media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
+.menuBtn{display:none;margin-left:auto;margin-right:-12px;width:48px;height:48px;padding:0;border:0;border-radius:50%;background:none;color:var(--nevoa);cursor:pointer}
+.menuBtn svg{display:block;width:26px;height:26px;margin:auto;overflow:visible;filter:drop-shadow(0 1px 6px #0009)}
+.menuBtn path{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;transform-box:fill-box;transform-origin:center;transition:transform .5s cubic-bezier(.16,1,.3,1),stroke-dasharray .5s cubic-bezier(.16,1,.3,1),stroke-dashoffset .5s cubic-bezier(.16,1,.3,1)}
+.menuBtn .l2{stroke-dasharray:12 40;stroke-dashoffset:-6}
+.menuBtn:hover .l2{stroke-dasharray:18 40;stroke-dashoffset:0}
+.menuBtn[aria-expanded="true"] .l1{transform:translateY(3px) rotate(45deg)}
+.menuBtn[aria-expanded="true"] .l2{stroke-dasharray:18 40;stroke-dashoffset:0;transform:translateY(-3px) rotate(-45deg)}
+@media(max-width:980px){
+ .menuBtn{display:block}
+ .nav ul#menuLista{position:fixed;inset:0;z-index:-1;display:flex;flex-direction:column;justify-content:center;gap:2px;margin:0;padding:96px max(28px,env(safe-area-inset-right,0px)) 56px max(28px,env(safe-area-inset-left,0px));background:var(--mata);visibility:hidden;clip-path:inset(0 0 100% 0);transition:clip-path .6s cubic-bezier(.16,1,.3,1),visibility 0s .6s}
+ .nav ul#menuLista.aberto{visibility:visible;clip-path:inset(0);transition:clip-path .6s cubic-bezier(.16,1,.3,1)}
+ .nav ul#menuLista a{display:inline-flex;align-items:center;gap:14px;padding:6px 0;color:var(--nevoa);opacity:1;font:300 clamp(36px,10vw,52px)/1.12 Jost,sans-serif;letter-spacing:-.015em;text-shadow:none}
+ .nav ul#menuLista a::after{display:none}
+ .nav ul#menuLista .contatoItem{margin-top:26px;padding:26px 0 0;border-left:0;border-top:1px solid var(--line)}
+ .nav ul#menuLista .contatoItem a{color:var(--broto);font-weight:400}
+ .nav ul#menuLista .seta{width:26px;height:26px;stroke-width:1.4}
+ .nav.menuAberto::before{opacity:0}
+}
 /* ---- seções sem cartões (referências: faixas de foto, fotos redondas, faixa de palavras, linha do tempo) ---- */
 .destaque{position:relative;display:grid;grid-template-columns:1.15fr 1fr;min-height:clamp(480px,66vh,660px);padding:0;overflow:hidden;border-block:1px solid var(--line)}
 /* apresentação do site do Maré Cheia: prints de verdade numa janela de navegador; clicar entra no site.
@@ -337,22 +355,21 @@ html.parado{scroll-behavior:auto}
 .flutua{display:none}
 @media(max-width:980px){
  .menuBtn{margin-left:auto}
- .flutua{position:fixed;z-index:29;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;padding:8px 16px 8px 8px;border-radius:18px;background:#0f1a14eb;box-shadow:0 14px 34px #0008,inset 0 0 0 1px #b5d96a55;color:var(--nevoa);text-decoration:none;transform:translateY(140%);transition:transform .45s cubic-bezier(.2,.7,.1,1)}
- .flutua.on{transform:none}
- .flutua .fth{height:44px;border-radius:12px;background:url(img/poster-mapa.jpg) center/cover}
- .flutua b{display:block;font:600 16px Jost,sans-serif}.flutua small{font-size:13px;color:var(--mut)}
- .flutua .seta{font-size:22px;color:var(--broto)}
+ .flutua{position:fixed;z-index:29;left:50%;bottom:max(16px,calc(env(safe-area-inset-bottom) + 10px));display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 20px 0 24px;border-radius:999px;background:var(--broto);color:var(--mata);text-decoration:none;font:500 15.5px Jost,sans-serif;letter-spacing:.01em;white-space:nowrap;box-shadow:0 14px 30px -10px #000d,0 2px 6px #0005;transform:translate(-50%,calc(100% + 40px));transition:transform .55s cubic-bezier(.16,1,.3,1)}
+ .flutua.on{transform:translate(-50%,0)}
+ .flutua.on:active{transform:translate(-50%,0) scale(.97);transition-duration:.15s}
+ .flutua:focus-visible{outline:2px solid var(--nevoa);outline-offset:3px}
+ .flutua .seta{width:16px;height:16px}
 }
 @media(max-width:600px){.nav .in{gap:10px;height:64px}.logo span{display:none}.logo img.nova{height:42px}}
 </style></head><body>
 
 <nav class="nav" id="nav" aria-label="Principal"><div class="in">
  <a class="logo" href="#" aria-label="MARÉ, início"><img class="nova" src="img/logo-mare-branca-curta.webp" alt="MARÉ" width="700" height="381"></a>
- <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista">Menu</button>
- <ul id="menuLista"><li><a href="#projeto">O projeto</a></li><li><a href="#frentes">Frentes</a></li><li><a href="#servicos">Serviços</a></li><li><a href="#contato">Contato</a></li></ul>
- <a class="btn broto contato" href="#contato">Fale com a gente</a>
+ <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista" aria-label="Abrir menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="l1" d="M3 9h18"/><path class="l2" d="M3 15h18"/></svg></button>
+ <ul id="menuLista"><li><a href="#projeto">O projeto</a></li><li><a href="#frentes">Frentes</a></li><li><a href="#servicos">Serviços</a></li><li class="contatoItem"><a href="#contato">Fale com a gente<svg class="seta" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></li></ul>
 </div></nav>
-<a class="flutua" id="flutua" href="mare-cheia.html"><span class="fth" aria-hidden="true"></span><span><b>Projeto atual</b><small>Mapa 3D dos alagamentos</small></span><span class="seta" aria-hidden="true">→</span></a>
+<a class="flutua" id="flutua" href="mare-cheia.html">Ver o mapa do Maré Cheia<svg class="seta" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
 
 <svg class="rio" id="rio" viewBox="0 0 40 1000" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="gRio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b5d96a"/><stop offset="1" stop-color="#6fd3c2"/></linearGradient></defs>
  <path class="base" d="M20 0C34 80 6 160 20 240S34 400 20 480 6 640 20 720 34 880 20 1000"/><path class="agua" id="rioAgua" d="M20 0C34 80 6 160 20 240S34 400 20 480 6 640 20 720 34 880 20 1000"/></svg>
@@ -576,7 +593,13 @@ if(window.gsap&&window.ScrollTrigger&&!still){
 }
 </script>
 
-<script>(()=>{const b=document.getElementById("menuBtn"),l=document.getElementById("menuLista");if(!b)return;b.onclick=()=>{const a=l.classList.toggle("aberto");b.setAttribute("aria-expanded",a);b.textContent=a?"Fechar":"Menu"};l.querySelectorAll("a").forEach(x=>x.addEventListener("click",()=>{l.classList.remove("aberto");b.setAttribute("aria-expanded","false");b.textContent="Menu"}))})()</script>
+<script>(()=>{const b=document.getElementById("menuBtn"),l=document.getElementById("menuLista"),n=document.getElementById("nav");if(!b)return;
+ // menu do celular em tela cheia: trava a rolagem enquanto aberto; fecha no link, no Esc e ao voltar para tela larga
+ const set=a=>{l.classList.toggle("aberto",a);n.classList.toggle("menuAberto",a);b.setAttribute("aria-expanded",a);b.setAttribute("aria-label",a?"Fechar menu":"Abrir menu");document.documentElement.style.overflow=a?"hidden":""};
+ b.onclick=()=>set(!l.classList.contains("aberto"));
+ l.querySelectorAll("a").forEach(x=>x.addEventListener("click",()=>set(false)));
+ addEventListener("keydown",e=>{if(e.key==="Escape"&&l.classList.contains("aberto")){set(false);b.focus()}});
+ addEventListener("resize",()=>{if(innerWidth>980&&l.classList.contains("aberto"))set(false)})})()</script>
 <script>
 // Contato. O formulário muda com o perfil: morador vê só bairro, mensagem e (se marcar) o contato; os outros perfis têm campos próprios.
 // Para ligar ao Google Forms: colar em FORMS.url o endereço "formResponse" e em cada campo o "entry.NNN" da pergunta
