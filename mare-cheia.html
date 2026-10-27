@@ -3,7 +3,7 @@
 <title>Maré Cheia · MARÉ</title>
 <meta name="description" content="Maré Cheia, projeto da MARÉ: alagamentos, calçadas e acessibilidade em Belém, com mapa 3D e ações nos bairros.">
 <meta property="og:type" content="website"><meta property="og:title" content="Maré Cheia · MARÉ"><meta property="og:description" content="Alagamentos, calçadas e acessibilidade em Belém: 22 pontos num mapa 3D."><meta property="og:image" content="https://jvcarvalho07.github.io/mare-belem/img/u-rio-aereo.webp"><meta property="og:url" content="https://jvcarvalho07.github.io/mare-belem/mare-cheia.html"><meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#0f1a14">
-<link rel="icon" href="img/icone-mare-redondo.png">
+<link rel="icon" href="img/icone-onda-64.png" sizes="64x64"><link rel="apple-touch-icon" href="img/icone-onda-192.png">
 <link rel="preload" as="image" href="img/u-rio-aereo-hd.webp" media="(min-width: 900px)">
 <link rel="preload" as="image" href="img/u-rio-aereo.webp" media="(max-width: 899px)">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -145,22 +145,12 @@ footer a{color:#cde9e6}
 @media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
 .nav .menuBtn{color:#fff}.nav.claro .menuBtn{color:var(--tinta);background:#0f7f8614}
 @media(max-width:700px){.sup .base .in{gap:18px}.sup h1{font-size:19px}.sup .acts{margin-top:4px}.nota{margin-top:24px}}
-/* tela de carregamento: aparece até a foto da abertura ficar pronta */
-.carrega{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:#03161b;color:#e6f6f3;transition:opacity .7s ease,visibility .7s}
-.carrega.sai{opacity:0;visibility:hidden}
-.carrega .cw{display:flex;flex-direction:column;align-items:center;gap:16px}
-/* referência (Pinterest): só um círculo enchendo de água com a porcentagem no meio */
-.carrega .gota{position:relative;width:132px;height:132px;border-radius:50%;overflow:hidden;background:#0a2a2e;box-shadow:0 0 0 2px #2bb3b155}
-.carrega .gota i{position:absolute;left:-50%;width:200%;height:200%;top:100%;border-radius:42%;background:#2bb3b1;transition:top .4s linear;animation:gira 3s linear infinite}
-.carrega .gota span{position:absolute;inset:0;z-index:2;display:grid;place-items:center;font:300 30px Jost,sans-serif;color:#fff;font-variant-numeric:tabular-nums}
-@keyframes gira{to{transform:rotate(360deg)}}
-.carrega small{font:400 14px Jost,sans-serif;color:#8fc9c4;letter-spacing:.04em}
-.parado .carrega .gota i{animation:none}
+/* sem tela de carregamento: a foto da abertura aparece suave quando fica pronta */
+.agua{opacity:0;transition:opacity .9s ease}.foto-ok .agua{opacity:1}
 </style></head><body>
-<div class="carrega" id="carrega" role="status" aria-live="polite"><div class="cw"><div class="gota"><i></i><span id="carregaPct">0%</span></div><small>Carregando</small></div></div>
 
 <nav class="nav" id="nav" aria-label="Principal">
- <a class="back" href="index.html" aria-label="Voltar ao início"><img src="img/icone-mare-redondo.png" alt="">Início</a>
+ <a class="back" href="index.html" aria-label="Voltar ao início"><img src="img/icone-onda-192.png" alt="">Início</a>
  <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista">Menu</button>
  <ul id="menuLista"><li><a href="#pontos">Pontos</a></li><li><a href="#mergulho">O problema</a></li><li><a href="#acoes">Ações</a></li></ul>
  <a class="btn teal contato" href="#enviar">Enviar um ponto</a>
@@ -267,15 +257,12 @@ function assar(){return new Promise(res=>{const img=new Image();img.onload=()=>{
  g.fillStyle="rgba(4,40,44,.16)";g.fillRect(0,0,W,H);
  let fs=Math.min(W*.17,H*.3);g.font=`800 ${fs}px Jost, sans-serif`;const mw=g.measureText("MARÉ CHEIA").width;if(mw>W*.86){fs*=W*.86/mw;g.font=`800 ${fs}px Jost, sans-serif`}
  g.textAlign="center";g.textBaseline="middle";g.shadowColor="rgba(0,30,35,.4)";g.shadowBlur=fs*.15;g.fillStyle="rgba(236,250,247,.84)";g.fillText("MARÉ CHEIA",W/2,H*.42);
- res(c.toDataURL("image/jpeg",.92))};img.onerror=()=>res("");img.src=innerWidth<900?"img/u-rio-aereo.webp":"img/u-rio-aereo-hd.webp"})}
-async function iniciarAgua(){try{await document.fonts.load("800 100px Jost")}catch(e){}const u=await assar();if(u)agua.style.backgroundImage=`url(${u})`;tiraCarrega()}
-// some a tela de carregamento quando a foto fica pronta (ou depois de 8 s, para nunca prender a página)
-// a porcentagem anda até 90% sozinha e só chega a 100% quando a foto está pronta (no mínimo 1,8 s; no máximo 8 s)
-const carrega=document.getElementById("carrega");let pronto=false;
-if(carrega){const pct=document.getElementById("carregaPct"),agua=carrega.querySelector(".gota i"),t0=performance.now();let p=0;
- const passo=setInterval(()=>{const k=Math.min(1,(performance.now()-t0)/1800);p=Math.max(p,Math.round(pronto?k*100:Math.min(90,k*90)));pct.textContent=p+"%";agua.style.top=(100-p*.9)+"%";
-  if(p>=100){clearInterval(passo);setTimeout(()=>{carrega.classList.add("sai");setTimeout(()=>carrega.remove(),800)},350)}},80)}
-function tiraCarrega(){pronto=true}setTimeout(tiraCarrega,8000);
+ c.toBlob(b=>res(b?URL.createObjectURL(b):""),"image/jpeg",.9)};img.onerror=()=>res("");img.src=innerWidth<900?"img/u-rio-aereo.webp":"img/u-rio-aereo-hd.webp"})}
+// a foto aparece quando fica pronta (no máximo 4 s depois, aparece de qualquer jeito)
+let urlFoto="";
+function tiraCarrega(){document.documentElement.classList.add("foto-ok")}
+async function iniciarAgua(){try{await document.fonts.load("800 100px Jost")}catch(e){}const u=await assar();if(u){if(urlFoto)URL.revokeObjectURL(urlFoto);urlFoto=u;agua.style.backgroundImage=`url(${u})`}tiraCarrega()}
+setTimeout(tiraCarrega,4000);
 iniciarAgua();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(iniciarAgua,500)});
 
 // 2) vídeo só no computador e só quando aparece
