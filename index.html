@@ -35,24 +35,28 @@ section{padding-block:clamp(56px,7vw,96px)}
 .btn.vidro{color:var(--nevoa);background:#ffffff14;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px #ffffff40}
 
 /* navegação */
-/* sem faixa de fundo: a logo flutua sozinha e só aparece depois da abertura (.fora); os links ganham uma pílula escura para continuarem legíveis sobre o conteúdo */
+/* menu leve, sem faixa nem caixas: links finos, botão de contorno com seta e a logo solta, que só aparece depois da abertura (.fora).
+   Fora da abertura, um degradê escuro que some para baixo (sem borda) mantém tudo legível sobre o conteúdo. */
 .nav{position:fixed;z-index:30;top:0;left:0;right:0;padding-top:env(safe-area-inset-top,0px);pointer-events:none;transition:transform .5s cubic-bezier(.2,.7,.1,1)}
+.nav::before{content:"";position:absolute;inset:0 0 -48px;z-index:-1;pointer-events:none;background:linear-gradient(180deg,#0b140fec 0%,#0b140fb0 50%,#0b140f00 100%);opacity:0;transition:opacity .5s}
+.nav.fora::before{opacity:1}
 .nav .in>*{pointer-events:auto}
-.nav.esconde{transform:translateY(-120%)}
-.nav .in{display:flex;align-items:center;gap:18px;height:78px}
+.nav.esconde{transform:translateY(-130%)}
+.nav .in{display:flex;align-items:center;gap:34px;height:76px}
 .logo{display:flex;align-items:center;gap:10px;color:var(--nevoa);text-decoration:none;font:800 22px Jost,sans-serif;letter-spacing:.18em}
 .logo img{width:36px;height:36px;border-radius:50%;background:#fff;object-fit:contain}
-.logo img.nova{width:auto;height:58px;border-radius:0;background:none}
-.nav .logo{padding:2px 18px;border-radius:999px;background:#0f1a14d0;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 10px 30px #0006,inset 0 0 0 1px #ffffff1a;opacity:0;transform:translateY(-10px);visibility:hidden;transition:opacity .45s,transform .45s,visibility 0s .45s}
-.nav.fora .logo{opacity:1;transform:none;visibility:visible;transition:opacity .45s,transform .45s}
-.nav ul{display:flex;gap:28px;list-style:none;margin:0 0 0 auto;padding:11px 24px;border-radius:999px;transition:background .4s,box-shadow .4s}
-.nav.fora ul{background:#0f1a14c4;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 10px 30px #0006,inset 0 0 0 1px #ffffff1a}
-.nav.fora .menuBtn{background:#0f1a14d0;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 10px 30px #0006,inset 0 0 0 1px #ffffff26}
-.nav .btn{box-shadow:0 10px 30px #0005}
-.nav ul a{color:var(--nevoa);text-decoration:none;font:400 15.5px Jost,sans-serif;opacity:.85;position:relative}
-.nav ul a::after{content:"";position:absolute;left:0;right:100%;bottom:-6px;height:2px;background:var(--broto);transition:right .3s}
+.logo img.nova{width:auto;height:50px;border-radius:0;background:none;filter:drop-shadow(0 2px 10px #000a)}
+.nav .logo{opacity:0;transform:translateY(-8px);visibility:hidden;transition:opacity .5s,transform .5s,visibility 0s .5s}
+.nav.fora .logo{opacity:1;transform:none;visibility:visible;transition:opacity .5s,transform .5s}
+.nav ul{display:flex;gap:34px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{color:var(--nevoa);text-decoration:none;font:400 14.5px Jost,sans-serif;letter-spacing:.05em;opacity:.78;position:relative;transition:opacity .25s;text-shadow:0 1px 8px #0008}
+.nav ul a:hover{opacity:1}
+.nav ul a::after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:1px;background:var(--broto);transition:right .3s}
 .nav ul a:hover::after{right:0}
-.nav .btn{padding:11px 20px}
+.nav .btn{padding:9px 18px;gap:8px;background:#0b140f33;color:var(--nevoa);font:500 14px Jost,sans-serif;letter-spacing:.04em;box-shadow:inset 0 0 0 1px #e7eee670;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.nav .btn::after{content:"→";transition:transform .25s}
+.nav .btn:hover{background:var(--broto);color:var(--mata);box-shadow:inset 0 0 0 1px var(--broto);transform:none}
+.nav .btn:hover::after{transform:translateX(3px)}
 
 /* abertura */
 .hero{position:relative;height:100svh;min-height:620px;max-height:1060px;overflow:hidden}
@@ -219,7 +223,8 @@ html.parado{scroll-behavior:auto}
 .mare .lt{display:inline-block;padding-top:.2em;margin-top:-.2em;margin-right:.035em;letter-spacing:0;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 12px #0004)}
 @media(max-width:800px){.hero .bg{background-image:url(img/u-floresta-nevoa-m.webp)}}
 .hero .bg{will-change:transform}
-.menuBtn{display:none;margin-left:auto;font:600 15px Jost,sans-serif;color:inherit;background:#ffffff1f;border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
+.menuBtn{display:none;margin-left:auto;font:500 14.5px Jost,sans-serif;letter-spacing:.06em;color:var(--nevoa);background:none;border:0;padding:10px 2px;cursor:pointer;text-shadow:0 1px 8px #0008}
+.menuBtn::before{content:"";display:inline-block;width:18px;height:7px;margin-right:10px;vertical-align:2px;border-block:1.5px solid currentColor}
 @media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
 /* ---- seções sem cartões (referências: faixas de foto, fotos redondas, faixa de palavras, linha do tempo) ---- */
 .destaque{position:relative;display:grid;grid-template-columns:1.15fr 1fr;min-height:clamp(480px,66vh,660px);padding:0;overflow:hidden;border-block:1px solid var(--line)}
@@ -338,11 +343,11 @@ html.parado{scroll-behavior:auto}
  .flutua b{display:block;font:600 16px Jost,sans-serif}.flutua small{font-size:13px;color:var(--mut)}
  .flutua .seta{font-size:22px;color:var(--broto)}
 }
-@media(max-width:600px){.menuBtn{padding:8px 13px}.nav .in{gap:10px;height:66px}.logo span{display:none}.logo img.nova{height:48px}.nav .logo{padding:1px 14px}}
+@media(max-width:600px){.nav .in{gap:10px;height:64px}.logo span{display:none}.logo img.nova{height:42px}}
 </style></head><body>
 
 <nav class="nav" id="nav" aria-label="Principal"><div class="in">
- <a class="logo" href="#" aria-label="MARÉ, início"><img class="nova" src="img/logo-mare-escura-forte.webp" alt="MARÉ" width="700" height="381"></a>
+ <a class="logo" href="#" aria-label="MARÉ, início"><img class="nova" src="img/logo-mare-branca-curta.webp" alt="MARÉ" width="700" height="381"></a>
  <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista">Menu</button>
  <ul id="menuLista"><li><a href="#projeto">O projeto</a></li><li><a href="#frentes">Frentes</a></li><li><a href="#servicos">Serviços</a></li><li><a href="#contato">Contato</a></li></ul>
  <a class="btn broto contato" href="#contato">Fale com a gente</a>
