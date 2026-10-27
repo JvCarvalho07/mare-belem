@@ -54,7 +54,7 @@ label.ck{display:flex;gap:8px;align-items:flex-start;font-size:14.5px}label.ck i
 .maplibregl-popup-content{border-radius:14px;padding:12px 14px}
 .anel{position:absolute;left:50%;bottom:0;width:70px;height:70px;margin:0 0 -35px -35px;border-radius:50%;border:2px solid #0f7f86;opacity:0;pointer-events:none;animation:anel 2.4s ease-out infinite;will-change:transform,opacity}
 @keyframes anel{0%{transform:scale(.15);opacity:.85}100%{transform:scale(1);opacity:0}}
-body.quieto .anel{animation-play-state:paused}
+body.quieto .anel,body.ocioso .anel{animation-play-state:paused;visibility:hidden}
 .hero .brand,.hero .tools,.hero .panel,.hero .open,.hero .maplibregl-ctrl-top-right{display:none!important}
 .embed .brand{display:none}
 body:not(.adm) .admin{display:none!important}.adm .pub{display:none}.embed .panel{top:12px}
@@ -175,7 +175,11 @@ function draw(){mk.forEach(m=>m.remove());mk=[];const on=[...document.querySelec
 document.addEventListener("change",e=>{if(e.target.classList.contains("f"))draw()});
 
 
-let ativo=true;addEventListener("message",e=>{const d=e.data||{};if(typeof d.mareAtivo==="boolean"){ativo=d.mareAtivo;document.body.classList.toggle("quieto",!ativo)}if(Array.isArray(d.mareVoar))map.flyTo({center:d.mareVoar,zoom:16,pitch:60,duration:2200})});
+// ninguém mexe (no mapa nem na página de fora) há 40 s: os anéis param até a próxima interação
+let ultMexeu=performance.now();const mexeu=()=>{ultMexeu=performance.now();if(document.body.classList.contains("ocioso"))document.body.classList.remove("ocioso")};
+["pointermove","pointerdown","keydown","wheel","touchstart"].forEach(e=>addEventListener(e,mexeu,{passive:true}));
+setInterval(()=>{if(performance.now()-ultMexeu>40000)document.body.classList.add("ocioso")},5000);
+let ativo=true;addEventListener("message",e=>{const d=e.data||{};if(d.mareMexeu)mexeu();if(typeof d.mareAtivo==="boolean"){ativo=d.mareAtivo;document.body.classList.toggle("quieto",!ativo)}if(Array.isArray(d.mareVoar))map.flyTo({center:d.mareVoar,zoom:16,pitch:60,duration:2200})});
 // Trechos de rua a até 150 m dos pontos de alagamento, calculados uma vez por ferramenta/ruas-agua.mjs.
 function aguaNasRuas(){if(!EST||map.getSource("ruas-agua"))return;
  map.addSource("ruas-agua",{type:"geojson",data:"dados/ruas-agua.json"});

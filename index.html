@@ -51,21 +51,22 @@ section{padding-block:clamp(56px,7vw,96px)}
 .hero{position:relative;height:100svh;min-height:620px;max-height:1060px;overflow:hidden}
 .hero .bg{position:absolute;inset:-8% 0 0;background:url(img/u-floresta-nevoa-2k.webp) center 30%/cover;will-change:transform;}
 .folhas{position:absolute;top:0;left:0;right:0;height:210vh;overflow:hidden;pointer-events:none;z-index:4}
-.lf{position:absolute;pointer-events:none}
-.lf img,.lf svg{width:100%;height:auto;display:block}
-.lf.fg1{--w:clamp(220px,26vw,420px);width:calc(var(--w)*1.143);left:calc(-6% - var(--w)*.0714);top:calc(min(100svh,1060px) - 12vw - var(--w)*.0714);opacity:.9}
-.lf.fg1 img{transform-origin:20% 90%;animation:sway 9s ease-in-out infinite}
-.lf.fg2{--w:clamp(130px,15vw,250px);width:calc(var(--w)*1.553);right:-8%;top:-3%;opacity:.8}
-.lf.fg2 img{transform-origin:80% 10%;animation:sway2 11s ease-in-out infinite}
+.lf{position:absolute;pointer-events:none;will-change:transform}
+.lf svg{width:100%;height:auto;display:block}
+.lf.fg1{width:clamp(220px,26vw,420px);left:-6%;top:calc(min(100svh,1060px) - 12vw);filter:blur(6px);opacity:.9;transform-origin:20% 90%;animation:sway 9s ease-in-out infinite}
+.lf.fg2{width:clamp(160px,18vw,300px);right:-4%;top:6%;filter:blur(4px);opacity:.75;transform:scaleX(-1) rotate(18deg);transform-origin:80% 10%;animation:sway2 11s ease-in-out infinite}
 .lf.m1{width:54px;left:12%;top:-8%;animation:fall 26s linear infinite}
-.lf.m2{width:38px;left:58%;top:-8%;animation:fall 32s linear infinite -11s}
+.lf.m2{width:38px;left:58%;top:-8%;animation:fall 32s linear infinite -11s;filter:blur(1px)}
 .lf.m3{width:46px;left:83%;top:-8%;animation:fall 38s linear infinite -21s}
 @keyframes sway{50%{transform:rotate(4deg) translateY(-6px)}}
-@keyframes sway2{50%{transform:rotate(-5deg) translateY(8px)}}
-@keyframes fall{0%{transform:translate(0,0) rotate(0);opacity:0}6%{opacity:.9}45%{transform:translate(-60px,80vh) rotate(150deg);opacity:.85}100%{transform:translate(40px,190vh) rotate(330deg);opacity:0}}
-.calmo .lf.m1,.calmo .lf.m2,.calmo .lf.m3{display:none}.calmo .lf img{animation-play-state:paused}
-.folhas.fora{visibility:hidden}.fora .lf,.fora .lf img{animation-play-state:paused}
-@media(max-width:700px){.lf.m3,.lf.fg2{display:none}.lf.fg1{--w:200px;opacity:.7}}
+@keyframes sway2{50%{transform:scaleX(-1) rotate(12deg) translateY(8px)}}
+/* o sumiço no fim (63% e 80%) faz o papel da antiga máscara em degradê, que custava placa de vídeo a cada quadro */
+@keyframes fall{0%{transform:translate(0,0) rotate(0);opacity:0}6%{opacity:.9}45%{transform:translate(-60px,80vh) rotate(150deg);opacity:.85}63%{opacity:.58}80%{opacity:.19}100%{transform:translate(40px,190vh) rotate(330deg);opacity:0}}
+.folhas.fora{visibility:hidden}.fora .lf{animation-play-state:paused}
+/* ninguém mexe há 40 s: enfeites param e as folhas que caem somem (o notebook não esquenta); voltam ao mexer */
+.ocioso .lf,.ocioso .trilha,.ocioso .selo::before,.ocioso .selo i::before,.ocioso .rpin i::before{animation-play-state:paused!important}
+.lf svg{transition:opacity 1.2s}.ocioso .lf.m1 svg,.ocioso .lf.m2 svg,.ocioso .lf.m3 svg{opacity:0}
+@media(max-width:700px){.lf.m3,.lf.fg2{display:none}.lf{filter:none!important}.lf.fg1{width:200px;opacity:.7}}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;z-index:2;pointer-events:none;background:linear-gradient(180deg,#0f1a1400,#0f1a14)}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 50% 40%,#0f1a1400 0%,#0f1a1499 60%,#0f1a14 100%),linear-gradient(180deg,#0f1a1480,#0f1a1400 30%,#0f1a1400 100%)}
 .fog{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.55;background:radial-gradient(40% 25% at 20% 60%,#e7eee633,transparent 70%),radial-gradient(35% 20% at 75% 45%,#e7eee626,transparent 70%)}
@@ -75,10 +76,10 @@ section{padding-block:clamp(56px,7vw,96px)}
 .hero .lead{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,4vw,60px);align-items:end;margin-top:clamp(14px,3vh,34px)}
 .hero .lead>*{min-width:0}
 .selo{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:10px;justify-self:end;align-self:end;padding:11px 20px;border-radius:999px;font:600 15px Jost,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--broto);background:#0f1a14d9;box-shadow:inset 0 0 0 1px #b5d96a99;text-decoration:none}
-.selo::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:999px;box-shadow:0 0 30px 6px #b5d96a77;animation:brilho 2.4s ease-in-out infinite alternate}
+.selo::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:999px;box-shadow:0 0 30px 6px #b5d96a77;will-change:opacity;animation:brilho 2.4s ease-in-out infinite alternate}
 .selo:hover{transform:translateY(-2px)}
 .selo i,.rpin i{position:relative;isolation:isolate;width:9px;height:9px;border-radius:50%;background:var(--broto)}
-.selo i::before,.rpin i::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:#b5d96a99;animation:anel 2.2s ease-out infinite}
+.selo i::before,.rpin i::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:#b5d96a99;will-change:transform,opacity;animation:anel 2.2s ease-out infinite}
 @keyframes brilho{from{opacity:.25}to{opacity:1}}
 @keyframes anel{from{transform:scale(1);opacity:.8}to{transform:scale(2.6);opacity:0}}
 .hero h1{font-size:clamp(24px,2.6vw,38px);font-weight:300;line-height:1.2;max-width:24ch}
@@ -177,7 +178,7 @@ html.parado{scroll-behavior:auto}
 @media(max-width:980px){.proj2{grid-template-columns:1fr}.pj.big{grid-row:auto;min-height:420px}}
 .mare{background:none!important;filter:none!important}
 .mare{letter-spacing:0!important}
-.mare .lt{display:inline-block;padding-top:.2em;margin-top:-.2em;margin-right:.035em;letter-spacing:0;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent}
+.mare .lt{display:inline-block;padding-top:.2em;margin-top:-.2em;margin-right:.035em;letter-spacing:0;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 12px #0004)}
 @media(max-width:800px){.hero .bg{background-image:url(img/u-floresta-nevoa-m.webp)}}
 .hero .bg{will-change:transform}
 .menuBtn{display:none;margin-left:auto;font:600 15px Jost,sans-serif;color:inherit;background:#ffffff1f;border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
@@ -301,8 +302,8 @@ html.parado{scroll-behavior:auto}
  <path class="base" d="M20 0C34 80 6 160 20 240S34 400 20 480 6 640 20 720 34 880 20 1000"/><path class="agua" id="rioAgua" d="M20 0C34 80 6 160 20 240S34 400 20 480 6 640 20 720 34 880 20 1000"/></svg>
 <a class="rpin" id="rpin" href="#projeto" aria-label="Ir ao projeto Maré Cheia"><i></i><span>Maré Cheia</span></a>
 <div class="folhas" aria-hidden="true">
- <div class="lf fg1"><img src="img/folha-fg1.webp" alt="" width="960" height="508" decoding="async"></div>
- <div class="lf fg2"><img src="img/folha-fg2.webp" alt="" width="932" height="1047" decoding="async"></div>
+ <div class="lf fg1"><svg viewBox="0 0 260 120"><use href="#folha-acai"/></svg></div>
+ <div class="lf fg2"><svg viewBox="0 0 200 260"><use href="#folha-larga"/></svg></div>
  <div class="lf m1"><svg viewBox="0 0 40 70"><use href="#folha-peq"/></svg></div>
  <div class="lf m2"><svg viewBox="0 0 40 70"><use href="#folha-peq"/></svg></div>
  <div class="lf m3"><svg viewBox="0 0 200 260"><use href="#folha-larga"/></svg></div>
@@ -416,8 +417,10 @@ addEventListener("scroll",()=>flutuaUpd(scrollY),{passive:true});
 // animações contínuas param fora da tela
 {const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("fora",!e.isIntersecting)),{rootMargin:"80px"});
  document.querySelectorAll(".hero,.folhas,.trilha").forEach(el=>io.observe(el))}
-// depois de 14 s parado, o movimento de enfeite das folhas para (economiza placa de vídeo)
-setTimeout(()=>document.documentElement.classList.add("calmo"),14000);
+// página aberta e ninguém mexendo há 40 s: pausa os enfeites até a próxima interação
+{const h=document.documentElement;let ult=performance.now();const mexeu=()=>{ult=performance.now();if(h.classList.contains("ocioso"))h.classList.remove("ocioso")};
+ ["pointermove","pointerdown","keydown","wheel","scroll","touchstart"].forEach(e=>addEventListener(e,mexeu,{passive:true}));
+ setInterval(()=>{if(performance.now()-ult>40000)h.classList.add("ocioso")},5000)}
 const mf=document.getElementById("mf");
 mf.innerHTML=mf.innerHTML.split(/(<em>.*?<\/em>|\s+)/).map(t=>/^\s+$/.test(t)||!t?t:`<span>${t}</span>`).join("");
 const words=[...mf.querySelectorAll(":scope>span")];

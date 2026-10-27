@@ -59,7 +59,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .sup h1{font-size:clamp(21px,2.3vw,32px);font-weight:300;line-height:1.25;max-width:28ch;text-shadow:0 2px 18px #0009}
 .sup .acts{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
 .aves{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
-.ave{position:absolute;color:#fff;animation:voa linear infinite}
+.ave{position:absolute;color:#fff;will-change:transform;animation:voa linear infinite}
 .ave svg{width:100%;height:auto;display:block}
 
 @keyframes voa{from{transform:translate3d(-15vw,0,0)}to{transform:translate3d(115vw,-8vh,0)}}
@@ -71,7 +71,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .ondas svg{position:absolute;bottom:0;left:0;width:200%;height:100%;will-change:transform}
 .ondas .o1{opacity:.45;transform:translate3d(-12%,0,0)}
 .ondas .o2{opacity:.7;transform:translate3d(-30%,0,0)}
-.ondas .o3{animation:corre 34s linear infinite}
+.ondas .o3{will-change:transform;animation:corre 34s linear infinite}
 @keyframes corre{to{transform:translate3d(-50%,0,0)}}
 
 /* ato 2: 22 pontos + mapa */
@@ -268,13 +268,16 @@ iniciarAgua();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeo
 {const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("fora",!e.isIntersecting)),{rootMargin:"60px"});document.querySelectorAll(".sup,.mergulho").forEach(el=>io.observe(el))}
 // depois de 20 s parados na abertura, o movimento de enfeite para (economiza placa de vídeo)
 setTimeout(()=>document.documentElement.classList.add("calmo"),20000);
+// avisa o mapa (iframe) que a pessoa está mexendo aqui fora, para os anéis dele não pararem à toa
+{let ult=0;const mexeu=()=>{const t=performance.now();if(t-ult<2000)return;ult=t;const f=document.getElementById("mapaF");if(f)try{f.contentWindow.postMessage({mareMexeu:1},"*")}catch(e){}};
+ ["pointermove","pointerdown","keydown","wheel","scroll","touchstart"].forEach(e=>addEventListener(e,mexeu,{passive:true}))}
 // 3) bolhas (poucas)
 {const b=document.getElementById("bolhas"),n=forte?7:4;for(let i=0;i<n;i++){const e=document.createElement("i"),s=5+Math.random()*14;e.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s}px;--dx:${Math.random()*80-40}px;animation-duration:${16+Math.random()*18}s;animation-delay:${-Math.random()*30}s;opacity:${.3+Math.random()*.45}`;b.appendChild(e)}}
 // 4) o mapa só anima quando está na tela; os cards levam até o ponto
 // O mapa 3D é pesado (MapLibre, prédios, ruas): só nasce quando a pessoa pede, para a rolagem não engasgar.
 const poster=document.getElementById("poster"),caixaMapa=poster.parentElement;let mapaPronto=null;
 function abrirMapa(){if(mapaPronto)return mapaPronto;caixaMapa.classList.add("carregando");
- mapaF=document.createElement("iframe");mapaF.id="mapaF";mapaF.title="Mapa 3D dos alagamentos de Belém";mapaF.allow="fullscreen";mapaF.src="mapa.html?embed=1&tema=estudio&v=7";
+ mapaF=document.createElement("iframe");mapaF.id="mapaF";mapaF.title="Mapa 3D dos alagamentos de Belém";mapaF.allow="fullscreen";mapaF.src="mapa.html?embed=1&tema=estudio&v=8";
  mapaPronto=new Promise(res=>mapaF.addEventListener("load",()=>{setTimeout(()=>{poster.remove();caixaMapa.classList.remove("carregando");res()},700)},{once:true}));
  caixaMapa.appendChild(mapaF);
  new IntersectionObserver(es=>{try{mapaF.contentWindow.postMessage({mareAtivo:es[0].isIntersecting},"*")}catch(e){}},{threshold:0}).observe(mapaF);
