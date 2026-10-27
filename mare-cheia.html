@@ -13,8 +13,8 @@
    Atos: superfície (rio + água) → papel (22 pontos + mapa de ponta a ponta) → mergulho (dados e ações) → leito (contato). */
 :root{--papel:#f3f5f2;--tinta:#123236;--mut:#557173;--teal:#0f7f86;--teal2:#2bb3b1;--fundo:#03161b;--espuma:#e6f6f3;--barro:#b88a52;color-scheme:light}
 *{box-sizing:border-box}
-html{scrollbar-width:thin;scrollbar-color:var(--teal) var(--papel)}
-::-webkit-scrollbar{width:9px}::-webkit-scrollbar-track{background:var(--papel)}::-webkit-scrollbar-thumb{background:var(--teal);border-radius:9px}
+html{scrollbar-width:none}
+::-webkit-scrollbar{width:0;height:0;display:none}
 body{margin:0;color:var(--tinta);background:var(--papel);font:18px/1.65 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:hidden}
 .in{max-width:1180px;margin:0 auto;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:Jost,sans-serif;margin:0;text-wrap:balance}
@@ -145,18 +145,25 @@ footer a{color:#cde9e6}
 @media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
 .nav .menuBtn{color:#fff}.nav.claro .menuBtn{color:var(--tinta);background:#0f7f8614}
 @media(max-width:700px){.sup .base .in{gap:18px}.sup h1{font-size:19px}.sup .acts{margin-top:4px}.nota{margin-top:24px}}
-/* tela de carregamento: aparece até a foto da abertura ficar pronta */
-.carrega{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:#03161b;color:#e6f6f3;transition:opacity .7s ease,visibility .7s}
+/* tela de carregamento: a água sobe e alaga a tela; a página aparece quando a foto está pronta (no mínimo 3,6 s) */
+.carrega{position:fixed;inset:0;z-index:200;overflow:hidden;background:#03161b;color:#e6f6f3;transition:opacity .9s ease,visibility .9s}
 .carrega.sai{opacity:0;visibility:hidden}
-.carrega .cw{display:flex;flex-direction:column;align-items:center;gap:16px}
-.carrega .lg{width:min(300px,70vw);height:auto;animation:surge .9s ease-out both}
-.carrega .nivel{width:min(220px,56vw);height:4px;border-radius:2px;background:#ffffff1f;overflow:hidden}
-.carrega .nivel i{display:block;height:100%;width:0;border-radius:2px;background:#2bb3b1;animation:enche 2.6s cubic-bezier(.2,.7,.1,1) forwards}
-@keyframes enche{to{width:92%}}@keyframes surge{from{opacity:0;transform:translateY(8px)}}
-.carrega small{font:400 14px Jost,sans-serif;color:#8fc9c4}
-.parado .carrega .nivel i{animation:none;width:92%}
+.carrega .cw{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px}
+.carrega .lg{width:min(320px,72vw);height:auto;animation:surge 1s ease-out both}
+.carrega .pct{font:300 clamp(40px,7vw,64px)/1 Jost,sans-serif;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.carrega small{font:400 14px Jost,sans-serif;color:#9fd8d2}
+.carrega .agua{position:absolute;left:0;right:0;bottom:0;height:0;z-index:2;background:linear-gradient(180deg,#1f9ea6e6,#0f6f78f2 40%,#0a4b52 100%);animation:alaga 3.4s cubic-bezier(.45,.05,.35,1) .3s forwards}
+.carrega .agua svg{position:absolute;left:0;bottom:calc(100% - 1px);width:200%;height:46px;animation:onda 2.6s linear infinite}
+.carrega .agua svg.o2{opacity:.45;height:58px;animation-duration:4.2s;animation-direction:reverse}
+.carrega .bolhas{position:absolute;inset:0;overflow:hidden}
+.carrega .bolha{position:absolute;bottom:-20px;border-radius:50%;border:1.5px solid #ffffff59;animation:bolha linear infinite}
+@keyframes alaga{0%{height:0}60%{height:78%}100%{height:112%}}
+@keyframes onda{to{transform:translateX(-50%)}}
+@keyframes bolha{to{transform:translateY(-110vh);opacity:0}}
+@keyframes surge{from{opacity:0;transform:translateY(10px)}}
+.parado .carrega .agua{animation:none;height:112%}.parado .carrega .agua svg,.parado .carrega .bolha{animation:none;display:none}
 </style></head><body>
-<div class="carrega" id="carrega" role="status" aria-live="polite"><div class="cw"><img class="lg" src="img/logo-mare-escura-curta.webp" alt="MARÉ" width="700" height="381"><div class="nivel"><i></i></div><small>Carregando o Maré Cheia…</small></div></div>
+<div class="carrega" id="carrega" role="status" aria-live="polite"><div class="agua" aria-hidden="true"><svg viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 23 C100 3 200 3 300 23 S500 43 600 23 S800 3 900 23 S1100 43 1200 23 V46 H0Z" fill="#1f9ea6" fill-opacity=".9"/></svg><svg class="o2" viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 23 C100 3 200 3 300 23 S500 43 600 23 S800 3 900 23 S1100 43 1200 23 V46 H0Z" fill="#1f9ea6" fill-opacity=".9"/></svg></div><div class="cw"><img class="lg" src="img/logo-mare-branca-curta.webp" alt="MARÉ" width="700" height="381"><div class="pct" id="carregaPct">0%</div><small>A maré está subindo…</small></div></div>
 
 <nav class="nav" id="nav" aria-label="Principal">
  <a class="back" href="index.html"><img src="img/icone-mare-redondo.png" alt="">MARÉ</a>
@@ -269,7 +276,12 @@ function assar(){return new Promise(res=>{const img=new Image();img.onload=()=>{
  res(c.toDataURL("image/jpeg",.92))};img.onerror=()=>res("");img.src=innerWidth<900?"img/u-rio-aereo.webp":"img/u-rio-aereo-hd.webp"})}
 async function iniciarAgua(){try{await document.fonts.load("800 100px Jost")}catch(e){}const u=await assar();if(u)agua.style.backgroundImage=`url(${u})`;tiraCarrega()}
 // some a tela de carregamento quando a foto fica pronta (ou depois de 8 s, para nunca prender a página)
-const carrega=document.getElementById("carrega");function tiraCarrega(){if(carrega&&!carrega.classList.contains("sai")){carrega.classList.add("sai");setTimeout(()=>carrega.remove(),800)}}setTimeout(tiraCarrega,8000);
+// A tela fica no mínimo 3,6 s (o tempo da água encher) e no máximo 9 s.
+const carrega=document.getElementById("carrega"),pctEl=document.getElementById("carregaPct"),t0=performance.now(),MIN=3600;let pronto=false;
+if(carrega){const ag=document.createElement("div");ag.className="bolhas";carrega.querySelector(".agua").appendChild(ag);for(let i=0;i<10;i++){const b=document.createElement("i"),z=6+Math.random()*16;b.className="bolha";b.style.cssText=`left:${Math.random()*100}%;width:${z}px;height:${z}px;animation-duration:${3+Math.random()*3}s;animation-delay:${Math.random()*2.5}s`;ag.appendChild(b)}
+ const conta=()=>{if(!carrega.isConnected)return;const k=Math.min(1,(performance.now()-t0)/MIN);pctEl.textContent=Math.round((pronto?k:Math.min(k,.94))*100)+"%";if(!carrega.classList.contains("sai"))requestAnimationFrame(conta)};requestAnimationFrame(conta)}
+function tiraCarrega(){pronto=true;if(!carrega||carrega.classList.contains("sai"))return;const falta=MIN-(performance.now()-t0);if(falta>0)return setTimeout(tiraCarrega,falta);pctEl.textContent="100%";setTimeout(()=>{carrega.classList.add("sai");setTimeout(()=>carrega.remove(),950)},350)}
+setTimeout(tiraCarrega,9000);
 iniciarAgua();let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(iniciarAgua,500)});
 
 // 2) vídeo só no computador e só quando aparece

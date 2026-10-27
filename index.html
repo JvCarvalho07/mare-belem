@@ -14,8 +14,8 @@
    Tipo: Jost (800 para a palavra MARÉ, 300 para títulos), Atkinson Hyperlegible no texto. */
 :root{--mata:#0f1a14;--sombra:#15241b;--musgo:#2f4a35;--nevoa:#e7eee6;--mut:#a9bcae;--line:#ffffff1f;--broto:#b5d96a;--barro:#c2a173;color-scheme:dark}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px;scrollbar-width:thin;scrollbar-color:var(--musgo) var(--mata)}
-::-webkit-scrollbar{width:9px}::-webkit-scrollbar-track{background:var(--mata)}::-webkit-scrollbar-thumb{background:var(--musgo);border-radius:9px}
+html{scroll-behavior:smooth;scroll-padding-top:90px;scrollbar-width:none}
+::-webkit-scrollbar{width:0;height:0;display:none}
 body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(50% 40% at 85% 20%,#1d3a2a66,transparent 70%),radial-gradient(45% 35% at 10% 75%,#173a3a55,transparent 70%),var(--mata)}
 body{margin:0;background:transparent;color:var(--nevoa);font:18px/1.65 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:hidden}
 .in{max-width:1220px;margin:0 auto;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
