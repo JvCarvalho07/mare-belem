@@ -28,10 +28,10 @@ section{padding-block:clamp(56px,7vw,96px)}
 .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;font:600 15px Jost,sans-serif;letter-spacing:.06em;text-decoration:none;transition:transform .25s,background .25s,color .25s}
 .btn:hover{transform:translateY(-2px)}
 .btn.broto{background:var(--broto);color:var(--mata)}
-.btn.vidro{color:var(--nevoa);background:#ffffff14;backdrop-filter:blur(8px);box-shadow:inset 0 0 0 1px #ffffff40}
+.btn.vidro{color:var(--nevoa);background:#0f1a14b3;box-shadow:inset 0 0 0 1px #ffffff40}
 
 /* navegação */
-.nav{position:fixed;z-index:30;top:0;left:0;right:0;padding-top:env(safe-area-inset-top,0px);--p:0;background:rgba(15,26,20,calc(var(--p)*.78));backdrop-filter:blur(calc(var(--p)*14px));-webkit-backdrop-filter:blur(calc(var(--p)*14px));box-shadow:0 1px 0 rgba(255,255,255,calc(var(--p)*.08));transition:transform .5s cubic-bezier(.2,.7,.1,1)}
+.nav{position:fixed;z-index:30;top:0;left:0;right:0;padding-top:env(safe-area-inset-top,0px);--p:0;background:rgba(15,26,20,calc(var(--p)*.94));box-shadow:0 1px 0 rgba(255,255,255,calc(var(--p)*.08));transition:transform .5s cubic-bezier(.2,.7,.1,1)}
 .nav.esconde{transform:translateY(-100%)}
 .nav .in{transition:height .4s}.nav.solid .in{height:64px}
 .nav .in{display:flex;align-items:center;gap:26px;height:76px}
@@ -49,38 +49,22 @@ section{padding-block:clamp(56px,7vw,96px)}
 
 /* abertura */
 .hero{position:relative;height:100svh;min-height:620px;max-height:1060px;overflow:hidden}
-.hero .fog{-webkit-mask-image:linear-gradient(180deg,#000 60%,transparent);mask-image:linear-gradient(180deg,#000 60%,transparent)}
-.hero .bg{position:absolute;inset:-8% 0 0;-webkit-mask-image:linear-gradient(180deg,#000 60%,transparent 98%);mask-image:linear-gradient(180deg,#000 60%,transparent 98%);background:url(img/u-floresta-nevoa-2k.webp) center 30%/cover;will-change:transform;}
-@keyframes breathe{to{transform:scale(1.07)}}
+.hero .bg{position:absolute;inset:-8% 0 0;background:url(img/u-floresta-nevoa-2k.webp) center 30%/cover;will-change:transform;}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;z-index:2;pointer-events:none;background:linear-gradient(180deg,#0f1a1400,#0f1a14)}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(120% 80% at 50% 40%,#0f1a1400 0%,#0f1a1499 60%,#0f1a14 100%),linear-gradient(180deg,#0f1a1480,#0f1a1400 30%,#0f1a1400 100%)}
-.fog{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.55;background:radial-gradient(40% 25% at 20% 60%,#e7eee633,transparent 70%),radial-gradient(35% 20% at 75% 45%,#e7eee626,transparent 70%);animation:fog 24s linear infinite alternate}
-@keyframes fog{to{transform:translateX(6%)}}
+.fog{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.55;background:radial-gradient(40% 25% at 20% 60%,#e7eee633,transparent 70%),radial-gradient(35% 20% at 75% 45%,#e7eee626,transparent 70%)}
 .hero .in{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;justify-content:center;padding-top:60px}
 .kicker{font:400 clamp(15px,1.4vw,18px) Jost,sans-serif;letter-spacing:.04em;color:var(--mut);margin-bottom:6px}
-.mare{white-space:nowrap;font:800 clamp(76px,22vw,330px)/1 Jost,sans-serif;letter-spacing:-.04em;margin:-.14em 0 -.1em -.05em;padding-top:.06em;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 20px 40px #0008)}
+.mare{white-space:nowrap;font:800 clamp(76px,22vw,330px)/1 Jost,sans-serif;letter-spacing:-.04em;margin:-.14em 0 -.1em -.05em;padding-top:.06em;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero .lead{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,4vw,60px);align-items:end;margin-top:clamp(14px,3vh,34px)}
 .hero .lead>*{min-width:0}
+.proj::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:999px;box-shadow:0 0 26px 5px #b5d96a88;animation:brilho 2.4s ease-in-out infinite alternate}
+.proj i,.rpin i{position:relative;isolation:isolate;width:9px;height:9px;border-radius:50%;background:var(--broto)}
+.proj i::before,.rpin i::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:#b5d96a99;animation:anel 2.2s ease-out infinite}
+@keyframes brilho{from{opacity:.25}to{opacity:1}}
+@keyframes anel{from{transform:scale(1);opacity:.8}to{transform:scale(2.6);opacity:0}}
 .hero h1{font-size:clamp(24px,2.6vw,38px);font-weight:300;line-height:1.2;max-width:24ch}
 .hero .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
-.mini{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center;padding:12px;border-radius:18px;background:#0f1a1499;backdrop-filter:blur(10px);box-shadow:inset 0 0 0 1px var(--line);text-decoration:none;color:var(--nevoa);max-width:420px;justify-self:end;transition:transform .3s}
-.mini:hover{transform:translateY(-3px)}
-.mini .th{position:relative;height:84px;border-radius:12px;overflow:hidden;background:url(img/u-rio-aereo.webp) center/cover}
-.mini .th i{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;background:var(--broto);display:grid;place-items:center;box-shadow:0 0 0 0 #b5d96a88;animation:pulse 2.2s infinite}
-.mini .th i::after{content:"";width:12px;height:12px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--mata)}
-@keyframes pulse{70%{box-shadow:0 0 0 14px #b5d96a00}}
-.mini b{font:600 17px Jost,sans-serif;display:block}.mini span{font-size:14px;color:var(--mut)}
-.folhas{position:absolute;top:0;left:0;right:0;height:210vh;overflow:hidden;pointer-events:none;z-index:4;-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 98%);mask-image:linear-gradient(180deg,#000 55%,transparent 98%)}
-.lf{position:absolute;pointer-events:none}
-.lf svg{width:100%;height:auto;display:block}
-.lf.fg1{width:clamp(220px,26vw,420px);left:-6%;top:calc(min(100svh,1060px) - 12vw);filter:blur(6px);opacity:.9;transform-origin:20% 90%;animation:sway 9s ease-in-out infinite}
-.lf.fg2{width:clamp(160px,18vw,300px);right:-4%;top:6%;filter:blur(4px);opacity:.75;transform:scaleX(-1) rotate(18deg);transform-origin:80% 10%;animation:sway2 11s ease-in-out infinite}
-.lf.m1{width:54px;left:12%;top:-8%;animation:fall 26s linear infinite}
-.lf.m2{width:38px;left:58%;top:-8%;animation:fall 32s linear infinite -11s;filter:blur(1px)}
-.lf.m3{width:46px;left:83%;top:-8%;animation:fall 38s linear infinite -21s}
-@media(max-width:700px){.lf.m3,.lf.fg2{display:none}.lf{filter:none!important}.lf.fg1{width:200px;opacity:.7}}
-@keyframes sway{50%{transform:rotate(4deg) translateY(-6px)}}
-@keyframes sway2{50%{transform:scaleX(-1) rotate(12deg) translateY(8px)}}
-@keyframes fall{0%{transform:translate(0,0) rotate(0);opacity:0}6%{opacity:.9}45%{transform:translate(-60px,80vh) rotate(150deg);opacity:.85}100%{transform:translate(40px,190vh) rotate(330deg);opacity:0}}
 .scroll{position:absolute;z-index:3;left:50%;bottom:22px;transform:translateX(-50%);width:1px;height:54px;background:linear-gradient(#e7eee600,#e7eee6aa);overflow:hidden}
 .scroll::after{content:"";position:absolute;left:0;top:-20px;width:1px;height:20px;background:var(--broto);animation:drop 1.8s infinite}
 @keyframes drop{to{top:54px}}
@@ -107,7 +91,7 @@ section{padding-block:clamp(56px,7vw,96px)}
 /* serviços */
 .claro{background:transparent}
 .svc{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:40px}
-.sv{display:grid;grid-template-columns:150px 1fr;gap:22px;align-items:center;padding:16px;border-radius:22px;background:#ffffff0d;backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px var(--line);min-width:0;transition:background .3s}.sv:hover{background:#ffffff17}
+.sv{display:grid;grid-template-columns:150px 1fr;gap:22px;align-items:center;padding:16px;border-radius:22px;background:#ffffff0d;box-shadow:inset 0 0 0 1px var(--line);min-width:0;transition:background .3s}.sv:hover{background:#ffffff17}
 .sv img{width:150px;height:150px;object-fit:cover;border-radius:14px}
 .sv p{font-size:16.5px;color:var(--mut);margin:0}
 .sv small{display:block;font:600 14px Jost,sans-serif;color:var(--broto);margin-bottom:4px}
@@ -150,9 +134,15 @@ html.parado{scroll-behavior:auto}
 .parado .manifesto p span{opacity:1}
 .rio{position:fixed;left:max(10px,calc(50% - 680px));top:0;height:100vh;width:40px;z-index:5;pointer-events:none;opacity:0;transition:opacity .6s}
 .rio.on{opacity:1}
+.rpin{position:fixed;z-index:6;left:max(10px,calc(50% - 680px));top:0;display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;color:var(--broto);font:600 13px Jost,sans-serif;letter-spacing:.06em;text-decoration:none;white-space:nowrap;transition:opacity .6s}
+.rpin.on{opacity:1;pointer-events:auto}
+.rpin i{width:13px;height:13px;box-shadow:0 0 0 3px #0f1a14,0 0 14px #b5d96a}
+.rpin span{opacity:0;transform:translateX(-6px);transition:opacity .3s,transform .3s;background:#0f1a14e6;padding:4px 10px;border-radius:999px}
+.rpin:hover span,.rpin:focus-visible span{opacity:1;transform:none}
+@media(max-width:1300px){.rpin{display:none}}
 .rio path{fill:none;stroke-linecap:round}
 .rio .base{stroke:#ffffff14;stroke-width:2}
-.rio .agua{stroke:url(#gRio);stroke-width:3;filter:drop-shadow(0 0 6px #6fd3c2aa)}
+.rio .agua{stroke:url(#gRio);stroke-width:3}
 @media(max-width:1300px){.rio{display:none}}
 /* projetos */
 .proj2{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:repeat(3,auto);gap:18px;margin-top:40px}
@@ -162,7 +152,7 @@ html.parado{scroll-behavior:auto}
 .pj::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#0f1a1400 30%,#0f1a14e6)}
 .pj.big{grid-row:span 3;min-height:640px}
 .pj:not(.big){min-height:200px}
-.pj .gl{margin:18px;padding:20px 22px;border-radius:18px;background:#0f1a1466;backdrop-filter:blur(16px);box-shadow:inset 0 0 0 1px #ffffff26;max-width:520px}
+.pj .gl{margin:18px;padding:20px 22px;border-radius:18px;background:#0f1a1466;box-shadow:inset 0 0 0 1px #ffffff26;max-width:520px}
 .pj .st{display:inline-block;font:600 13px Jost,sans-serif;padding:4px 12px;border-radius:999px;background:var(--broto);color:var(--mata);margin-bottom:10px}
 .pj .st.em{background:#ffffff26;color:var(--nevoa)}
 .pj p{margin:0;font-size:16px;color:#d3ddd5}
@@ -170,23 +160,24 @@ html.parado{scroll-behavior:auto}
 .mare{background:none!important;filter:none!important}
 .mare{letter-spacing:0!important}
 .mare .lt{display:inline-block;padding-top:.2em;margin-top:-.2em;margin-right:.035em;letter-spacing:0;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 20px 40px #0008)}
-@media(min-width:2000px){.hero .bg{background-image:url(img/u-floresta-nevoa.webp)}}
 @media(max-width:800px){.hero .bg{background-image:url(img/u-floresta-nevoa-m.webp)}}
 .hero .bg{will-change:transform}
-.lf{will-change:transform}
 .menuBtn{display:none;margin-left:auto;font:600 15px Jost,sans-serif;color:inherit;background:#ffffff1f;border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
 @media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
 /* ---- seções sem cartões (referências: faixas de foto, fotos redondas, faixa de palavras, linha do tempo) ---- */
-.destaque{position:relative;display:grid;grid-template-columns:1.15fr 1fr;min-height:88vh;padding:0;overflow:hidden}
+.destaque{position:relative;display:grid;grid-template-columns:1.15fr 1fr;min-height:88vh;padding:0;overflow:hidden;background:radial-gradient(60% 80% at 82% 30%,#2b5a3a99,transparent 70%),linear-gradient(100deg,#183326,#0f1a14);box-shadow:inset 0 1px 0 #b5d96a77,inset 0 -1px 0 #b5d96a77}
 .dfoto{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,#000 70%,transparent);mask-image:linear-gradient(90deg,#000 70%,transparent)}
 .dfoto img{position:absolute;inset:-6% 0;width:100%;height:112%;object-fit:cover;will-change:transform}
 .dtexto{display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,6vw,90px) max(22px,calc((100vw - 1220px)/2 + 22px)) clamp(40px,6vw,90px) clamp(10px,3vw,40px)}
-.etq{font:600 15px Jost,sans-serif;color:var(--broto);margin-bottom:10px}
+.etq{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;padding:7px 16px;border-radius:999px;font:600 14px Jost,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--broto);background:#b5d96a22;box-shadow:inset 0 0 0 1px #b5d96a88;margin-bottom:16px}
+.etq i{position:relative;isolation:isolate;width:9px;height:9px;border-radius:50%;background:var(--broto)}
+.etq i::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:#b5d96a99;animation:anel 2.2s ease-out infinite}
+.dsite{font-size:15px;color:var(--mut);margin:0 0 18px;padding-left:14px;border-left:2px solid var(--broto)}
 .destaque h2{font-size:clamp(56px,8vw,120px);font-weight:800;letter-spacing:-.03em;line-height:.9;margin-bottom:22px}
 .dnum{list-style:none;margin:10px 0 30px;padding:0;display:flex;flex-wrap:wrap;gap:12px 34px}
 .dnum b{display:block;font:300 clamp(40px,4vw,58px)/1 Jost,sans-serif;color:var(--broto);font-variant-numeric:tabular-nums}
 .dnum span{font-size:15px;color:var(--mut)}
-.destaque .btn{align-self:flex-start}
+.destaque .btn{align-self:flex-start;padding:18px 34px;font-size:17px;box-shadow:0 0 36px #b5d96a55}
 
 .faixa{overflow:hidden;border-block:1px solid var(--line);padding-block:18px;white-space:nowrap}
 .trilha{display:inline-flex;align-items:center;gap:34px;animation:corre 40s linear infinite;will-change:transform}
@@ -261,22 +252,19 @@ html.parado{scroll-behavior:auto}
    abertura: o bloco do texto vira uma camada só, então subir e descer não redesenha as letras;
    letras: sombra menor; no celular, cor lisa (a letra recortada na foto sumia em alguns aparelhos);
    animações param quando a parte sai da tela. */
-.nav{backdrop-filter:none;-webkit-backdrop-filter:none}
-.nav.vid{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .hero .in{will-change:transform,opacity}
 .mare .lt{filter:drop-shadow(0 12px 22px #0007)}
 .rio .agua{filter:none}
-.fora .lf,.fora .fog,.fora .mini .th i,.trilha.fora{animation-play-state:paused}
-.folhas.fora{visibility:hidden}
+.trilha.fora,.nav.fora .proj::before{animation-play-state:paused}
 @media(max-width:700px){
  .mare .lt{background:none!important;-webkit-background-clip:border-box!important;background-clip:border-box!important;color:#eef5e8!important;-webkit-text-fill-color:#eef5e8;filter:none!important;text-shadow:0 6px 24px #0009}
  .hero .bg{will-change:auto}
 }
 
 /* ---- atalho do projeto Maré Cheia ---- */
-.proj{display:inline-flex;align-items:center;gap:8px;margin-left:auto;padding:8px 14px 8px 12px;border-radius:999px;background:#b5d96a1f;box-shadow:inset 0 0 0 1px #b5d96a66;color:var(--nevoa);text-decoration:none;font:600 15px Jost,sans-serif;white-space:nowrap;transition:background .3s}
+.proj{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:8px;margin-left:auto;padding:8px 14px 8px 12px;border-radius:999px;background:#b5d96a1f;box-shadow:inset 0 0 0 1px #b5d96a66;color:var(--nevoa);text-decoration:none;font:600 15px Jost,sans-serif;white-space:nowrap;transition:background .3s}
 .proj:hover{background:#b5d96a33}
-.proj i{width:8px;height:8px;border-radius:50%;background:var(--broto);box-shadow:0 0 0 0 #b5d96a99;animation:pulse 2.2s infinite}
+.proj i{width:8px;height:8px}
 .proj .seta{opacity:.7}
 .nav ul{margin-left:0}
 .flutua{display:none}
@@ -304,24 +292,11 @@ html.parado{scroll-behavior:auto}
 
 <svg class="rio" id="rio" viewBox="0 0 40 1000" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="gRio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b5d96a"/><stop offset="1" stop-color="#6fd3c2"/></linearGradient></defs>
  <path class="base" d="M20 0C34 80 6 160 20 240S34 400 20 480 6 640 20 720 34 880 20 1000"/><path class="agua" id="rioAgua" d="M20 0C34 80 6 160 20 240S34 400 20 480 6 640 20 720 34 880 20 1000"/></svg>
-<div class="folhas" aria-hidden="true">
- <div class="lf fg1" aria-hidden="true"><svg viewBox="0 0 260 120"><use href="#folha-acai"/></svg></div>
- <div class="lf fg2" aria-hidden="true"><svg viewBox="0 0 200 260"><use href="#folha-larga"/></svg></div>
- <div class="lf m1" aria-hidden="true"><svg viewBox="0 0 40 70"><use href="#folha-peq"/></svg></div>
- <div class="lf m2" aria-hidden="true"><svg viewBox="0 0 40 70"><use href="#folha-peq"/></svg></div>
- <div class="lf m3" aria-hidden="true"><svg viewBox="0 0 200 260"><use href="#folha-larga"/></svg></div>
-</div>
+<a class="rpin" id="rpin" href="#projeto" aria-label="Ir ao projeto Maré Cheia"><i></i><span>Maré Cheia</span></a>
 <main>
 <section class="hero" style="padding:0">
  <div class="bg" id="hbg" role="img" aria-label="Floresta amazônica coberta de névoa"></div>
  <div class="fog"></div>
- <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9ccf6c"/><stop offset=".55" stop-color="#4f8a45"/><stop offset="1" stop-color="#1f4d2b"/></linearGradient>
-  <linearGradient id="gB" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c3e08a"/><stop offset="1" stop-color="#5b9450"/></linearGradient>
-  <symbol id="folha-larga" viewBox="0 0 200 260"><path fill="url(#gA)" d="M100 6C40 40 8 110 22 178c10 46 44 72 78 76 34-4 68-30 78-76C192 110 160 40 100 6z"/><path d="M100 14v240" stroke="#173d22" stroke-width="3" opacity=".45" fill="none"/><path d="M100 60 58 92M100 92 42 136M100 128 40 178M100 166 56 214M100 60l42 32M100 92l58 44M100 128l60 50M100 166l44 48" stroke="#173d22" stroke-width="2" opacity=".3" fill="none"/></symbol>
-  <symbol id="folha-acai" viewBox="0 0 260 120"><path d="M4 112C80 70 160 40 256 6" stroke="#2f5e33" stroke-width="3" fill="none"/><g fill="url(#gB)"><path d="M40 92c-6-24 4-44 20-56-2 22-6 40-20 56z"/><path d="M40 92c20-10 42-12 62-6-20 8-40 12-62 6z"/><path d="M90 72c-4-26 8-46 24-56-2 22-8 40-24 56z"/><path d="M90 72c22-8 44-8 62 0-20 6-42 8-62 0z"/><path d="M142 50c-2-24 10-42 26-50-4 20-10 36-26 50z"/><path d="M142 50c20-6 40-4 56 4-18 4-38 4-56-4z"/><path d="M196 28c0-18 10-30 22-36-4 16-10 28-22 36z"/><path d="M196 28c14-2 28 0 40 8-14 2-28 0-40-8z"/></g></symbol>
-  <symbol id="folha-peq" viewBox="0 0 40 70"><path fill="url(#gB)" d="M20 2C4 20 2 44 20 68 38 44 36 20 20 2z"/><path d="M20 8v58" stroke="#1f4d2b" stroke-width="1.6" opacity=".5"/></symbol>
- </defs></svg>
  <div class="in">
   <div class="kicker ld d1">Empresa júnior socioambiental de Belém do Pará</div>
   <div class="mare" aria-hidden="true"><span class="lt">M</span><span class="lt">A</span><span class="lt">R</span><span class="lt">É</span></div>
@@ -330,7 +305,7 @@ html.parado{scroll-behavior:auto}
     <h1>Mobilização, acessibilidade e renovação estrutural para a cidade-floresta.</h1>
     <div class="acts"><a class="btn broto contato" href="#contato">Quero uma proposta</a><a class="btn vidro" href="#manifesto">Conheça nosso trabalho</a></div>
    </div>
-   <a class="mini ld d4" href="mare-cheia.html"><span class="th"><i></i></span><span><b>Maré Cheia</b><span>Projeto em andamento: alagamentos e calçadas em 3D</span></span></a>
+   
   </div>
  </div>
  
@@ -343,11 +318,12 @@ html.parado{scroll-behavior:auto}
 <section class="destaque" id="projeto" aria-label="Projeto atual: Maré Cheia">
  <div class="dfoto"><img src="img/u-rio-aereo.webp" alt="Rio sinuoso cortando a floresta, visto de cima" loading="lazy"></div>
  <div class="dtexto">
-  <span class="etq">Projeto atual</span>
+  <span class="etq"><i></i>Projeto atual</span>
   <h2>Maré Cheia</h2>
   <p>Alagamentos, calçadas e acessibilidade em Belém. Um mapa 3D com 22 pontos já registrados, para levar cada problema a quem pode resolver.</p>
   <ul class="dnum"><li><b data-n="22">22</b><span>pontos no mapa</span></li><li><b data-n="145">145</b><span>pontos críticos na cidade</span></li><li><b data-n="150" data-s=" mm">150 mm</b><span>de chuva num só dia</span></li></ul>
-  <a class="btn broto" href="mare-cheia.html">Conhecer o Maré Cheia</a>
+  <p class="dsite">O Maré Cheia tem um site só dele: o mapa 3D interativo abre em outra página.</p>
+  <a class="btn broto" href="mare-cheia.html">Entrar no site do Maré Cheia →</a>
  </div>
 </section>
 
@@ -409,7 +385,6 @@ html.parado{scroll-behavior:auto}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 const still=(()=>{try{return localStorage.getItem("mare_movimento")==="off"}catch(e){return false}})();if(still)document.documentElement.classList.add("parado");
 const nav=document.getElementById("nav"),hbg=document.getElementById("hbg");
@@ -419,33 +394,32 @@ const flutuaUpd=y=>{if(!flutua||innerWidth>980)return;const r=secProj.getBoundin
 addEventListener("scroll",()=>flutuaUpd(scrollY),{passive:true});
 // animações contínuas param fora da tela
 {const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle("fora",!e.isIntersecting)),{rootMargin:"80px"});
- document.querySelectorAll(".hero,.folhas,.trilha").forEach(el=>io.observe(el))}
+ document.querySelectorAll(".hero,.trilha").forEach(el=>io.observe(el))}
 const mf=document.getElementById("mf");
 mf.innerHTML=mf.innerHTML.split(/(<em>.*?<\/em>|\s+)/).map(t=>/^\s+$/.test(t)||!t?t:`<span>${t}</span>`).join("");
 const words=[...mf.querySelectorAll(":scope>span")];
 let lastY=0;const rioEl=document.getElementById("rio"),rioP=document.getElementById("rioAgua"),RL=rioP.getTotalLength();rioP.style.strokeDasharray=RL;rioP.style.strokeDashoffset=RL;
-let altH=0;const medeH=()=>{altH=document.documentElement.scrollHeight-innerHeight};medeH();addEventListener("resize",medeH);addEventListener("load",medeH);setTimeout(medeH,2500);
-const rioUpd=y=>{const H=altH;rioP.style.strokeDashoffset=RL*(1-Math.min(1,y/Math.max(1,H)));rioEl.classList.toggle("on",y>innerHeight*.75)};
+let altH=0;const medeH=()=>{altH=document.documentElement.scrollHeight-innerHeight;if(window.posPin)posPin()};medeH();addEventListener("resize",medeH);addEventListener("load",medeH);setTimeout(medeH,2500);
+const rpin=document.getElementById("rpin");let projF=.5;
+const posPin=()=>{projF=Math.min(1,Math.max(0,(secProj.getBoundingClientRect().top+scrollY-innerHeight*.25)/Math.max(1,altH)));const q=rioP.getPointAtLength(RL*projF);rpin.style.transform=`translate(${(q.x-6.5).toFixed(1)}px,${(q.y*innerHeight/1000-6.5).toFixed(1)}px)`};
+window.posPin=posPin;posPin();
+const rioUpd=y=>{const H=altH;rioP.style.strokeDashoffset=RL*(1-Math.min(1,y/Math.max(1,H)));const on=y>innerHeight*.75;rioEl.classList.toggle("on",on);rpin.classList.toggle("on",on)};
 const navUpd=y=>{rioUpd(y);const p=Math.min(1,y/(innerHeight*.5));nav.style.setProperty("--p",p.toFixed(3));nav.classList.toggle("solid",p>.95);nav.classList.toggle("vid",p>.04);flutuaUpd(y);
  if(y>innerHeight&&y>lastY+2)nav.classList.add("esconde");if(y<lastY-2||y<innerHeight)nav.classList.remove("esconde");lastY=y};
 const contar=b=>{const n=+b.dataset.n,s=b.dataset.s||"",o={v:0};if(still||!window.gsap){b.textContent=n+s;return}gsap.to(o,{v:n,duration:1.6,ease:"power3.out",onUpdate:()=>b.textContent=Math.round(o.v)+s})};
 if(window.gsap&&window.ScrollTrigger&&!still){
  gsap.registerPlugin(ScrollTrigger);
- if(window.Lenis){const lenis=new Lenis({lerp:.09});lenis.on("scroll",e=>{ScrollTrigger.update();navUpd(e.scroll)});gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
-  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",e=>{const t=document.querySelector(a.getAttribute("href"));if(t){e.preventDefault();lenis.scrollTo(t,{offset:-70,duration:1.4})}}))}
- else addEventListener("scroll",()=>navUpd(scrollY),{passive:true});
+ ScrollTrigger.create({trigger:document.body,start:"top top",end:"bottom bottom",snap:{snapTo:v=>Math.abs(v-projF)<.03?projF:v,delay:.18,duration:{min:.25,max:.6},ease:"power2.inOut"}});
+ addEventListener("scroll",()=>navUpd(scrollY),{passive:true});
  document.querySelectorAll(".ld").forEach(e=>{e.classList.remove("ld")});
  const tl=gsap.timeline({defaults:{ease:"power4.out"}});
  tl.from(".mare .lt",{yPercent:60,opacity:0,duration:1.1,stagger:.07,ease:"power3.out",clearProps:"transform,opacity"})
    .from(".kicker",{y:20,opacity:0,duration:.9},"-=1.1")
    .from(".hero h1",{y:30,opacity:0,duration:1},"-=.8")
    .from(".hero .acts .btn",{y:20,opacity:0,stagger:.1,duration:.8},"-=.7")
-   .from(".mini",{x:40,opacity:0,duration:1},"-=.8")
-   .from(".lf.fg1,.lf.fg2",{opacity:0,duration:1.6},"-=1.4");
- gsap.to(hbg,{yPercent:18,scale:1.08,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
+   .from(".mini",{x:40,opacity:0,duration:1},"-=.8");
+ gsap.to(hbg,{yPercent:14,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
  gsap.to(".hero .in",{y:-120,opacity:0,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom 20%",scrub:true}});
- gsap.to(".lf.fg1",{y:-160,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
- gsap.to(".lf.fg2",{y:120,ease:"none",scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
  gsap.set(words,{opacity:.16});
  gsap.to(words,{opacity:1,stagger:.05,ease:"none",scrollTrigger:{trigger:mf,start:"top 80%",end:"bottom 45%",scrub:true}});
  gsap.utils.toArray("h2.rv,p.rv,.cta .rv").forEach(el=>{el.classList.remove("rv");gsap.from(el,{y:50,opacity:0,duration:1.1,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 98%"}})});
