@@ -180,19 +180,21 @@ html.parado{scroll-behavior:auto}
 .parado *,.parado *::before,.parado *::after{animation:none!important;transition:none!important}
 .parado .ld,.parado .rv{opacity:1;transform:none}
 .parado .manifesto p span{opacity:1}
-/* rio: desenhado na própria página (não fica preso à tela), à esquerda. A ponta desce junto com a rolagem;
-   ele passa por baixo das letras do MARÉ, das fotos e dos textos. A bolinha marca o Maré Cheia na própria seção. Só no computador. */
-.rio{position:absolute;left:max(10px,calc(50% - 680px));top:0;width:40px;height:100%;z-index:2;pointer-events:none;overflow:visible}
+/* rio da rolagem: do lado direito (preenche o vazio da direita e não passa por cima dos textos da esquerda); só no computador */
+.rio{position:fixed;left:calc(100% - 40px - max(10px,calc(50% - 680px)));top:0;height:100vh;width:40px;z-index:5;pointer-events:none;opacity:0;transition:opacity .6s}
+.rio.on{opacity:1}
+.rpin{position:fixed;z-index:6;left:calc(100% - 40px - max(10px,calc(50% - 680px)));top:0;display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;color:var(--broto);font:600 13px Jost,sans-serif;letter-spacing:.06em;text-decoration:none;white-space:nowrap;transition:opacity .6s}
+.rpin.on{opacity:1;pointer-events:auto}
+.rpin i{width:13px;height:13px;box-shadow:0 0 0 3px #0f1a14,0 0 14px #b5d96a}
+.rpin span{position:absolute;right:calc(100% + 10px);opacity:0;transform:translateX(6px);transition:opacity .3s,transform .3s;background:#0f1a14e6;padding:4px 10px;border-radius:999px}
+.rpin:hover span,.rpin:focus-visible span{opacity:1;transform:none}
+@media(max-width:1300px){.rpin{display:none}}
 .rio path{fill:none;stroke-linecap:round}
 .rio .base{stroke:#ffffff14;stroke-width:2}
 .rio .agua{stroke:url(#gRio);stroke-width:3;filter:drop-shadow(0 0 6px #6fd3c2aa)}
-.rpin{position:absolute;z-index:4;left:max(10px,calc(50% - 680px));top:0;display:flex;align-items:center;gap:10px;color:var(--broto);font:600 13px Jost,sans-serif;letter-spacing:.06em;text-decoration:none;white-space:nowrap}
-.rpin i{width:13px;height:13px;box-shadow:0 0 0 3px #0f1a14,0 0 14px #b5d96a}
-.rpin span{opacity:0;transform:translateX(-6px);transition:opacity .3s,transform .3s;background:#0f1a14e6;padding:4px 10px;border-radius:999px}
-.rpin:hover span,.rpin:focus-visible span{opacity:1;transform:none}
-@media(max-width:1300px){.rio,.rpin{display:none}}
-body{position:relative}
-main>section:not(.hero){position:relative;z-index:3}
+@media(max-width:1300px){.rio{display:none}}
+/* o rio passa por baixo das fotos (cartões das frentes, projetos, contato), em vez de riscar por cima delas */
+#frentes,#projetos,#como{position:relative;z-index:6}.cta{z-index:6}
 /* projetos */
 .proj2{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:repeat(3,auto);gap:18px;margin-top:40px}
 .pj{position:relative;border-radius:26px;overflow:hidden;min-height:260px;isolation:isolate;text-decoration:none;color:var(--nevoa);display:flex;align-items:flex-end}
@@ -341,8 +343,8 @@ main>section:not(.hero){position:relative;z-index:3}
 </div></nav>
 <a class="flutua" id="flutua" href="mare-cheia.html"><span class="fth" aria-hidden="true"></span><span><b>Projeto atual</b><small>Mapa 3D dos alagamentos</small></span><span class="seta" aria-hidden="true">→</span></a>
 
-<svg class="rio" id="rio" viewBox="0 0 40 1000" aria-hidden="true"><defs><linearGradient id="gRio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b5d96a"/><stop offset="1" stop-color="#6fd3c2"/></linearGradient></defs>
- <path class="base" d="M20 0V1000"/><path class="agua" id="rioAgua" d="M20 0V1000"/></svg>
+<svg class="rio" id="rio" viewBox="0 0 40 1000" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="gRio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b5d96a"/><stop offset="1" stop-color="#6fd3c2"/></linearGradient></defs>
+ <path class="base" d="M20 0C34 80 6 160 20 240S34 400 20 480 6 640 20 720 34 880 20 1000"/><path class="agua" id="rioAgua" d="M20 0C34 80 6 160 20 240S34 400 20 480 6 640 20 720 34 880 20 1000"/></svg>
 <a class="rpin" id="rpin" href="#projeto" aria-label="Ir ao projeto Maré Cheia"><i></i><span>Maré Cheia</span></a>
 <div class="folhas" aria-hidden="true">
  <div class="lf fg1"><svg viewBox="0 0 260 120"><use href="#folha-acai"/></svg></div>
@@ -516,26 +518,13 @@ addEventListener("scroll",()=>flutuaUpd(scrollY),{passive:true});
 const mf=document.getElementById("mf");
 mf.innerHTML=mf.innerHTML.split(/(<em>.*?<\/em>|\s+)/).map(t=>/^\s+$/.test(t)||!t?t:`<span>${t}</span>`).join("");
 const words=[...mf.querySelectorAll(":scope>span")];
-let lastY=0;const rioEl=document.getElementById("rio"),rioP=document.getElementById("rioAgua"),rpin=document.getElementById("rpin");
-let altH=0,docH=1,RL=1,projF=.5;const PASSO=440;
-// x do rio numa altura y: cada trecho é uma curva de 20 a 20 com as alças a ±14 (x = 20 ± 42·t·(1−t)); y cresce reto
-let H0=0;const xRio=y=>{const z=y-H0,k=Math.floor(z/PASSO),t=(z-k*PASSO)/PASSO;return 20+(k%2?-1:1)*42*t*(1-t)};
-const fazRio=()=>{docH=document.documentElement.scrollHeight;altH=docH-innerHeight;
- rioEl.setAttribute("viewBox","0 0 40 "+docH);rioEl.style.height=docH+"px";
- // na abertura o rio faz uma curva larga por trás das letras do MARÉ e volta para a margem antes do texto
- H0=(document.querySelector(".hero")||{}).offsetHeight||innerHeight;
- let d="M20 0 C380 "+(H0*.14).toFixed(0)+" 380 "+(H0*.44).toFixed(0)+" 20 "+(H0*.58).toFixed(0)+" L20 "+H0,y=H0,lado=1;while(y<docH){const y2=y+PASSO;d+=" C"+(20+14*lado)+" "+(y+PASSO/3).toFixed(0)+" "+(20+14*lado)+" "+(y+2*PASSO/3).toFixed(0)+" 20 "+y2;y=y2;lado=-lado}
- rioEl.querySelectorAll("path").forEach(p=>p.setAttribute("d",d));RL=rioP.getTotalLength();rioP.style.strokeDasharray=RL;
- // bolinha do Maré Cheia: no rio, 22% da tela abaixo do topo da seção; a travada leve deixa a seção perto do topo
- const topo=secProj.getBoundingClientRect().top+scrollY,yPin=topo+innerHeight*.22;
- rpin.style.transform="translate("+(xRio(yPin)-6.5).toFixed(1)+"px,"+(yPin-6.5).toFixed(1)+"px)";
- projF=Math.min(1,Math.max(0,(topo-innerHeight*.08)/Math.max(1,altH)));rioUpd(scrollY)};
-// a ponta do rio fica a 60% da altura da tela: o rio vai se desenhando enquanto a pessoa desce
-const rioUpd=y=>{const ponta=Math.min(docH,y+innerHeight*.6);rioP.style.strokeDashoffset=(RL*(1-ponta/docH)).toFixed(1)};
-const medeH=()=>{if(window.gsap&&window.ScrollTrigger)ScrollTrigger.refresh();fazRio()};
-addEventListener("resize",medeH);addEventListener("load",medeH);setTimeout(medeH,2500);
-if(window.ResizeObserver){let rt;new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(fazRio,300)}).observe(document.querySelector("main"))}
-fazRio();
+let lastY=0;const rioEl=document.getElementById("rio"),rioP=document.getElementById("rioAgua"),RL=rioP.getTotalLength();rioP.style.strokeDasharray=RL;rioP.style.strokeDashoffset=RL;
+let altH=0;const medeH=()=>{altH=document.documentElement.scrollHeight-innerHeight;if(window.posPin)posPin()};medeH();addEventListener("resize",medeH);addEventListener("load",medeH);setTimeout(medeH,2500);
+const rpin=document.getElementById("rpin");let projF=.5;
+// procura a rolagem em que a ponta do rio cai 22% da tela abaixo do topo da seção (a bolinha fica dentro dela)
+const posPin=()=>{const topo=secProj.getBoundingClientRect().top+scrollY;let f=.5;for(let k=0;k<8;k++){const yq=rioP.getPointAtLength(RL*f).y*innerHeight/1000;f=Math.min(1,Math.max(0,(topo-yq+innerHeight*.22)/Math.max(1,altH)))}projF=f;const q=rioP.getPointAtLength(RL*projF);rpin.style.transform=`translate(${(q.x-6.5).toFixed(1)}px,${(q.y*innerHeight/1000-6.5).toFixed(1)}px)`};
+window.posPin=posPin;posPin();
+const rioUpd=y=>{const H=altH;rioP.style.strokeDashoffset=RL*(1-Math.min(1,y/Math.max(1,H)));const on=y>innerHeight*.75;rioEl.classList.toggle("on",on);rpin.classList.toggle("on",on)};
 const navUpd=y=>{rioUpd(y);const p=Math.min(1,y/(innerHeight*.5));nav.style.setProperty("--p",p.toFixed(3));nav.classList.toggle("solid",p>.95);nav.classList.toggle("vid",p>.04);flutuaUpd(y);
  if(y>innerHeight&&y>lastY+2)nav.classList.add("esconde");if(y<lastY-2||y<innerHeight)nav.classList.remove("esconde");lastY=y};
 const contar=b=>{const n=+b.dataset.n,s=b.dataset.s||"",o={v:0};if(still||!window.gsap){b.textContent=n+s;return}gsap.to(o,{v:n,duration:1.6,ease:"power3.out",onUpdate:()=>b.textContent=Math.round(o.v)+s})};
