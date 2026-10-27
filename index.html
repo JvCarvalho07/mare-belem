@@ -141,10 +141,11 @@ section{padding-block:clamp(56px,7vw,96px)}
 .cta .in{display:grid;grid-template-columns:1fr minmax(320px,520px);gap:clamp(30px,5vw,80px);align-items:center}
 .form{display:grid;gap:14px;padding:clamp(20px,2.4vw,30px);border-radius:22px;background:#0f1a14b8;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:inset 0 0 0 1px #ffffff26}
 .form .duas{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.form label{display:grid;gap:6px;font:600 13px Jost,sans-serif;letter-spacing:.04em;color:var(--mut)}
+.form label{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:6px;row-gap:6px;font:600 13px Jost,sans-serif;letter-spacing:.04em;color:var(--mut)}
 .form label small{font-weight:400;letter-spacing:0;opacity:.8}
 .form input,.form select,.form textarea{width:100%;font:400 16px 'Atkinson Hyperlegible',sans-serif;color:var(--nevoa);background:#0b1410;border:0;border-radius:12px;padding:12px 14px;box-shadow:inset 0 0 0 1px #ffffff26;transition:box-shadow .2s}
 .form textarea{min-height:110px;resize:vertical}
+.form label>input:not([type=radio]):not([type=checkbox]),.form label>select,.form label>textarea{flex:1 1 100%}
 .form input:focus,.form select:focus,.form textarea:focus{outline:0;box-shadow:inset 0 0 0 2px var(--broto)}
 .form fieldset{border:0;margin:0;padding:0;display:grid;gap:8px}
 .form legend{font:600 13px Jost,sans-serif;letter-spacing:.04em;color:var(--mut);margin-bottom:6px}
@@ -158,6 +159,9 @@ section{padding-block:clamp(56px,7vw,96px)}
 .form .aviso{font-size:14px;color:var(--mut);min-height:1.2em}
 .form .aviso.ok{color:var(--broto)}
 .zap{display:none}.zap.on{display:inline-flex}
+.form [hidden]{display:none!important}
+.form .marca{display:flex;align-items:center;gap:10px;font:400 15px Jost,sans-serif;letter-spacing:0;color:var(--nevoa);cursor:pointer}
+.form .marca input{width:18px;height:18px;accent-color:var(--broto);box-shadow:none;padding:0}
 @media(max-width:980px){.cta .in{grid-template-columns:1fr}}
 @media(max-width:520px){.form .duas{grid-template-columns:1fr}}
 .vals{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 30px;padding:0;list-style:none}
@@ -176,18 +180,21 @@ html.parado{scroll-behavior:auto}
 .parado *,.parado *::before,.parado *::after{animation:none!important;transition:none!important}
 .parado .ld,.parado .rv{opacity:1;transform:none}
 .parado .manifesto p span{opacity:1}
-.rio{position:fixed;left:max(10px,calc(50% - 680px));top:0;height:100vh;width:40px;z-index:5;pointer-events:none;opacity:0;transition:opacity .6s}
+/* rio da rolagem: do lado direito (preenche o vazio da direita e não passa por cima dos textos da esquerda); só no computador */
+.rio{position:fixed;left:calc(100% - 40px - max(10px,calc(50% - 680px)));top:0;height:100vh;width:40px;z-index:5;pointer-events:none;opacity:0;transition:opacity .6s}
 .rio.on{opacity:1}
-.rpin{position:fixed;z-index:6;left:max(10px,calc(50% - 680px));top:0;display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;color:var(--broto);font:600 13px Jost,sans-serif;letter-spacing:.06em;text-decoration:none;white-space:nowrap;transition:opacity .6s}
+.rpin{position:fixed;z-index:6;left:calc(100% - 40px - max(10px,calc(50% - 680px)));top:0;display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;color:var(--broto);font:600 13px Jost,sans-serif;letter-spacing:.06em;text-decoration:none;white-space:nowrap;transition:opacity .6s}
 .rpin.on{opacity:1;pointer-events:auto}
 .rpin i{width:13px;height:13px;box-shadow:0 0 0 3px #0f1a14,0 0 14px #b5d96a}
-.rpin span{opacity:0;transform:translateX(-6px);transition:opacity .3s,transform .3s;background:#0f1a14e6;padding:4px 10px;border-radius:999px}
+.rpin span{position:absolute;right:calc(100% + 10px);opacity:0;transform:translateX(6px);transition:opacity .3s,transform .3s;background:#0f1a14e6;padding:4px 10px;border-radius:999px}
 .rpin:hover span,.rpin:focus-visible span{opacity:1;transform:none}
 @media(max-width:1300px){.rpin{display:none}}
 .rio path{fill:none;stroke-linecap:round}
 .rio .base{stroke:#ffffff14;stroke-width:2}
 .rio .agua{stroke:url(#gRio);stroke-width:3;filter:drop-shadow(0 0 6px #6fd3c2aa)}
 @media(max-width:1300px){.rio{display:none}}
+/* o rio passa por baixo das fotos (cartões das frentes, projetos, contato), em vez de riscar por cima delas */
+#frentes,#projetos,#como{position:relative;z-index:6}.cta{z-index:6}
 /* projetos */
 .proj2{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:repeat(3,auto);gap:18px;margin-top:40px}
 .pj{position:relative;border-radius:26px;overflow:hidden;min-height:260px;isolation:isolate;text-decoration:none;color:var(--nevoa);display:flex;align-items:flex-end}
@@ -436,20 +443,50 @@ html.parado{scroll-behavior:auto}
  <ul class="vals rv"><li>Escuta ativa</li><li>Natureza a favor</li><li>Transparência</li><li>Cidade para todos</li></ul>
  </div>
  <form class="form rv" id="formContato" novalidate>
-  <div class="duas">
-   <label>Seu nome<input name="nome" autocomplete="name" required></label>
-   <label>Você é<select name="perfil"><option>Morador(a)</option><option>Escola ou comunidade</option><option>Empresa</option><option>Órgão público</option><option>Imprensa</option><option>Outro</option></select></label>
-  </div>
-  <fieldset><legend>Sobre o quê?</legend><div class="chips">
-   <label><input type="radio" name="assunto" value="Quero uma proposta" checked><span>Quero uma proposta</span></label>
-   <label><input type="radio" name="assunto" value="Problema na minha rua"><span>Problema na minha rua</span></label>
-   <label><input type="radio" name="assunto" value="Parceria"><span>Parceria</span></label>
-   <label><input type="radio" name="assunto" value="Outro"><span>Outro</span></label>
+  <fieldset><legend>Quem está escrevendo?</legend><div class="chips" id="perfis">
+   <label><input type="radio" name="perfil" value="morador" checked><span>Moro em Belém</span></label>
+   <label><input type="radio" name="perfil" value="escola"><span>Escola ou comunidade</span></label>
+   <label><input type="radio" name="perfil" value="empresa"><span>Empresa</span></label>
+   <label><input type="radio" name="perfil" value="publico"><span>Órgão público</span></label>
+   <label><input type="radio" name="perfil" value="imprensa"><span>Imprensa</span></label>
   </div></fieldset>
-  <label>Bairro <small>(se for um lugar de Belém)</small><input name="bairro" autocomplete="address-level3"></label>
-  <label>Mensagem<textarea name="mensagem" required></textarea></label>
-  <label>Como respondemos? <small>e-mail ou WhatsApp</small><input name="retorno" required></label>
-  <div class="acoes"><button class="btn broto" type="submit">Enviar mensagem</button><a class="btn vidro zap" id="zap" target="_blank" rel="noopener">Falar no WhatsApp</a></div>
+  <!-- cada campo diz para quais perfis aparece (data-p); os escondidos não contam como obrigatórios nem vão no envio -->
+  <label data-p="escola">Nome da escola ou comunidade<input name="organizacao" required></label>
+  <label data-p="empresa">Empresa<input name="organizacao" autocomplete="organization" required></label>
+  <label data-p="publico">Órgão ou secretaria<input name="organizacao" required></label>
+  <label data-p="imprensa">Veículo<input name="organizacao" required></label>
+  <div class="duas" data-p="escola empresa publico imprensa">
+   <label>Seu nome<input name="nome" autocomplete="name" required></label>
+   <label data-p="empresa publico">Cargo <small>(opcional)</small><input name="cargo" autocomplete="organization-title"></label>
+   <label data-p="escola imprensa">Bairro <small>(opcional)</small><input name="bairro" autocomplete="address-level3"></label>
+  </div>
+  <label data-p="morador">Bairro<input name="bairro" autocomplete="address-level3" required></label>
+  <fieldset data-p="escola"><legend>O que vocês precisam?</legend><div class="chips">
+   <label><input type="radio" name="interesse" value="Oficina na escola" checked><span>Oficina</span></label>
+   <label><input type="radio" name="interesse" value="Diagnóstico do entorno"><span>Diagnóstico do entorno</span></label>
+   <label><input type="radio" name="interesse" value="Mutirão ou mobilização"><span>Mutirão</span></label>
+   <label><input type="radio" name="interesse" value="Outro"><span>Outro</span></label></div></fieldset>
+  <fieldset data-p="empresa"><legend>Serviço de interesse</legend><div class="chips">
+   <label><input type="radio" name="interesse" value="Diagnóstico de acessibilidade" checked><span>Acessibilidade</span></label>
+   <label><input type="radio" name="interesse" value="Mapa de risco de alagamento"><span>Risco de alagamento</span></label>
+   <label><input type="radio" name="interesse" value="Relatório socioambiental"><span>Relatório socioambiental</span></label>
+   <label><input type="radio" name="interesse" value="Oficina para a equipe"><span>Oficina</span></label>
+   <label><input type="radio" name="interesse" value="Parceria ou patrocínio"><span>Parceria</span></label></div></fieldset>
+  <fieldset data-p="publico"><legend>Assunto</legend><div class="chips">
+   <label><input type="radio" name="interesse" value="Dados do mapa" checked><span>Dados do mapa</span></label>
+   <label><input type="radio" name="interesse" value="Parceria em projeto"><span>Parceria</span></label>
+   <label><input type="radio" name="interesse" value="Ação num bairro"><span>Ação num bairro</span></label>
+   <label><input type="radio" name="interesse" value="Outro"><span>Outro</span></label></div></fieldset>
+  <label data-p="empresa">Endereço do local <small>(se o serviço for num lugar)</small><input name="bairro" autocomplete="street-address"></label>
+  <label data-p="imprensa">Prazo da matéria <small>(opcional)</small><input name="prazo" type="date"></label>
+  <label><span data-p="morador">O que está acontecendo?</span><span data-p="escola empresa publico">Conte um pouco mais</span><span data-p="imprensa">Pauta</span>
+   <textarea name="mensagem" required></textarea></label>
+  <label class="marca" data-p="morador"><input type="checkbox" id="querResposta"> Quero que a MARÉ me responda</label>
+  <div class="duas" data-p="escola empresa publico imprensa resposta">
+   <label>E-mail<input name="email" type="email" autocomplete="email"></label>
+   <label>WhatsApp<input name="telefone" type="tel" autocomplete="tel" inputmode="tel"></label>
+  </div>
+  <div class="acoes"><button class="btn broto" type="submit">Enviar</button><a class="btn vidro zap" id="zap" target="_blank" rel="noopener">Falar no WhatsApp</a></div>
   <p class="aviso" id="formAviso" role="status"></p>
  </form>
 </div></section>
@@ -529,15 +566,24 @@ if(window.gsap&&window.ScrollTrigger&&!still){
 
 <script>(()=>{const b=document.getElementById("menuBtn"),l=document.getElementById("menuLista");if(!b)return;b.onclick=()=>{const a=l.classList.toggle("aberto");b.setAttribute("aria-expanded",a);b.textContent=a?"Fechar":"Menu"};l.querySelectorAll("a").forEach(x=>x.addEventListener("click",()=>{l.classList.remove("aberto");b.setAttribute("aria-expanded","false");b.textContent="Menu"}))})()</script>
 <script>
-// Contato. Para ligar: criar o Google Forms com os mesmos campos, colar aqui o endereço "formResponse"
-// e o "entry.NNN" de cada pergunta (aparecem no link "Obter link preenchido" do Forms). WHATS = número com DDI e DDD, só dígitos.
-const FORMS={url:"",campos:{nome:"",perfil:"",assunto:"",bairro:"",mensagem:"",retorno:""}},WHATS="";
-{const fm=document.getElementById("formContato"),av=document.getElementById("formAviso"),zap=document.getElementById("zap");
+// Contato. O formulário muda com o perfil: morador vê só bairro, mensagem e (se marcar) o contato; os outros perfis têm campos próprios.
+// Para ligar ao Google Forms: colar em FORMS.url o endereço "formResponse" e em cada campo o "entry.NNN" da pergunta
+// (aparecem em "Obter link preenchido" no Forms). WHATS = número com DDI e DDD, só dígitos.
+const FORMS={url:"",campos:{perfil:"",organizacao:"",nome:"",cargo:"",bairro:"",interesse:"",prazo:"",mensagem:"",email:"",telefone:""}},WHATS="";
+{const fm=document.getElementById("formContato"),av=document.getElementById("formAviso"),zap=document.getElementById("zap"),quer=document.getElementById("querResposta");
  if(WHATS){zap.href="https://wa.me/"+WHATS;zap.classList.add("on")}
+ const mostra=()=>{const p=fm.querySelector("[name=perfil]:checked").value,marcas=new Set([p]);if(p==="morador"&&quer.checked)marcas.add("resposta");
+  fm.querySelectorAll("[data-p]").forEach(el=>el.hidden=!el.dataset.p.split(" ").some(x=>marcas.has(x)));
+  fm.querySelectorAll("input,textarea,select").forEach(i=>i.disabled=!!i.closest("[data-p][hidden]"));
+  av.textContent=""};
+ fm.addEventListener("change",e=>{if(e.target.name==="perfil"||e.target===quer)mostra()});mostra();
  fm.addEventListener("submit",async e=>{e.preventDefault();av.className="aviso";
-  const falta=[...fm.querySelectorAll("[required]")].find(i=>!i.value.trim());if(falta){av.textContent="Falta preencher: "+falta.closest("label").firstChild.textContent.trim()+".";falta.focus();return}
+  const falta=[...fm.querySelectorAll("[required]")].filter(i=>!i.disabled).find(i=>!i.value.trim());
+  if(falta){const l=falta.closest("label"),t=l.querySelector("span:not([hidden])");av.textContent="Falta preencher: "+(t?t.textContent:l.firstChild.textContent).trim()+".";falta.focus();return}
+  const em=fm.querySelector("[name=email]"),tel=fm.querySelector("[name=telefone]");
+  if(!em.disabled&&!em.value.trim()&&!tel.value.trim()){av.textContent="Deixe um e-mail ou um WhatsApp para a resposta.";em.focus();return}
   if(!FORMS.url){av.textContent="O envio pelo site ainda está sendo preparado. Volte em breve!";return}
-  const d=new FormData(fm),corpo=new URLSearchParams();for(const[k,id]of Object.entries(FORMS.campos))if(id)corpo.append(id,d.get(k)||"");
-  try{await fetch(FORMS.url,{method:"POST",mode:"no-cors",body:corpo});fm.reset();av.className="aviso ok";av.textContent="Recebemos! Vamos responder pelo contato que você deixou."}catch(err){av.textContent="Não deu para enviar agora. Tente de novo em alguns minutos."}})}
+  const d=new FormData(fm),corpo=new URLSearchParams();for(const[k,id]of Object.entries(FORMS.campos))if(id)corpo.append(id,d.getAll(k).filter(Boolean).join(" "));
+  try{await fetch(FORMS.url,{method:"POST",mode:"no-cors",body:corpo});fm.reset();mostra();av.className="aviso ok";av.textContent="Recebemos! Obrigado por escrever para a MARÉ."}catch(err){av.textContent="Não deu para enviar agora. Tente de novo em alguns minutos."}})}
 </script>
 </body></html>
