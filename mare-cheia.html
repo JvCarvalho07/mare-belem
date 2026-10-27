@@ -83,6 +83,14 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .fatos b{color:var(--teal);font-family:Jost,sans-serif}
 .mapa{position:relative;margin-top:clamp(28px,4vw,44px);height:min(82vh,760px);min-height:460px}
 .mapa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.poster{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:0;padding:0;cursor:pointer;background:#e8eeec url(img/poster-mapa.jpg) center/cover;font:inherit;color:inherit}
+.poster::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 55%,#0f3a3f00,#0f3a3f40)}
+.poster .pbtn{position:relative;z-index:1;display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:999px;background:var(--teal);color:#fff;font:600 18px Jost,sans-serif;box-shadow:0 14px 34px #0f3a3f55;transition:transform .3s}
+.poster .pbtn::before{content:"";width:12px;height:12px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#fff}
+.poster:hover .pbtn,.poster:focus-visible .pbtn{transform:translateY(-3px)}
+.poster .pnota{position:relative;z-index:1;font:600 14px Jost,sans-serif;color:#0f3a3f;background:#ffffffd9;padding:6px 14px;border-radius:999px}
+.mapa.carregando .pbtn{opacity:.75}
+.mapa.carregando .pbtn::after{content:"…"}
 .mapa::before{content:"";position:absolute;left:0;right:0;top:0;height:60px;z-index:2;pointer-events:none;background:linear-gradient(var(--papel),#f3f5f200)}
 .trilho{display:grid;grid-template-columns:1fr 1fr;column-gap:48px;margin-top:26px;border-top:1px solid #0f7f8633}
 .trilho::-webkit-scrollbar{display:none}
@@ -131,8 +139,6 @@ footer .in{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-betwe
 footer a{color:#cde9e6}
 @media(max-width:980px){.nav ul{display:none}.sup .base .in{grid-template-columns:1fr}.sup .acts{justify-content:flex-start}.abre{grid-template-columns:1fr}.dados,.frentes{grid-template-columns:1fr}.acoes{grid-template-columns:1fr 1fr}.leito .cta{grid-template-columns:1fr}.prof{display:none}.vfundo{display:none}}
 @media(max-width:980px){.trilho{grid-template-columns:1fr}.dados .cartao,.fr{border-right:0;border-bottom:1px solid #ffffff2e;padding:0 0 18px}.acoes{padding-left:96px}.acoes::before{left:62px}.ac::before{left:-100px;width:40px;font-size:22px}.ac::after{left:-41px}}
-.tocar{position:absolute;inset:0;z-index:4;display:none;align-items:center;justify-content:center;border:0;background:#0f3a3f33;color:#fff;font:600 16px Jost,sans-serif;cursor:pointer}
-.tocar::before{content:"";position:absolute;left:50%;top:50%;width:250px;height:52px;margin:-26px 0 0 -125px;border-radius:999px;background:var(--teal);z-index:-1}
 @media(max-width:600px){.acoes{grid-template-columns:1fr}.nav .btn{display:none}.mapa{height:70vh}}
 .menuBtn{display:none;margin-left:auto;font:600 15px Jost,sans-serif;color:inherit;background:#ffffff1f;border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
 @media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
@@ -178,8 +184,10 @@ footer a{color:#cde9e6}
   </div>
  </div>
  <div class="mapa">
-  <button class="tocar" id="tocar" type="button">Toque para explorar o mapa</button>
-  <iframe id="mapaF" src="mapa.html?embed=1&amp;tema=estudio&amp;v=6" title="Mapa 3D dos alagamentos de Belém" loading="lazy" allow="fullscreen"></iframe>
+  <button class="poster" id="poster" type="button" aria-label="Abrir o mapa 3D dos alagamentos de Belém">
+   <span class="pbtn">Abrir o mapa 3D</span>
+   <span class="pnota">Belém e Ananindeua · 21 pontos de alagamento</span>
+  </button>
 
  </div>
  <div class="in">  <div class="trilho" id="trilho">
@@ -235,7 +243,7 @@ footer a{color:#cde9e6}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
-const agua=document.getElementById("agua"),nav=document.getElementById("nav"),pt=document.getElementById("profPt"),mapaF=document.getElementById("mapaF");
+const agua=document.getElementById("agua"),nav=document.getElementById("nav"),pt=document.getElementById("profPt");let mapaF=null;
 const forte=matchMedia("(min-width: 900px) and (pointer: fine)").matches; // computador: água WebGL e vídeo
 
 // 1) nome do projeto "dentro" da foto (imagem pronta, sem custo depois)
@@ -256,11 +264,16 @@ if(forte){new IntersectionObserver(es=>{if(es[0].isIntersecting){if(!vluz.src)vl
 // 3) bolhas (poucas)
 {const b=document.getElementById("bolhas"),n=forte?12:6;for(let i=0;i<n;i++){const e=document.createElement("i"),s=5+Math.random()*14;e.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s}px;--dx:${Math.random()*80-40}px;animation-duration:${16+Math.random()*18}s;animation-delay:${-Math.random()*30}s;opacity:${.3+Math.random()*.45}`;b.appendChild(e)}}
 // 4) o mapa só anima quando está na tela; os cards levam até o ponto
-new IntersectionObserver(es=>{try{mapaF.contentWindow.postMessage({mareAtivo:es[0].isIntersecting},"*")}catch(e){}},{threshold:0}).observe(mapaF);
-document.querySelectorAll(".pc").forEach(b=>b.addEventListener("click",()=>{const ll=b.dataset.ll.split(",").map(Number);try{mapaF.contentWindow.postMessage({mareVoar:ll},"*")}catch(e){}}));
-
-const tocar=document.getElementById("tocar");
-if(!forte){mapaF.style.pointerEvents="none";tocar.style.display="flex";tocar.onclick=()=>{mapaF.style.pointerEvents="auto";tocar.remove()}}else tocar.remove();
+// O mapa 3D é pesado (MapLibre, prédios, ruas): só nasce quando a pessoa pede, para a rolagem não engasgar.
+const poster=document.getElementById("poster"),caixaMapa=poster.parentElement;let mapaPronto=null;
+function abrirMapa(){if(mapaPronto)return mapaPronto;caixaMapa.classList.add("carregando");
+ mapaF=document.createElement("iframe");mapaF.id="mapaF";mapaF.title="Mapa 3D dos alagamentos de Belém";mapaF.allow="fullscreen";mapaF.src="mapa.html?embed=1&tema=estudio&v=7";
+ mapaPronto=new Promise(res=>mapaF.addEventListener("load",()=>{setTimeout(()=>{poster.remove();caixaMapa.classList.remove("carregando");res()},700)},{once:true}));
+ caixaMapa.appendChild(mapaF);
+ new IntersectionObserver(es=>{try{mapaF.contentWindow.postMessage({mareAtivo:es[0].isIntersecting},"*")}catch(e){}},{threshold:0}).observe(mapaF);
+ return mapaPronto}
+poster.addEventListener("click",abrirMapa);
+document.querySelectorAll(".pc").forEach(b=>b.addEventListener("click",async()=>{const ll=b.dataset.ll.split(",").map(Number);const novo=!mapaF;await abrirMapa();setTimeout(()=>{try{mapaF.contentWindow.postMessage({mareVoar:ll},"*")}catch(e){}},novo?1800:0)}));
 // 5) navegação, medidor e animações de entrada
 let last=0;
 const upd=y=>{const h=innerHeight,k=y/Math.max(1,document.documentElement.scrollHeight-h);pt.style.top=`calc(${(k*100).toFixed(2)}% - 6px)`;

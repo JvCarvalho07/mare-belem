@@ -52,6 +52,9 @@ label.ck{display:flex;gap:8px;align-items:flex-start;font-size:14.5px}label.ck i
 .pop{font:15px "Atkinson Hyperlegible",sans-serif;color:var(--ink);max-width:240px}.pop img{width:100%;border-radius:8px;margin-top:6px;display:block}
 .pop .tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;color:#fff;margin-bottom:4px}
 .maplibregl-popup-content{border-radius:14px;padding:12px 14px}
+.anel{position:absolute;left:50%;bottom:0;width:70px;height:70px;margin:0 0 -35px -35px;border-radius:50%;border:2px solid #0f7f86;opacity:0;pointer-events:none;animation:anel 2.4s ease-out infinite;will-change:transform,opacity}
+@keyframes anel{0%{transform:scale(.15);opacity:.85}100%{transform:scale(1);opacity:0}}
+body.quieto .anel{animation-play-state:paused}
 .hero .brand,.hero .tools,.hero .panel,.hero .open,.hero .maplibregl-ctrl-top-right{display:none!important}
 .embed .brand{display:none}
 body:not(.adm) .admin{display:none!important}.adm .pub{display:none}.embed .panel{top:12px}
@@ -117,14 +120,16 @@ const ESTILO_ESTUDIO={version:8,glyphs:"https://tiles.openfreemap.org/fonts/{fon
   {id:"parque",type:"fill",source:"omt","source-layer":"park",paint:{"fill-color":"#dce9dd","fill-opacity":.7}},
   {id:"ruas",type:"line",source:"omt","source-layer":"transportation",filter:["!=",["get","class"],"rail"],paint:{"line-color":"#ffffff","line-width":["interpolate",["exponential",1.6],["zoom"],11,.4,14,2.2,17,10]}},
   {id:"ruas-borda",type:"line",source:"omt","source-layer":"transportation",filter:["in",["get","class"],["literal",["primary","trunk","motorway","secondary"]]],paint:{"line-color":"#d5dcdb","line-width":["interpolate",["exponential",1.6],["zoom"],11,.6,14,3,17,12]}},
-  {id:"building-3d",type:"fill-extrusion",source:"omt","source-layer":"building",minzoom:12.5,paint:{
+  {id:"building-3d",type:"fill-extrusion",source:"omt","source-layer":"building",minzoom:13.5,paint:{
    "fill-extrusion-color":["interpolate",["linear"],["coalesce",["get","render_height"],6],0,"#fbfcfc",40,"#f2f5f5",120,"#e6ecec"],
    "fill-extrusion-height":["coalesce",["get","render_height"],6],"fill-extrusion-base":["coalesce",["get","render_min_height"],0],"fill-extrusion-opacity":.96,"fill-extrusion-vertical-gradient":true}},
   {id:"bairros",type:"symbol",source:"omt","source-layer":"place",filter:["in",["get","class"],["literal",["suburb","neighbourhood","quarter"]]],
    layout:{"text-field":["get","name"],"text-font":["Noto Sans Regular"],"text-size":12,"text-letter-spacing":.08,"text-transform":"uppercase"},
    paint:{"text-color":"#557173","text-halo-color":"#eef1f0","text-halo-width":1.5}}
  ]};
-const map=new maplibregl.Map({cooperativeGestures:Q.has("embed"),pixelRatio:Math.min(devicePixelRatio||1,1.5),container:"map",center:[-48.4925,-1.4560],zoom:HERO?14.6:12.6,pitch:HERO?62:0,bearing:HERO?-28:0,maxPitch:78,attributionControl:{compact:true},style:EST?ESTILO_ESTUDIO:"https://tiles.openfreemap.org/styles/"+(ESC?"dark":AQ?"positron":"liberty"),interactive:!HERO||true});
+// Só Belém (parte continental, Icoaraci e Outeiro) e Ananindeua: o mapa não carrega nada além disso (Benevides, Marituba, Mosqueiro).
+const LIMITE=[[-48.565,-1.505],[-48.315,-1.215]],TOQUE=matchMedia("(pointer: coarse)").matches;
+const map=new maplibregl.Map({cooperativeGestures:Q.has("embed"),pixelRatio:Math.min(devicePixelRatio||1,TOQUE?1:1.5),maxBounds:LIMITE,minZoom:10.8,renderWorldCopies:false,fadeDuration:TOQUE?0:300,container:"map",center:[-48.4925,-1.4560],zoom:HERO?14.6:12.6,pitch:HERO?62:0,bearing:HERO?-28:0,maxPitch:78,attributionControl:{compact:true},style:EST?ESTILO_ESTUDIO:"https://tiles.openfreemap.org/styles/"+(ESC?"dark":AQ?"positron":"liberty"),interactive:!HERO||true});
 window.mareMap=map;
 if(!HERO)map.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
 map.on("style.load",()=>{if(map.getSource("dem"))return;
@@ -148,46 +153,42 @@ map.on("style.load",()=>{if(map.getSource("dem"))return;
  }
  map.setLight({anchor:"map",position:[1.4,210,35],intensity:.35,color:"#fff6e8"});
 
- if(HERO){map.setTerrain({source:"dem",exaggeration:3})}});
+ if(HERO){map.setTerrain({source:"dem",exaggeration:3})}
+ limites()});
+// Limites do IBGE (malha municipal de Belém 1501402 e Ananindeua 1500800): o resto fica coberto.
+async function limites(){if(map.getSource("fora"))return;try{
+ const j=await (await fetch("dados/limites.json")).json();
+ const caixa=[[-49.5,-2.5],[-47.3,-2.5],[-47.3,-0.3],[-49.5,-0.3],[-49.5,-2.5]];
+ map.addSource("fora",{type:"geojson",data:{type:"Feature",properties:{},geometry:{type:"Polygon",coordinates:[caixa,...j.features.map(f=>f.geometry.coordinates[0])]}}});
+ map.addSource("limites",{type:"geojson",data:j});
+ const cor=EST?"#eef1f0":ESC?"#0b130f":"#f3f1ec",antes=map.getLayer("bairros")?"bairros":undefined;
+ map.addLayer({id:"fora",type:"fill",source:"fora",paint:{"fill-color":cor,"fill-opacity":.78}},antes);
+ map.addLayer({id:"limites",type:"line",source:"limites",paint:{"line-color":EST?"#0f7f86":ESC?"#b5d96a":"#7a6a55","line-width":1.4,"line-opacity":.55,"line-dasharray":[3,2]}},antes);
+}catch(e){}}
 let mk=[],adding=false,pos=null,is3d=HERO;
 const pin=c=>`<svg class="pin" viewBox="0 0 30 38" aria-hidden="true"><path d="M15 37s13-13.2 13-22A13 13 0 0 0 2 15c0 8.8 13 22 13 22z" fill="${c}" stroke="#fff" stroke-width="2.5"/><circle cx="15" cy="15" r="5" fill="#fff"/></svg>`;
 function draw(){mk.forEach(m=>m.remove());mk=[];const on=[...document.querySelectorAll(".f:checked")].map(x=>x.value);const V=R.concat(IMP).filter(r=>on.includes(r.tipo));
- V.forEach(r=>{const el=document.createElement("div");el.innerHTML=pin(T[r.tipo][1]);el.title=T[r.tipo][0]+" em "+(r.bairro||"local sem bairro");
+ V.forEach(r=>{const el=document.createElement("div");el.innerHTML=(EST&&r.tipo==="alagamento"?'<i class="anel"></i>':"")+pin(T[r.tipo][1]);el.title=T[r.tipo][0]+" em "+(r.bairro||"local sem bairro");
   const h=`<div class="pop"><span class="tag" style="background:${T[r.tipo][1]}">${T[r.tipo][0]}</span><br><b>${esc(r.local||r.bairro)}</b><br>${r.local?esc(r.bairro)+"<br>":""}${esc(r.desc)}<br><small style="color:#5d5662">${r.url?`Fonte: <a href="${r.url}" target="_blank" rel="noopener">notícia</a>, local aproximado`:esc(r.data)}</small>${r.foto?`<img src="${r.foto}" alt="Foto enviada pelo morador">`:""}</div>`;
   mk.push(new maplibregl.Marker({element:el,anchor:"bottom"}).setLngLat([r.lng,r.lat]).setPopup(new maplibregl.Popup({offset:30,maxWidth:"260px"}).setHTML(h)).addTo(map))});
  $("list").innerHTML=V.map((r,i)=>`<li><button data-i="${i}"><i style="background:${T[r.tipo][1]}"></i><span><b>${esc(r.local||r.bairro||T[r.tipo][0])}</b>${esc(r.bairro)} · ${r.imp?"imprensa":"morador"}</span></button></li>`).join("");$("list").querySelectorAll("button").forEach(b=>b.onclick=()=>{const r=V[+b.dataset.i];map.flyTo({center:[r.lng,r.lat],zoom:16});mk[+b.dataset.i].togglePopup()})}
 document.addEventListener("change",e=>{if(e.target.classList.contains("f"))draw()});
 
 
-let ruasFeitas=new Set(),aguaF=[];let ativo=true;addEventListener("message",e=>{const d=e.data||{};if(typeof d.mareAtivo==="boolean")ativo=d.mareAtivo;if(Array.isArray(d.mareVoar))map.flyTo({center:d.mareVoar,zoom:16,pitch:60,duration:2200})});
-function aguaNasRuas(){if(!EST||!map.getSource("omt"))return;
- const pts=IMP.concat(R).filter(r=>r.tipo==="alagamento").map(r=>[r.lng,r.lat]);
- const RAIO=150,mLat=111320,mLng=111320*Math.cos(-1.45*Math.PI/180);
- const perto=c=>pts.some(p=>Math.hypot((c[0]-p[0])*mLng,(c[1]-p[1])*mLat)<RAIO);
- const feats=map.querySourceFeatures("omt",{sourceLayer:"transportation"});const novos=[];
- feats.forEach(f=>{const cl=f.properties.class;if(!cl||/rail|ferry|path|track/.test(cl))return;
-  const g=f.geometry,linhas=g.type==="LineString"?[g.coordinates]:g.type==="MultiLineString"?g.coordinates:[];
-  linhas.forEach(L=>{const d=[];for(let i=0;i<L.length-1;i++){const a=L[i],b=L[i+1],n=Math.max(1,Math.ceil(Math.hypot((b[0]-a[0])*mLng,(b[1]-a[1])*mLat)/12));for(let k=0;k<n;k++)d.push([a[0]+(b[0]-a[0])*k/n,a[1]+(b[1]-a[1])*k/n])}d.push(L[L.length-1]);
-   let run=[];d.forEach(c=>{if(perto(c))run.push(c);else{if(run.length>1)novos.push(run);run=[]}});if(run.length>1)novos.push(run)})});
- const fc={type:"FeatureCollection",features:novos.filter(c=>{const k=c[0].map(v=>v.toFixed(5)).join()+c.length;if(ruasFeitas.has(k))return false;ruasFeitas.add(k);return true}).map(c=>({type:"Feature",properties:{},geometry:{type:"LineString",coordinates:c}}))};
- const src=map.getSource("ruas-agua");
- aguaF.push(...fc.features);if(src){src.setData({type:"FeatureCollection",features:aguaF});return}
- map.addSource("ruas-agua",{type:"geojson",data:fc});
+let ativo=true;addEventListener("message",e=>{const d=e.data||{};if(typeof d.mareAtivo==="boolean"){ativo=d.mareAtivo;document.body.classList.toggle("quieto",!ativo)}if(Array.isArray(d.mareVoar))map.flyTo({center:d.mareVoar,zoom:16,pitch:60,duration:2200})});
+// Trechos de rua a até 150 m dos pontos de alagamento, calculados uma vez por ferramenta/ruas-agua.mjs.
+function aguaNasRuas(){if(!EST||map.getSource("ruas-agua"))return;
+ map.addSource("ruas-agua",{type:"geojson",data:"dados/ruas-agua.json"});
  map.addLayer({id:"ruas-agua",type:"line",source:"ruas-agua",layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":"#2bb3b1","line-opacity":.55,"line-blur":3,"line-width":["interpolate",["exponential",1.6],["zoom"],13,4,15,12,17,34]}},"building-3d");
- map.addLayer({id:"ruas-agua-brilho",type:"line",source:"ruas-agua",layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":"#e6fbf8","line-opacity":.7,"line-width":["interpolate",["linear"],["zoom"],13,1,17,3],"line-dasharray":[0,4,3]}},"building-3d");
- const passos=[[0,4,3],[1,4,2],[2,4,1],[3,4,0],[0,1,3,3],[0,2,3,2],[0,3,3,1]];let ps=0;
- setInterval(()=>{if(ativo&&!document.hidden&&map.getLayer("ruas-agua-brilho"))map.setPaintProperty("ruas-agua-brilho","line-dasharray",passos[ps=(ps+1)%passos.length])},180);
+ map.addLayer({id:"ruas-agua-brilho",type:"line",source:"ruas-agua",layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":"#e6fbf8","line-opacity":.6,"line-width":["interpolate",["linear"],["zoom"],13,1,17,3],"line-dasharray":[0,3,2]}},"building-3d");
 }
 function manchaAlagamento(){if(!EST||map.getSource("pontos"))return;
  const fc={type:"FeatureCollection",features:IMP.concat(R).filter(r=>r.tipo==="alagamento").map(r=>({type:"Feature",properties:{},geometry:{type:"Point",coordinates:[r.lng,r.lat]}}))};
  map.addSource("pontos",{type:"geojson",data:fc});
  map.addLayer({id:"calor",type:"heatmap",source:"pontos",paint:{"heatmap-radius":["interpolate",["linear"],["zoom"],11,40,15,120],"heatmap-intensity":1.1,"heatmap-opacity":.75,
   "heatmap-color":["interpolate",["linear"],["heatmap-density"],0,"rgba(15,127,134,0)",.25,"rgba(43,179,177,.35)",.6,"rgba(15,127,134,.7)",1,"rgba(9,82,92,.9)"]}},"building-3d");
- map.addLayer({id:"onda",type:"circle",source:"pontos",paint:{"circle-radius":10,"circle-color":"rgba(0,0,0,0)","circle-stroke-color":"#0f7f86","circle-stroke-width":2,"circle-stroke-opacity":.8,"circle-pitch-alignment":"map"}});
- const t0=performance.now();setInterval(()=>{if(!ativo||document.hidden)return;const k=((performance.now()-t0)/2400)%1;map.setPaintProperty("onda","circle-radius",8+k*60);map.setPaintProperty("onda","circle-stroke-opacity",.85*(1-k))},70);
  map.easeTo({pitch:58,bearing:-24,zoom:14,center:[-48.4880,-1.4545],duration:2600});is3d=true;const b=document.getElementById("b3d");if(b)b.setAttribute("aria-pressed","true");}
-let ta;const agendar=()=>{clearTimeout(ta);ta=setTimeout(aguaNasRuas,500)};
-if(EST){map.on("style.load",()=>setTimeout(()=>{manchaAlagamento();agendar()},60));map.on("moveend",agendar);setTimeout(agendar,2500);setTimeout(agendar,6000)}
+if(EST)map.on("style.load",()=>setTimeout(()=>{manchaAlagamento();aguaNasRuas()},60));
 draw();map.on("load",()=>{if(HERO&&!matchMedia("(prefers-reduced-motion: reduce)").matches){const spin=()=>{map.easeTo({bearing:map.getBearing()+20,duration:30000,easing:t=>t});};spin();map.on("moveend",spin)}});
 $("b3d").onclick=function(){if(EST){is3d=!is3d;this.setAttribute("aria-pressed",is3d);map.easeTo(is3d?{pitch:58,bearing:-24,zoom:Math.max(map.getZoom(),14)}:{pitch:0,bearing:0},{duration:1200});return}is3d=!is3d;this.setAttribute("aria-pressed",is3d);
  if(is3d){map.setTerrain({source:"dem",exaggeration:1.5});map.easeTo({pitch:62,bearing:-25,zoom:Math.max(map.getZoom(),14.2),duration:1400})}else{map.setTerrain(null);map.easeTo({pitch:0,bearing:0,duration:900})}};
