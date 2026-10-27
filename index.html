@@ -66,7 +66,7 @@ section{padding-block:clamp(56px,7vw,96px)}
 .folhas{position:absolute;top:0;left:0;right:0;height:210vh;overflow:hidden;pointer-events:none;z-index:4}
 .lf{position:absolute;pointer-events:none;will-change:transform}
 .lf svg{width:100%;height:auto;display:block}
-.lf.fg1{width:clamp(220px,26vw,420px);left:-6%;top:calc(min(100svh,1060px) - 4.5vw);filter:blur(6px);opacity:.9;transform-origin:20% 90%;animation:sway 9s ease-in-out infinite}
+.lf.fg1{width:clamp(220px,26vw,420px);left:-6%;top:calc(var(--heroH,min(100svh,1060px)) - 4.5vw);filter:blur(6px);opacity:.9;transform-origin:20% 90%;animation:sway 9s ease-in-out infinite}
 .lf.fg2{width:clamp(160px,18vw,300px);right:-4%;top:6%;filter:blur(4px);opacity:.75;transform:scaleX(-1) rotate(18deg);transform-origin:80% 10%;animation:sway2 11s ease-in-out infinite}
 .lf.m1{width:54px;left:12%;top:-8%;animation:fall 26s linear infinite}
 .lf.m2{width:38px;left:58%;top:-8%;animation:fall 32s linear infinite -11s;filter:blur(1px)}
@@ -224,12 +224,11 @@ html.parado{scroll-behavior:auto}
 .mare{background:none!important;filter:none!important}
 .mare{letter-spacing:0!important}
 .mare .lt:last-child{margin-right:0!important}
-/* telas em pé (celular e tablet): MARÉ vira um bloco 2×2 (MA / RÉ) do tamanho da largura útil, limitado pela altura, para não sobrar vazio em cima */
+/* telas em pé (celular e tablet): a abertura tem só a altura do conteúdo, sem vazio em cima; MARÉ continua inteiro numa linha, na largura da grade */
 @media (orientation:portrait) and (max-width:1100px){
- .hero{max-height:none}
- .hero .in>.mare{display:grid;grid-template-columns:auto auto;column-gap:.06em;row-gap:.24em;justify-content:center;align-self:end;font-size:min(calc((100vw - 44px) / 1.74),calc((100svh - 340px) / 2.05));line-height:.86;text-align:left;margin:0 auto!important;padding-top:0}
- .hero .in>.mare .lt{margin-right:0!important}
- .hero .in>.mare .lt:nth-child(even){justify-self:end}
+ .hero{height:auto;min-height:0;max-height:none}
+ section.hero .in{height:auto;grid-template-rows:auto auto;padding-top:clamp(176px,30vw,300px);padding-bottom:clamp(40px,8vw,72px)}
+ .hero .in>.mare{font-size:calc((100vw - 44px) / 3.04)}
 }
 .mare .lt{display:inline-block;padding-top:.2em;margin-top:-.2em;margin-right:.035em;letter-spacing:0;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 12px #0004)}
 @media(max-width:800px){.hero .bg{background-image:url(img/u-floresta-nevoa-m.webp)}}
@@ -573,6 +572,7 @@ const posPin=()=>{const topo=secProj.getBoundingClientRect().top+scrollY;let f=.
 window.posPin=posPin;posPin();
 const rioUpd=y=>{const H=altH;rioP.style.strokeDashoffset=RL*(1-Math.min(1,y/Math.max(1,H)));const on=y>innerHeight*.75;rioEl.classList.toggle("on",on);rpin.classList.toggle("on",on)};
 const heroEl=document.querySelector(".hero");
+const heroH=()=>document.documentElement.style.setProperty("--heroH",heroEl.offsetHeight+"px");heroH();addEventListener("resize",heroH);
 const navUpd=y=>{rioUpd(y);nav.classList.toggle("fora",y>heroEl.offsetHeight-90);flutuaUpd(y);
  if(y>innerHeight&&y>lastY+2)nav.classList.add("esconde");if(y<lastY-2||y<innerHeight)nav.classList.remove("esconde");lastY=y};
 const contar=b=>{const n=+b.dataset.n,s=b.dataset.s||"",o={v:0};if(still||!window.gsap){b.textContent=n+s;return}gsap.to(o,{v:n,duration:1.6,ease:"power3.out",onUpdate:()=>b.textContent=Math.round(o.v)+s})};
