@@ -2,7 +2,7 @@
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Maré Cheia · MARÉ</title>
 <meta name="description" content="Maré Cheia, projeto da MARÉ: alagamentos, calçadas e acessibilidade em Belém, com mapa 3D e ações nos bairros.">
-<meta property="og:type" content="website"><meta property="og:title" content="Maré Cheia · MARÉ"><meta property="og:description" content="Alagamentos, calçadas e acessibilidade em Belém: 22 pontos num mapa 3D."><meta property="og:image" content="https://jvcarvalho07.github.io/mare-belem/img/u-rio-aereo.webp"><meta property="og:url" content="https://jvcarvalho07.github.io/mare-belem/mare-cheia.html"><meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#0f1a14">
+<meta property="og:type" content="website"><meta property="og:title" content="Maré Cheia · MARÉ"><meta property="og:description" content="Projeto da MARÉ, empresa júnior socioambiental de Belém: 22 pontos de alagamento e bueiro num mapa 3D, cada um com link para a fonte."><meta property="og:image" content="https://jvcarvalho07.github.io/mare-belem/img/u-rio-aereo.webp"><meta property="og:url" content="https://jvcarvalho07.github.io/mare-belem/mare-cheia.html"><meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#0f1a14">
 <link rel="icon" href="img/icone-onda-64.png" sizes="64x64"><link rel="apple-touch-icon" href="img/icone-onda-192.png">
 <link rel="preload" as="image" href="img/u-rio-aereo-2k.webp" media="(min-width: 900px)">
 <link rel="preload" as="image" href="img/u-rio-aereo.webp" media="(max-width: 899px)">
@@ -103,10 +103,10 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .pc::after{content:"Ver no mapa";grid-column:3;grid-row:1;font:600 13px Jost,sans-serif;color:var(--teal);white-space:nowrap}
 .pc>*{grid-column:2}
 .pc:hover b{color:var(--teal)}
-.pc small{display:block;font:600 13px Jost,sans-serif;color:var(--barro)}
+.pc small{display:block;font:600 14px Jost,sans-serif;color:var(--barro)}
 .pc b{display:block;font:600 17px Jost,sans-serif;line-height:1.2;margin:2px 0 4px}
-.pc span{font-size:14px;color:var(--mut);line-height:1.35;display:block}
-.nota{font-size:14px;color:var(--mut);margin:14px auto 0;text-align:center}
+.pc span{font-size:16px;color:var(--mut);line-height:1.35;display:block}
+.nota{font-size:15px;color:var(--mut);margin:14px auto 0;text-align:center}
 
 /* ato 3: mergulho */
 .mergulho{position:relative;color:var(--espuma);background:linear-gradient(180deg,var(--papel) 0,#bfe3df 3%,#2a9a9a 12%,#0d5f66 30%,#073c44 60%,var(--fundo) 100%);padding-top:clamp(120px,14vw,190px);overflow:hidden}
@@ -138,12 +138,13 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .leito .cta{padding:0;display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:end;background:none;border-top:1px solid #ffffff2e;padding-top:40px}
 .leito .cta>*{min-width:0}
 .plantas{display:block;width:100%;height:clamp(110px,13vw,180px);margin-top:70px}
-footer{background:var(--fundo);color:#8fb3b0;padding-block:26px;font-size:14px}
+footer{background:var(--fundo);color:#8fb3b0;padding-block:26px;font-size:15px}
 footer .in{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-between}
 footer a{color:#cde9e6}
 @media(max-width:980px){.nav ul{display:none}.sup .base .in{grid-template-columns:1fr}.sup .acts{justify-content:flex-start}.abre{grid-template-columns:1fr}.dados,.frentes{grid-template-columns:1fr}.acoes{grid-template-columns:1fr 1fr}.leito .cta{grid-template-columns:1fr}.prof{display:none}.vfundo{display:none}}
 @media(max-width:980px){.trilho{grid-template-columns:1fr}.dados .cartao,.fr{border-right:0;border-bottom:1px solid #ffffff2e;padding:0 0 18px}.acoes{padding-left:96px}.acoes::before{left:62px}.ac::before{left:-100px;width:40px;font-size:22px}.ac::after{left:-41px}}
-@media(max-width:600px){.acoes{grid-template-columns:1fr}.nav .btn{display:none}.mapa{height:70vh}}
+@media(max-width:380px){.nav .btn{font-size:0}.nav .btn::after{content:"Enviar";font-size:14px}}
+@media(max-width:600px){.acoes{grid-template-columns:1fr}.nav .btn{padding:8px 12px;font-size:14px;white-space:nowrap}.mapa{height:70vh}}
 .menuBtn{display:none;margin-left:auto;font:600 15px Jost,sans-serif;color:inherit;background:#ffffff1f;border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
 @media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
 .nav .menuBtn{color:#fff}.nav.claro .menuBtn{color:var(--tinta);background:#0f7f8614}
@@ -156,7 +157,7 @@ footer a{color:#cde9e6}
  <a class="back" href="index.html" aria-label="Voltar ao início"><img src="img/icone-onda-192.png" alt="">Início</a>
  <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista">Menu</button>
  <ul id="menuLista"><li><a href="#pontos">Pontos</a></li><li><a href="#mergulho">O problema</a></li><li><a href="#acoes">Ações</a></li><li><a href="index.html#contato">Mandar um relato</a></li></ul>
- <a class="btn teal contato" href="#enviar">Enviar um ponto</a>
+ <a class="btn teal contato" href="index.html#contato">Enviar um ponto</a>
 </nav>
 
 <div class="prof" aria-hidden="true"><div class="esc"><span>0 m</span><span>1 m</span><span>2 m</span><span>3 m</span><span>4 m</span></div><div class="reg"><i id="profPt"></i></div></div>
@@ -184,15 +185,15 @@ footer a{color:#cde9e6}
  <div class="in abre">
   <div class="vinte" data-n="22" aria-hidden="true">22</div>
   <div>
-   <h2>lugares onde Belém alaga, quebra ou barra o caminho</h2>
-   <p>Juntamos notícias, estudos e relatos num mapa 3D. Cada ponto tem a fonte. Escolha um card para ver o lugar.</p>
+   <h2>lugares em Belém onde a água para</h2>
+   <p>Juntamos notícias, estudos e relatos num mapa 3D. Cada ponto tem a fonte. Escolha um card para ver o lugar. Feito pela MARÉ, empresa júnior socioambiental de Belém: a gente mapeia e propõe; não faz obra.</p>
    <div class="fatos"><span><b>0 a 4 m</b> de altura acima do rio</span><span><b>14</b> bacias hidrográficas</span><span><b>145</b> pontos críticos, segundo a prefeitura</span></div>
   </div>
  </div>
  <div class="mapa">
   <button class="poster" id="poster" type="button" aria-label="Abrir o mapa 3D dos alagamentos de Belém">
    <span class="pbtn">Abrir o mapa 3D</span>
-   <span class="pnota">Belém e Ananindeua · 21 pontos de alagamento</span>
+   <span class="pnota">Belém e Ananindeua · 22 pontos: 21 de alagamento e 1 bueiro</span>
   </button>
 
  </div>

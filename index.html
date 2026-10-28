@@ -512,8 +512,9 @@ html.parado{scroll-behavior:auto}
    <label data-p="empresa publico">Cargo <small>(opcional)</small><input name="cargo" autocomplete="organization-title"></label>
    <label data-p="escola imprensa">Bairro <small>(opcional)</small><input name="bairro" autocomplete="address-level3"></label>
   </div>
+  <label data-p="morador">Tipo do problema<select name="tipo" required><option value="">Escolha um tipo</option><option value="alagamento">Alagamento</option><option value="bueiro">Bueiro entupido</option><option value="calcada">Calçada quebrada</option><option value="acessibilidade">Falta de acessibilidade</option></select></label>
   <label data-p="morador">Bairro<input name="bairro" autocomplete="address-level3" required></label>
-  <label data-p="morador">Rua ou ponto de referência <small>(ajuda a achar no mapa)</small><input name="referencia" autocomplete="street-address"></label>
+  <label data-p="morador">Rua, cruzamento ou ponto de referência <small>(o mais perto que souber; pode deixar em branco)</small><input name="referencia" autocomplete="street-address"></label>
   <label data-p="voluntario">Bairro<input name="bairro" autocomplete="address-level3" required></label>
   <label data-p="voluntario">Curso ou instituição <small>(opcional)</small><input name="organizacao" autocomplete="organization"></label>
   <fieldset data-p="voluntario"><legend>Qual frente te interessa?</legend><div class="chips">
@@ -540,7 +541,7 @@ html.parado{scroll-behavior:auto}
   <label data-p="empresa">Endereço do local <small>(se o serviço for num lugar)</small><input name="bairro" autocomplete="street-address"></label>
   <label data-p="imprensa">Prazo da matéria <small>(opcional)</small><input name="prazo" type="date"></label>
   <label><span data-p="morador">O que está acontecendo?</span><span data-p="escola empresa publico">Conte um pouco mais</span><span data-p="imprensa">Pauta</span><span data-p="voluntario">Por que quer participar?</span>
-   <textarea name="mensagem" required></textarea></label>
+   <textarea name="mensagem" required placeholder="Descreva o que acontece. Não escreva nomes de pessoas."></textarea></label>
   <label class="marca" data-p="morador"><input type="checkbox" id="querResposta"> Quero que a MARÉ me responda</label>
   <div class="duas" data-p="escola empresa publico imprensa resposta voluntario">
    <label>E-mail<input name="email" type="email" autocomplete="email"></label>
@@ -634,7 +635,7 @@ if(window.gsap&&window.ScrollTrigger&&!still){
 // Contato. O formulário muda com o perfil: morador vê só bairro, mensagem e (se marcar) o contato; os outros perfis têm campos próprios.
 // Para ligar ao Google Forms: colar em FORMS.url o endereço "formResponse" e em cada campo o "entry.NNN" da pergunta
 // (aparecem em "Obter link preenchido" no Forms). WHATS = número com DDI e DDD, só dígitos.
-const FORMS={url:"",campos:{perfil:"",referencia:"",organizacao:"",nome:"",cargo:"",bairro:"",interesse:"",prazo:"",mensagem:"",email:"",telefone:""}},WHATS="";
+const FORMS={url:"",campos:{perfil:"",referencia:"",organizacao:"",nome:"",cargo:"",bairro:"",interesse:"",prazo:"",mensagem:"",email:"",telefone:"",tipo:""}},WHATS="";
 {const fm=document.getElementById("formContato"),av=document.getElementById("formAviso"),zap=document.getElementById("zap"),quer=document.getElementById("querResposta");
  if(WHATS){zap.href="https://wa.me/"+WHATS;zap.classList.add("on")}
  let primeira=true;

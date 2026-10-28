@@ -15,6 +15,7 @@ body{font:16px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif;color:var(--ink
 .brand{position:absolute;top:max(12px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));z-index:4;display:flex;align-items:center;gap:10px;background:var(--glass);backdrop-filter:blur(10px);padding:6px 14px 6px 6px;border-radius:14px;box-shadow:0 6px 22px #2b143026;text-decoration:none;color:var(--ink)}
 .brand img{width:42px;height:42px;border-radius:9px;background:#fff;object-fit:contain}
 .brand b{font:800 18px "Bricolage Grotesque",sans-serif;letter-spacing:-.01em}
+.brand .seta{font:800 22px "Bricolage Grotesque",sans-serif;line-height:1}
 .tools{position:absolute;top:max(12px,env(safe-area-inset-top));right:max(56px,calc(env(safe-area-inset-right) + 56px));z-index:4;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .tb{font:700 15px "Atkinson Hyperlegible",sans-serif;border:0;border-radius:12px;padding:10px 14px;background:var(--glass);backdrop-filter:blur(10px);color:var(--ink);box-shadow:0 6px 22px #2b143026;cursor:pointer}
 .tb[aria-pressed="true"]{background:var(--acai);color:#fff}
@@ -27,7 +28,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .x{border:0;background:none;font-size:22px;cursor:pointer;color:var(--mut);padding:4px 8px}
 .pb{overflow:auto;padding:4px 16px 16px;display:flex;flex-direction:column;gap:18px}
 h2{font:700 15px "Bricolage Grotesque",sans-serif;margin:0 0 8px;color:var(--acai)}
-.mut{color:var(--mut);font-size:13.5px}
+.mut{color:var(--mut);font-size:15px}
 .list{list-style:none;margin:0;padding:0;display:grid;gap:2px;max-height:240px;overflow:auto}.list button{all:unset;cursor:pointer;display:grid;grid-template-columns:12px 1fr;gap:10px;align-items:start;padding:8px 6px;border-radius:10px;width:100%;box-sizing:border-box}.list button:hover,.list button:focus-visible{background:#fff}.list i{width:12px;height:12px;border-radius:50%;margin-top:5px}.list b{display:block;font-size:15px}.list span{font-size:13px;color:var(--mut)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:99px;background:#fff;border:1.5px solid var(--line);cursor:pointer;font-size:14px;user-select:none}
@@ -58,29 +59,29 @@ body.quieto .anel,body.ocioso .anel{animation-play-state:paused;visibility:hidde
 .hero .brand,.hero .tools,.hero .panel,.hero .open,.hero .maplibregl-ctrl-top-right{display:none!important}
 .embed .brand{display:none}
 body:not(.adm) .admin{display:none!important}.adm .pub{display:none}.embed .panel{top:12px}
-@media(max-width:720px){.panel{top:auto;left:8px;right:8px;width:auto;height:52vh;bottom:8px}.panel.closed{transform:translateY(calc(100% + 20px))}.brand b{display:none}.tools{right:52px}.embed .panel{top:auto}}
+@media(max-width:720px){.panel{top:auto;left:8px;right:8px;width:auto;height:52vh;bottom:8px}.panel.closed{transform:translateY(calc(100% + 20px))}.brand b,.brand img{display:none}.tools{right:52px;left:64px;gap:6px}.tools .tb{padding:9px 10px;font-size:14px}.embed .panel{top:auto}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 .esc{--glass:#12201ae8;--ink:#e7eee6;--mut:#9fb3a5;--line:#2a3d31;--chuva:#0f1a14}
 .esc .chip,.esc .sbtn,.esc input,.esc select,.esc textarea{background:#0f1a14;color:#e7eee6}
 .esc .list button:hover{background:#1b2c22}.esc h2{color:#b5d96a}.esc .tb.add{background:#b5d96a;color:#0f1a14}
 .est .estonly{display:block!important}
-.embed .panel,.embed .open{display:none!important}
+.embed .panel,.embed .open{display:none!important}.embed-so{display:none}.embed .embed-so{display:block;position:absolute;left:12px;bottom:40px;background:#ffffffd9;padding:6px 10px;border-radius:10px;z-index:4;font:700 15px "Atkinson Hyperlegible",sans-serif;color:#1d4f91;text-decoration:underline;text-shadow:0 0 6px #fff,0 0 2px #fff}
 .maplibregl-cooperative-gesture-screen{font:600 15px Jost,'Atkinson Hyperlegible',sans-serif;background:#0f3a3f99}
 </style></head><body>
 <div id="map" role="application" aria-label="Mapa de Belém com relatos de alagamento e calçadas"></div>
-<a class="brand" href="index.html"><img src="img/icone-onda-192.png" alt=""><b>Mapa dos alagamentos</b></a>
+<a class="brand" href="mare-cheia.html" aria-label="Voltar ao projeto Maré Cheia"><span class="seta" aria-hidden="true">←</span><img src="img/icone-onda-192.png" alt=""><b>Voltar ao projeto</b></a>
 <div class="tools">
  <button class="tb" id="b3d" aria-pressed="false">3D</button>
  <button class="tb" id="bsat" aria-pressed="false">Satélite</button>
  <button class="tb add admin" id="bnew">Marcar um ponto</button><a class="tb add pub" href="index.html#contato" target="_top" style="text-decoration:none">Enviar um ponto</a>
 </div>
 <aside class="panel" id="panel">
- <div class="ph"><h1>Belém, hoje</h1><button class="x" id="bclose" aria-label="Recolher painel">×</button></div>
+ <div class="ph"><h1>Pontos no mapa</h1><button class="x" id="bclose" aria-label="Recolher painel">×</button></div>
  <div class="pb">
-  <div><h2>Pontos registrados</h2><ul class="list" id="list"></ul><div class="mut" style="margin-top:6px">Pontos da imprensa têm local aproximado e link para a notícia.</div></div>
+  <div><h2>Pontos registrados</h2><input id="busca" type="search" placeholder="Buscar por rua ou bairro" aria-label="Buscar entre os pontos por rua ou bairro" style="margin-bottom:8px"><ul class="list" id="list"></ul><div class="mut" style="margin-top:6px">Pontos da imprensa têm local aproximado e link para a notícia.</div></div>
   <div class="estonly" style="display:none"><h2>Água nas ruas</h2><div class="mut">As faixas verde-água mostram as ruas em volta de cada ponto de alagamento. É uma simulação a partir das notícias, não uma medição.</div></div>
   <div><h2>O que mostrar</h2><div class="chips" id="chips"></div></div>
-  <div><h2>Chuva e maré agora</h2>
+  <div><h2>Estimativa com chuva e maré</h2>
    <div class="row"><input id="rain" type="number" min="0" placeholder="Chuva em mm/h" aria-label="Chuva em milímetros por hora"><select id="tide" aria-label="Maré"><option value="">Maré</option><option value="baixa">Baixa</option><option value="alta">Alta</option></select></div>
    <div class="gauge"><div class="tube"><div class="lvl" id="lvl"></div></div><div><b id="risk">Informe chuva e maré</b><span class="mut">Chuva de 30 mm/h ou mais com maré alta indica risco alto. É uma estimativa; a leitura automática de chuva e maré vem na próxima fase.</span></div></div></div>
   <div class="admin"><h2>Dados (equipe)</h2><div class="row"><button class="sbtn" id="bexp">Baixar planilha</button><button class="sbtn" id="bjson">Salvar arquivo</button></div>
@@ -91,6 +92,7 @@ body:not(.adm) .admin{display:none!important}.adm .pub{display:none}.embed .pane
  </div>
 </aside>
 <button class="tb open" id="bopen">Mostrar painel</button>
+<a class="embed-so" href="mapa.html?tema=estudio" target="_top">Lista, busca e ruas em tela cheia</a>
 <div id="hint">Toque no mapa onde fica o problema</div>
 <div id="modal" role="dialog" aria-modal="true" aria-labelledby="mt"><div class="box"><h3 id="mt">Marcar um ponto</h3>
  <select id="t" aria-label="Tipo de problema"></select>
@@ -105,6 +107,9 @@ const Q=new URLSearchParams(location.search),HERO=Q.has("hero"),ESC=Q.get("tema"
 if(HERO)document.body.classList.add("hero");if(Q.has("admin"))document.body.classList.add("adm");if(Q.has("embed"))document.body.classList.add("embed");
 const T={alagamento:["Alagamento","#1d4f91"],calcada:["Calçada quebrada","#c98410"],acessibilidade:["Sem acessibilidade","#7a3b8f"],bueiro:["Bueiro entupido","#b8402f"]};
 const $=id=>document.getElementById(id);
+const norm=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+$("busca").oninput=()=>draw();
+$("busca").onkeydown=e=>{if(e.key==="Enter"){const b=$("list").querySelector("button");if(b)b.click()}};
 const NEWS=[["alagamento", "Av. Visconde de Souza Franco (Doca) com R. Senador Manoel Barata", "Reduto", -1.4462, -48.4936, "Alaga na maré alta. Canal reformado nas obras da COP30 (2025); ainda aparece em notícias antigas. Conferir se continua alagando.", "https://dol.com.br/noticias/para/854962/video-mare-alta-deixa-ruas-de-belem-debaixo-dagua"], ["alagamento", "R. Municipalidade", "Reduto", -1.4449, -48.4952, "Água na altura da carenagem das motos na maré alta.", "https://dol.com.br/noticias/para/935942/video-rua-no-reduto-e-alagada-apos-chuvas-durante-mare-alta-em-belem"], ["alagamento", "Av. Pedro Miranda, canal da Visconde de Inhaúma", "Pedreira", -1.433, -48.4718, "O canal transborda e os carros param.", "https://diariodopara.com.br/para/chuva-forte-alaga-ruas-e-para-belem-veja-fotos/"], ["alagamento", "R. Augusto Corrêa, em frente à UFPA", "Guamá", -1.4746, -48.457, "Alaga e atrapalha carros e pedestres.", "https://dol.com.br/noticias/para/889706/chuva-deixa-ruas-alagadas-e-derruba-arvore-em-belem"], ["alagamento", "Av. Bernardo Sayão e Av. Perimetral", "Guamá", -1.4718, -48.463, "Trechos tomados pela água.", "https://dol.com.br/noticias/para/889706/chuva-deixa-ruas-alagadas-e-derruba-arvore-em-belem"], ["alagamento", "Av. Duque de Caxias", "Marco", -1.4436, -48.4705, "Ponto citado em dias de chuva forte.", "https://www.oliberal.com/belem/tempo-fechado-com-chuva-faz-terca-feira-escurecer-mais-cedo-e-provoca-varios-alagamentos-em-belem-1.1076837"], ["alagamento", "Tv. Alcindo Cacela com R. dos Mundurucus", "Cremação", -1.4618, -48.4848, "Ponto citado em dias de chuva forte.", "https://www.oliberal.com/belem/tempo-fechado-com-chuva-faz-terca-feira-escurecer-mais-cedo-e-provoca-varios-alagamentos-em-belem-1.1076837"], ["alagamento", "Tv. Campos Sales", "Campina", -1.4527, -48.4962, "Ponto citado em dias de chuva forte.", "https://www.oliberal.com/para/chuva-forte-provoca-alagamentos-na-grande-belem-1.1118866"], ["alagamento", "R. dos Pariquis com Av. Rui Barbosa", "Batista Campos", -1.4598, -48.4925, "Acúmulo de água frequente nesse cruzamento.", "https://www.oliberal.com/belem/chuvas-em-belem-areas-centrais-voltam-a-alagar-no-inverno-amazonico-1.1076419"], ["alagamento", "Av. João Paulo II perto da Tv. Angustura", "Marco", -1.4386, -48.469, "Um dos pontos mais críticos em dias de temporal.", "https://www.oliberal.com/belem/chuvas-em-belem-areas-centrais-voltam-a-alagar-no-inverno-amazonico-1.1076419"], ["alagamento", "R. Antônio Everdosa", "Pedreira", -1.4318, -48.4752, "Alaga em chuvas fortes.", "https://www.oliberal.com/belem/chuvas-em-belem-areas-centrais-voltam-a-alagar-no-inverno-amazonico-1.1076419"], ["alagamento", "R. dos Mundurucus", "Pedreira e Cremação", -1.464, -48.48, "A rua mais citada: fica alagada sempre que chove forte. Parte do canal foi entregue nas obras recentes.", "https://www.oliberal.com/belem/chuvas-em-belem-areas-centrais-voltam-a-alagar-no-inverno-amazonico-1.1076419"], ["alagamento", "Túnel do Entroncamento", "Souza", -1.4172, -48.4468, "O túnel do BRT alagou na chuva de 8 de maio de 2026.", "https://www.encontrabelem.com.br/sobre/defesa-civil-emite-alerta-e-grande-belem-volta-a-registrar-chuva-forte"], ["alagamento", "R. Engenheiro Fernando Guilhon", "Jurunas", -1.4702, -48.4905, "Alagou na chuva forte de 8 de maio de 2026.", "https://www.oliberal.com/para/chuva-forte-provoca-alagamentos-na-grande-belem-1.1118866"], ["alagamento", "Tv. Quintino Bocaiúva com R. Municipalidade", "Reduto", -1.4462, -48.4902, "Pequeno alagamento em chuva torrencial.", "https://dol.com.br/noticias/para/816698/chuva-torrencial-ruas-comecam-a-alagar-em-belem?d=1"], ["alagamento", "Av. Tamandaré, canal", "Batista Campos", -1.459, -48.4985, "O canal transborda e alaga a avenida. Canal reformado nas obras da COP30 (2025); ainda aparece em notícias antigas. Conferir se continua alagando.", "https://dol.com.br/noticias/para/816698/chuva-torrencial-ruas-comecam-a-alagar-em-belem?d=1"], ["alagamento", "Tv. Três de Maio com R. Domingos Marreiros", "Fátima", -1.4432, -48.4812, "Pequeno alagamento em chuva torrencial.", "https://dol.com.br/noticias/para/816698/chuva-torrencial-ruas-comecam-a-alagar-em-belem?d=1"], ["alagamento", "Av. Almirante Barroso", "Marco", -1.433, -48.458, "Trechos alagados em temporais.", "https://dol.com.br/noticias/para/816698/chuva-torrencial-ruas-comecam-a-alagar-em-belem?d=1"], ["alagamento", "Canal do Mata Fome", "Tapanã", -1.361, -48.46, "Canal com transbordamento recorrente, segundo plano de risco.", "https://dol.com.br/noticias/para/940789/evento-mapeia-pontos-de-alagamentos-em-belem-e-debate-prevencao"], ["bueiro", "Av. Celso Malcher, bacia do Tucunduba", "Terra Firme", -1.4565, -48.4545, "Lixo descartado na rua entope a drenagem, segundo estudo da UFPA.", "https://www.ppggrd.propesp.ufpa.br/ARQUIVOS/PRODUTOS/2018-2020/INGRID%20C%C3%81SSIA%20PORTO%20LIMA.pdf"], ["alagamento", "Ruas da Pedreira", "Pedreira", -1.4295, -48.47, "Alagamento em 5 de maio de 2026 chegou a prender uma ambulância.", "https://www.cnnbrasil.com.br/nacional/norte/pa/fortes-chuvas-causam-enchentes-nas-ruas-de-belem-no-para/"], ["alagamento", "Ruas do Marco", "Marco", -1.442, -48.464, "Alagamentos na chuva de 5 de maio de 2026 (35,8 mm até as 17h).", "https://www.cnnbrasil.com.br/nacional/norte/pa/fortes-chuvas-causam-enchentes-nas-ruas-de-belem-no-para/"]];
 let R=null;try{R=JSON.parse(localStorage.getItem("mare_relatos")||"null")}catch(e){}
 if(!Array.isArray(R))R=[];R=R.filter(r=>!r.ex&&!r.imp);const IMP=NEWS.map((e,i)=>({id:"imp"+i,tipo:e[0],local:e[1],bairro:e[2],lat:e[3],lng:e[4],desc:e[5],url:e[6],imp:true,data:"Imprensa"}));
@@ -125,11 +130,12 @@ const ESTILO_ESTUDIO={version:8,glyphs:"https://tiles.openfreemap.org/fonts/{fon
    "fill-extrusion-height":["coalesce",["get","render_height"],6],"fill-extrusion-base":["coalesce",["get","render_min_height"],0],"fill-extrusion-opacity":.96,"fill-extrusion-vertical-gradient":true}},
   {id:"bairros",type:"symbol",source:"omt","source-layer":"place",filter:["in",["get","class"],["literal",["suburb","neighbourhood","quarter"]]],
    layout:{"text-field":["get","name"],"text-font":["Noto Sans Regular"],"text-size":12,"text-letter-spacing":.08,"text-transform":"uppercase"},
-   paint:{"text-color":"#557173","text-halo-color":"#eef1f0","text-halo-width":1.5}}
+   paint:{"text-color":"#557173","text-halo-color":"#eef1f0","text-halo-width":1.5}},
+   {id:"nomes-ruas",type:"symbol",source:"omt","source-layer":"transportation_name",minzoom:14,layout:{"symbol-placement":"line","text-field":["get","name"],"text-font":["Noto Sans Regular"],"text-size":11.5,"text-letter-spacing":.03},paint:{"text-color":"#2e4a4d","text-halo-color":"#eef1f0","text-halo-width":1.6}}
  ]};
 // Só Belém (parte continental, Icoaraci e Outeiro) e Ananindeua: o mapa não carrega nada além disso (Benevides, Marituba, Mosqueiro).
 const LIMITE=[[-48.565,-1.505],[-48.315,-1.215]],TOQUE=matchMedia("(pointer: coarse)").matches;
-const map=new maplibregl.Map({cooperativeGestures:Q.has("embed"),pixelRatio:Math.min(devicePixelRatio||1,TOQUE?1:1.5),maxBounds:LIMITE,minZoom:10.8,renderWorldCopies:false,fadeDuration:TOQUE?0:300,container:"map",center:[-48.4925,-1.4560],zoom:HERO?14.6:12.6,pitch:HERO?62:0,bearing:HERO?-28:0,maxPitch:78,attributionControl:{compact:true},style:EST?ESTILO_ESTUDIO:"https://tiles.openfreemap.org/styles/"+(ESC?"dark":AQ?"positron":"liberty"),interactive:!HERO||true});
+const map=new maplibregl.Map({cooperativeGestures:Q.has("embed"),locale:{"CooperativeGesturesHandler.MobileHelpText":"Use dois dedos para mover o mapa","CooperativeGesturesHandler.WindowsHelpText":"Use Ctrl + rolagem para dar zoom no mapa","CooperativeGesturesHandler.MacHelpText":"Use ⌘ + rolagem para dar zoom no mapa"},pixelRatio:Math.min(devicePixelRatio||1,TOQUE?1:1.5),maxBounds:LIMITE,minZoom:10.8,renderWorldCopies:false,fadeDuration:TOQUE?0:300,container:"map",center:[-48.4925,-1.4560],zoom:HERO?14.6:12.6,pitch:HERO?62:0,bearing:HERO?-28:0,maxPitch:78,attributionControl:{compact:true},style:EST?ESTILO_ESTUDIO:"https://tiles.openfreemap.org/styles/"+(ESC?"dark":AQ?"positron":"liberty"),interactive:!HERO||true});
 window.mareMap=map;
 if(!HERO)map.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
 map.on("style.load",()=>{if(map.getSource("dem"))return;
@@ -167,11 +173,11 @@ async function limites(){if(map.getSource("fora"))return;try{
 }catch(e){}}
 let mk=[],adding=false,pos=null,is3d=HERO;
 const pin=c=>`<svg class="pin" viewBox="0 0 30 38" aria-hidden="true"><path d="M15 37s13-13.2 13-22A13 13 0 0 0 2 15c0 8.8 13 22 13 22z" fill="${c}" stroke="#fff" stroke-width="2.5"/><circle cx="15" cy="15" r="5" fill="#fff"/></svg>`;
-function draw(){mk.forEach(m=>m.remove());mk=[];const on=[...document.querySelectorAll(".f:checked")].map(x=>x.value);const V=R.concat(IMP).filter(r=>on.includes(r.tipo));
+function draw(){mk.forEach(m=>m.remove());mk=[];const on=[...document.querySelectorAll(".f:checked")].map(x=>x.value);const q=norm($("busca").value.trim());const V=R.concat(IMP).filter(r=>on.includes(r.tipo)&&norm((r.local||"")+" "+(r.bairro||"")).includes(q));
  V.forEach(r=>{const el=document.createElement("div");el.innerHTML=(EST&&r.tipo==="alagamento"?'<i class="anel"></i>':"")+pin(T[r.tipo][1]);el.title=T[r.tipo][0]+" em "+(r.bairro||"local sem bairro");
   const h=`<div class="pop"><span class="tag" style="background:${T[r.tipo][1]}">${T[r.tipo][0]}</span><br><b>${esc(r.local||r.bairro)}</b><br>${r.local?esc(r.bairro)+"<br>":""}${esc(r.desc)}<br><small style="color:#5d5662">${r.url?`Fonte: <a href="${r.url}" target="_blank" rel="noopener">notícia</a>, local aproximado`:esc(r.data)}</small>${r.foto?`<img src="${r.foto}" alt="Foto enviada pelo morador">`:""}</div>`;
   mk.push(new maplibregl.Marker({element:el,anchor:"bottom"}).setLngLat([r.lng,r.lat]).setPopup(new maplibregl.Popup({offset:30,maxWidth:"260px"}).setHTML(h)).addTo(map))});
- $("list").innerHTML=V.map((r,i)=>`<li><button data-i="${i}"><i style="background:${T[r.tipo][1]}"></i><span><b>${esc(r.local||r.bairro||T[r.tipo][0])}</b>${esc(r.bairro)} · ${r.imp?"imprensa":"morador"}</span></button></li>`).join("");$("list").querySelectorAll("button").forEach(b=>b.onclick=()=>{const r=V[+b.dataset.i];map.flyTo({center:[r.lng,r.lat],zoom:16});mk[+b.dataset.i].togglePopup()})}
+ $("list").innerHTML=V.map((r,i)=>`<li><button data-i="${i}"><i style="background:${T[r.tipo][1]}"></i><span><b>${esc(r.local||r.bairro||T[r.tipo][0])}</b>${esc(r.bairro)} · ${r.imp?"imprensa":"morador"}</span></button></li>`).join("")||(q?`<li class="mut">Nenhum ponto com "${esc($("busca").value.trim())}". A busca procura só entre os pontos já registrados. Se a sua rua não aparece, ela ainda não tem ponto: dá para enviar um.</li>`:'<li class="mut">Nenhum ponto com este filtro. Calçadas e acessibilidade ainda não têm pontos no mapa: quem souber de um pode enviar.</li>');$("list").querySelectorAll("button").forEach(b=>b.onclick=()=>{const r=V[+b.dataset.i];map.flyTo({center:[r.lng,r.lat],zoom:16});mk[+b.dataset.i].togglePopup()})}
 document.addEventListener("change",e=>{if(e.target.classList.contains("f"))draw()});
 
 
@@ -199,7 +205,7 @@ $("b3d").onclick=function(){if(EST){is3d=!is3d;this.setAttribute("aria-pressed",
 $("bsat").onclick=function(){const on=this.getAttribute("aria-pressed")!=="true";this.setAttribute("aria-pressed",on);map.setLayoutProperty("sat","visibility",on?"visible":"none")};
 
 $("bclose").onclick=()=>$("panel").classList.add("closed");$("bopen").onclick=()=>$("panel").classList.remove("closed");
-if(Q.has("embed")&&innerWidth<720)$("panel").classList.add("closed");
+if(innerWidth<720)$("panel").classList.add("closed");
 $("bnew").onclick=()=>{adding=true;$("hint").style.display="block";map.getCanvas().style.cursor="crosshair"};
 map.on("click",e=>{if(!adding)return;adding=false;$("hint").style.display="none";map.getCanvas().style.cursor="";pos=e.lngLat;$("modal").style.display="flex";$("t").focus()});
 $("mc").onclick=()=>$("modal").style.display="none";
