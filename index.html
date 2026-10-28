@@ -84,6 +84,7 @@ section{padding-block:clamp(56px,7vw,96px)}
 @keyframes fog{to{transform:translateX(6%)}}
 .hero .in{position:relative;z-index:3;height:100%;display:grid;grid-template-rows:1fr auto;gap:clamp(18px,3.4vh,40px);padding-top:clamp(84px,12vh,120px);padding-bottom:clamp(30px,6vh,64px)}
 .hero .in>.mare{align-self:end}
+@media (orientation:landscape){.hero .in>.mare{margin-bottom:clamp(36px,9vh,100px)}}
 .kicker{position:absolute;left:max(22px,env(safe-area-inset-left,0px));top:calc(env(safe-area-inset-top,0px) + 27px);font:400 15px/22px Jost,sans-serif;letter-spacing:.01em;color:#e7eee6d9;text-shadow:0 1px 10px #0009}
 .mare{white-space:nowrap;text-align:center;font:800 min(calc((min(100vw,1220px) - 44px) / 3.04),50svh)/1 Jost,sans-serif;letter-spacing:-.04em;margin:-.14em 0 -.1em;padding-top:.06em;background:linear-gradient(180deg,#f4f8f1f0 0%,#e7eee6b0 50%,#b5d96a70 100%),url(img/u-floresta-sol-hd.webp) center 40%/cover;-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero .lead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,4vw,60px);align-items:end}
