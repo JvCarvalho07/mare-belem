@@ -13,8 +13,9 @@
    Atos: superfície (rio + água) → papel (22 pontos + mapa de ponta a ponta) → mergulho (dados e ações) → leito (contato). */
 :root{--papel:#f3f5f2;--tinta:#123236;--mut:#557173;--teal:#0f7f86;--teal2:#2bb3b1;--fundo:#03161b;--espuma:#e6f6f3;--barro:#b88a52;color-scheme:light}
 *{box-sizing:border-box}
-html{scrollbar-color:#9db7b5 var(--papel);overflow-x:clip}
-::-webkit-scrollbar{width:12px}::-webkit-scrollbar-track{background:var(--papel)}::-webkit-scrollbar-thumb{background:#9db7b5;border-radius:999px;border:3px solid var(--papel)}::-webkit-scrollbar-thumb:hover{background:var(--teal)}
+html{overflow-x:clip}
+@supports (-moz-appearance:none){html{scrollbar-width:thin;scrollbar-color:#1f9ea6 #e3ebe8}}
+::-webkit-scrollbar{width:11px}::-webkit-scrollbar-track{background:linear-gradient(90deg,#dfe8e5,#eef3f1)}::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#8fe0d6 0%,#3fb3ad 45%,#0f7f86 100%);border-radius:999px;border:2px solid #e8efec;box-shadow:inset 0 1px 0 #ffffff99}::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#a6ece2 0%,#4cc4bd 45%,#13909a 100%)}::-webkit-scrollbar-thumb:active{background:#0f7f86}
 body{margin:0;color:var(--tinta);background:var(--papel);font:18px/1.65 "Atkinson Hyperlegible",system-ui,sans-serif;overflow-x:clip}
 .in{max-width:1180px;margin:0 auto;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:Jost,sans-serif;margin:0;text-wrap:balance}
@@ -30,11 +31,13 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .btn.linha{color:#fff;box-shadow:inset 0 0 0 1.5px #ffffffb0}
 
 /* navegação em pílula */
-.nav{position:fixed;z-index:40;top:max(14px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(1100px,calc(100% - 28px));display:flex;align-items:center;gap:16px;padding:7px 7px 7px 16px;border-radius:999px;background:#0a2a2e59;box-shadow:inset 0 0 0 1px #ffffff33;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background .4s,box-shadow .4s,transform .5s cubic-bezier(.2,.7,.1,1)}
-.nav.claro{background:#ffffffeb;box-shadow:0 8px 28px #0f7f861f}
+.nav{position:fixed;z-index:40;top:max(14px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(1100px,calc(100% - 28px));display:flex;align-items:center;gap:16px;padding:7px 7px 7px 16px;border-radius:999px;background:none;box-shadow:inset 0 0 0 1px #ffffff33;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background .4s,box-shadow .4s,transform .5s cubic-bezier(.2,.7,.1,1)}
+.nav.claro{background:none;box-shadow:inset 0 0 0 1px #0f7f8633}
+.nav:not(.claro){text-shadow:0 1px 12px #0a2a2ecc}
 .nav.esconde{transform:translate(-50%,-140%)}
 .nav a.back{display:flex;align-items:center;gap:9px;text-decoration:none;font:600 16px Jost,sans-serif;color:#fff;transition:color .3s}
-.nav a.back img{width:30px;height:30px;border-radius:50%;background:#fff;object-fit:contain}
+.nav a.back img{width:30px;height:30px;border-radius:50%;background:#fff;object-fit:contain;opacity:0;transition:opacity .5s}
+.nav:not(.topo) a.back img{opacity:1}
 .nav ul{display:flex;gap:4px;list-style:none;margin:0 0 0 auto;padding:0}
 .nav ul a{display:block;padding:7px 13px;border-radius:999px;color:#fff;text-decoration:none;font:400 15px Jost,sans-serif;transition:background .2s,color .3s}
 .nav ul a:hover{background:#ffffff26}
@@ -42,10 +45,11 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--teal2);outline-offs
 .nav .btn{padding:9px 16px;font-size:14px}
 
 /* medidor de profundidade */
-.prof{position:fixed;right:max(18px,env(safe-area-inset-right));top:50%;transform:translateY(-50%);z-index:30;display:flex;gap:10px;height:46vh;font:500 13px Jost,sans-serif;color:#fff;mix-blend-mode:difference;pointer-events:none}
+.prof{position:fixed;left:max(18px,env(safe-area-inset-left));top:50%;transform:translateY(-50%);z-index:30;display:flex;gap:10px;height:46vh;font:500 13px Jost,sans-serif;color:#fff;mix-blend-mode:difference;pointer-events:none;opacity:0;transition:opacity .6s}.prof.on{opacity:1}
 .prof .reg{position:relative;width:2px;background:#ffffff55;border-radius:2px}
 .prof .reg i{position:absolute;left:-5px;width:12px;height:12px;border-radius:50%;background:#fff;top:0}
-.prof .esc{display:flex;flex-direction:column;justify-content:space-between;text-align:right}
+.prof .esc{display:flex;flex-direction:column;justify-content:space-between;text-align:left}
+@media(min-width:981px) and (max-width:1260px){.in{padding-left:76px}}
 
 /* ato 1: superfície */
 .sup{position:relative;height:100svh;min-height:620px;overflow:hidden;background:#0d3d3f}
@@ -145,15 +149,15 @@ footer a{color:#cde9e6}
 @media(max-width:980px){.trilho{grid-template-columns:1fr}.dados .cartao,.fr{border-right:0;border-bottom:1px solid #ffffff2e;padding:0 0 18px}.acoes{padding-left:96px}.acoes::before{left:62px}.ac::before{left:-100px;width:40px;font-size:22px}.ac::after{left:-41px}}
 @media(max-width:380px){.nav .btn{font-size:0}.nav .btn::after{content:"Enviar";font-size:14px}}
 @media(max-width:600px){.acoes{grid-template-columns:1fr}.nav .btn{padding:8px 12px;font-size:14px;white-space:nowrap}.mapa{height:70vh}}
-.menuBtn{display:none;margin-left:auto;font:600 15px Jost,sans-serif;color:inherit;background:#ffffff1f;border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
+.menuBtn{display:none;margin-left:auto;font:600 15px Jost,sans-serif;color:inherit;background:#ffffff1f;border:0;border-radius:999px;padding:9px 16px;cursor:pointer;background:none;box-shadow:inset 0 0 0 1px #ffffff66}
 @media(max-width:980px){.menuBtn{display:block}.nav ul#menuLista{display:none;position:absolute;top:calc(100% + 8px);right:12px;flex-direction:column;gap:2px;padding:10px;border-radius:18px;background:#0f1a14f2;box-shadow:0 20px 40px #0006;min-width:200px}.nav ul#menuLista.aberto{display:flex}.nav ul#menuLista a{color:#e7eee6;padding:10px 14px}}
-.nav .menuBtn{color:#fff}.nav.claro .menuBtn{color:var(--tinta);background:#0f7f8614}
+.nav .menuBtn{color:#fff}.nav.claro .menuBtn{color:var(--tinta);background:none;box-shadow:inset 0 0 0 1px #12323640}
 @media(max-width:700px){.sup .base .in{gap:18px}.sup h1{font-size:19px}.sup .acts{margin-top:4px}.nota{margin-top:24px}}
 /* sem tela de carregamento: a foto da abertura aparece suave quando fica pronta */
 .agua{opacity:0;transition:opacity .9s ease}.foto-ok .agua{opacity:1}
 </style></head><body>
 
-<nav class="nav" id="nav" aria-label="Principal">
+<nav class="nav topo" id="nav" aria-label="Principal">
  <a class="back" href="index.html" aria-label="Voltar ao início"><img src="img/icone-onda-192.png" alt="">Início</a>
  <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista">Menu</button>
  <ul id="menuLista"><li><a href="#pontos">Pontos</a></li><li><a href="#mergulho">O problema</a></li><li><a href="#acoes">Ações</a></li><li><a href="index.html#contato">Mandar um relato</a></li></ul>
@@ -290,9 +294,9 @@ function abrirMapa(){if(mapaPronto)return mapaPronto;caixaMapa.classList.add("ca
 poster.addEventListener("click",abrirMapa);
 document.querySelectorAll(".pc").forEach(b=>b.addEventListener("click",async()=>{const ll=b.dataset.ll.split(",").map(Number);const novo=!mapaF;await abrirMapa();setTimeout(()=>{try{mapaF.contentWindow.postMessage({mareVoar:ll},"*")}catch(e){}},novo?1800:0)}));
 // 5) navegação, medidor e animações de entrada
-let last=0;
-const upd=y=>{const h=innerHeight,k=y/Math.max(1,document.documentElement.scrollHeight-h);pt.style.top=`calc(${(k*100).toFixed(2)}% - 6px)`;
- nav.classList.toggle("claro",y>h*.7);if(y>h&&y>last+2)nav.classList.add("esconde");if(y<last-2||y<h)nav.classList.remove("esconde");last=y};
+let last=0;const ondas=document.querySelector(".ondas"),merg=document.getElementById("mergulho");const inicioPapel=()=>ondas.getBoundingClientRect().top+scrollY+ondas.offsetHeight*.5,fimMergulho=()=>merg.getBoundingClientRect().top+scrollY+merg.offsetHeight*.13;
+const profEl=document.querySelector(".prof");const upd=y=>{const h=innerHeight;if(profEl)profEl.classList.toggle("on",y>h*.75);const k=y/Math.max(1,document.documentElement.scrollHeight-h);pt.style.top=`calc(${(k*100).toFixed(2)}% - 6px)`;
+ nav.classList.toggle("topo",y<inicioPapel());nav.classList.toggle("claro",y>=inicioPapel()&&y<fimMergulho());if(y>h&&y>last+2)nav.classList.add("esconde");if(y<last-2||y<h)nav.classList.remove("esconde");last=y};
 const contar=b=>{const n=+b.dataset.n,s=b.dataset.s||"",o={v:0};if(!window.gsap){b.textContent=n+s;return}gsap.to(o,{v:n,duration:1.6,ease:"power3.out",onUpdate:()=>b.textContent=Math.round(o.v)+s})};
 if(window.gsap&&window.ScrollTrigger){
  gsap.registerPlugin(ScrollTrigger);
