@@ -94,8 +94,8 @@ section{padding-block:clamp(56px,7vw,96px)}
 @keyframes brilho{from{opacity:.25}to{opacity:1}}
 @keyframes anel{from{transform:scale(1);opacity:.8}to{transform:scale(2.6);opacity:0}}
 .hero h1{font-size:clamp(24px,2.6vw,38px);font-weight:300;line-height:1.2;max-width:24ch}
-.hero .subt{grid-column:1/-1;margin:14px 0 0;max-width:46ch;font:400 clamp(17px,1.5vw,19px)/1.5 "Atkinson Hyperlegible",system-ui,sans-serif;color:var(--nevoa);text-shadow:0 1px 10px #0009}
-@media (orientation:landscape),(min-width:1101px){.hero .subt{position:absolute;left:max(22px,env(safe-area-inset-left,0px));top:calc(env(safe-area-inset-top,0px) + 66px);margin:0;grid-column:auto;font-size:17px}}
+.oculto{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.hero .acts{grid-column:-2/-1;justify-self:end}
 .hero .acts{display:flex;justify-content:flex-end}
 .btn .seta{width:16px;height:16px}.btn:hover .seta{transform:translateX(3px)}
 .scroll{position:absolute;z-index:3;left:50%;bottom:22px;transform:translateX(-50%);width:1px;height:54px;background:linear-gradient(#e7eee600,#e7eee6aa);overflow:hidden}
@@ -421,8 +421,7 @@ html.parado{scroll-behavior:auto}
   <div class="mare" aria-hidden="true"><span class="lt">M</span><span class="lt">A</span><span class="lt">R</span><span class="lt">É</span></div>
   <div class="lead">
    <div class="ld d3">
-    <h1>Mobilização, acessibilidade e renovação estrutural para a cidade-floresta.</h1>
-    <p class="subt">A MARÉ mapeia alagamentos, calçadas e acessibilidade, propõe soluções de baixo custo e leva cada problema a quem pode resolver. Não fazemos obras.</p>
+    <h1 class="oculto">MARÉ: Mobilização, Acessibilidade e Renovação Estrutural para a cidade-floresta</h1>
     <div class="acts"><a class="btn broto" href="mare-cheia.html">Ver o mapa do Maré Cheia<svg class="seta" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>
    </div>
   </div>
