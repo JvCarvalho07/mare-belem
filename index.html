@@ -26,7 +26,14 @@ h1,h2,h3{font-family:Jost,sans-serif;margin:0;text-wrap:balance}
 h2{font-size:clamp(36px,5vw,68px);font-weight:300;line-height:1.02;letter-spacing:-.02em;margin-bottom:22px}
 h3{font-size:24px;font-weight:600;line-height:1.15;margin-bottom:6px}
 p{margin:0 0 14px;max-width:56ch}
-a:focus-visible,button:focus-visible{outline:3px solid var(--broto);outline-offset:3px;border-radius:8px}
+a:focus-visible,button:focus-visible,[tabindex="0"]:focus-visible{outline:3px solid var(--broto);outline-offset:3px;border-radius:8px}
+.pular{position:fixed;left:12px;top:-80px;z-index:1000;padding:12px 20px;border-radius:999px;background:var(--broto);color:#0f1a14;font:600 16px Jost,sans-serif;text-decoration:none}
+.pular:focus{top:12px}
+#conteudo:focus{outline:0}
+.pararMov{background:none;border:0;padding:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer;min-height:44px}
+.valores{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.valores li{padding:18px 20px;border-radius:18px;background:#0f1a1466;box-shadow:inset 0 0 0 1px #ffffff26}
+.valores b{display:block;font:600 20px Jost,sans-serif;margin-bottom:4px}
 section{padding-block:clamp(56px,7vw,96px)}
 .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;font:600 15px Jost,sans-serif;letter-spacing:.06em;text-decoration:none;transition:transform .25s,background .25s,color .25s}
 .btn:hover{transform:translateY(-2px)}
@@ -389,6 +396,7 @@ html.parado{scroll-behavior:auto}
 @media(max-width:600px){.nav .in{gap:10px;height:64px}.logo span{display:none}.logo img.nova{height:42px}}
 </style></head><body>
 
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
 <nav class="nav" id="nav" aria-label="Principal"><div class="in">
  <a class="logo" href="#" aria-label="MARÉ, início"><img class="nova" src="img/logo-mare-branca-curta.webp" alt="MARÉ" width="700" height="381"></a>
  <button class="menuBtn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuLista" aria-label="Abrir menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="l1" d="M3 9h18"/><path class="l2" d="M3 15h18"/></svg><span class="menuTxt">Menu</span></button>
@@ -413,7 +421,7 @@ html.parado{scroll-behavior:auto}
   <symbol id="folha-acai" viewBox="0 0 260 120"><path d="M4 112C80 70 160 40 256 6" stroke="#2f5e33" stroke-width="3" fill="none"/><g fill="url(#gB)"><path d="M40 92c-6-24 4-44 20-56-2 22-6 40-20 56z"/><path d="M40 92c20-10 42-12 62-6-20 8-40 12-62 6z"/><path d="M90 72c-4-26 8-46 24-56-2 22-8 40-24 56z"/><path d="M90 72c22-8 44-8 62 0-20 6-42 8-62 0z"/><path d="M142 50c-2-24 10-42 26-50-4 20-10 36-26 50z"/><path d="M142 50c20-6 40-4 56 4-18 4-38 4-56-4z"/><path d="M196 28c0-18 10-30 22-36-4 16-10 28-22 36z"/><path d="M196 28c14-2 28 0 40 8-14 2-28 0-40-8z"/></g></symbol>
   <symbol id="folha-peq" viewBox="0 0 40 70"><path fill="url(#gB)" d="M20 2C4 20 2 44 20 68 38 44 36 20 20 2z"/><path d="M20 8v58" stroke="#1f4d2b" stroke-width="1.6" opacity=".5"/></symbol>
  </defs></svg>
-<main>
+<main id="conteudo" tabindex="-1">
 <section class="hero" style="padding:0">
  <div class="bg" id="hbg" role="img" aria-label="Floresta amazônica coberta de névoa"></div>
  <div class="fog"></div>
@@ -488,6 +496,19 @@ html.parado{scroll-behavior:auto}
  </ol>
 </div></section>
 
+<section class="valoresSec" id="valores" aria-labelledby="tValores"><div class="in">
+ <h2 class="rv" id="tValores">Nossos valores</h2>
+ <ul class="valores">
+  <li><b>Escuta ativa</b>O problema começa na fala do morador.</li>
+  <li><b>Transparência</b>Dados, fontes e contas abertos.</li>
+  <li><b>Cidade para todos</b>Idosos, crianças e pessoas com deficiência vêm primeiro.</li>
+  <li><b>Natureza a favor</b>Soluções de baixo custo que respeitam a água, a chuva e o rio.</li>
+  <li><b>Trabalho em equipe</b>Decisões por votação, com voz para todos.</li>
+  <li><b>Compromisso com a comunidade</b>Só prometemos o que podemos entregar.</li>
+ </ul>
+ <p style="margin-top:22px">Como a equipe trabalha, decide e cuida das pessoas está nas <a href="normas.html">Normas da MARÉ</a>.</p>
+</div></section>
+
 <section class="cta" id="contato"><div class="bg" id="cbg" role="img" aria-label="Rio sinuoso no meio da floresta, visto do alto"></div><div class="in"><div>
  <h2 class="rv">Juntos, a gente vira a maré.</h2>
  <p class="rv">Tem um problema na sua rua, escola ou comunidade? Conte para a gente. Respondemos com uma proposta: diagnóstico, oficina ou o ponto no nosso mapa.</p>
@@ -557,6 +578,7 @@ html.parado{scroll-behavior:auto}
 <footer><div class="in">
  <div class="big">MARÉ</div>
  <div><p>A MARÉ é uma empresa júnior socioambiental de Belém (PA), com uma equipe de 6 pessoas. Mapeamos, propomos e levamos cada problema a quem pode resolver; não fazemos obras.</p><p>Para falar com a equipe, use o <a href="#contato">formulário logo acima</a>.</p>
+ <p id="acessib"><strong>Acessibilidade.</strong> Este site pode ser usado só com o teclado (Tab para avançar, Enter para abrir). A letra é a Atkinson Hyperlegible, feita para leitura fácil, e as imagens têm descrição. Se algo não funcionar para você, conte pelo <a href="#contato">formulário</a> e a gente corrige. <button type="button" class="pararMov" id="pararMov" aria-pressed="false">Parar animações</button></p>
  <p style="font-size:13px">Fotos: <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> (licença Unsplash). Mapa: OpenStreetMap, OpenFreeMap, Esri.</p></div>
 </div></footer>
 
@@ -564,6 +586,7 @@ html.parado{scroll-behavior:auto}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 const still=(()=>{try{return localStorage.getItem("mare_movimento")==="off"}catch(e){return false}})();if(still)document.documentElement.classList.add("parado");
+(()=>{const b=document.getElementById("pararMov");if(!b)return;const r=document.documentElement,mostra=()=>{const on=r.classList.contains("parado");b.setAttribute("aria-pressed",on);b.textContent=on?"Ligar animações":"Parar animações"};mostra();b.onclick=()=>{const on=r.classList.toggle("parado");try{localStorage.setItem("mare_movimento",on?"off":"on")}catch(e){}mostra()}})();
 const nav=document.getElementById("nav"),hbg=document.getElementById("hbg");
 // atalho flutuante (celular): aparece depois da abertura e some na seção do projeto e no fim da página
 const flutua=document.getElementById("flutua"),secProj=document.getElementById("projeto");
